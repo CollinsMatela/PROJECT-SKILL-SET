@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import CommunmityIMG from "../Images/Community.jpg"
-import RegisterHandler from "../Utils/RegisterHandler.js";
+
 const Home = () => {
     const navigate = useNavigate();
 

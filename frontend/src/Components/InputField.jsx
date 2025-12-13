@@ -11,7 +11,7 @@ const InputField = ({ label, type, name, placeholder, error, value, onChange }) 
                            value={value}
                            onChange={onChange} 
                     />
-                    <p className="text-sm">{error}</p>
+                    <p className="text-sm"><span className="text-red-500">{error}</span></p>
     </div>
     );
 }
