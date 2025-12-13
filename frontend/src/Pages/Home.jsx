@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import CommunmityIMG from "../Images/Community.jpg"
 import RegisterHandler from "../Utils/RegisterHandler.js";
 const Home = () => {
+    const navigate = useNavigate();
+
+    const handleGetConnect = () =>{
+        alert("working")
+        navigate("/Registration");
+    }
+
     return(
             <section className="bg-slate-900 h-screen w-full flex flex-col">
                  <div className="bg-slate-900 flex-2 w-full flex ">
@@ -25,7 +33,7 @@ const Home = () => {
 
                         <div className="w-full">
                            <button className="bg-black h-12 w-40 justify-center items-center flex rounded-md cursor-pointer border-b-4 border-green-500"
-                                    onClick={RegisterHandler}>
+                                    onClick={handleGetConnect}>
                             <h1 className="text-white font-nanum text-[20px]">— Get Connect</h1>
                            </button> 
                         </div>
