@@ -4,7 +4,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import demoRoutes from "./routes/demoRoutes.js";
+import RegistrationRoute from "./routes/registrationRoute.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // Use the routes
-app.use("/api/demo", demoRoutes);
+app.use("/", RegistrationRoute);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

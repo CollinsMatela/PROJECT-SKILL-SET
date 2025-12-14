@@ -13,7 +13,7 @@ const Registration = () => {
 
     const [errors, setErrors] = useState({});
 
-    const handleSubmit = () =>{
+    const handleSubmit = async () =>{
         if(!lastname){
             setErrors({ lastname: "Lastname is required" });
             return;
@@ -48,13 +48,25 @@ const Registration = () => {
         Middlename : middlename,
         Email : email,
         Password : password,
-        ConfirmPassword : confirmpassword,
         Terms : terms
         };
+        try {
+            const res = await handleRegistrationSubmit(registerData);
+            console.log(res.account);
+            console.log(res.message);
 
-        handleRegistrationSubmit(registerData);
-        console.log(registerData);
-        setErrors("");
+            setLastname("")
+            setFirstname("")
+            setEmail("")
+            setPassword("")
+            setConfirmPassword("")
+            setTerms(false)
+            
+            setErrors("");
+        } catch (error) {
+            console.error(err)
+        }
+        
     }
 
     return(
@@ -125,8 +137,8 @@ const Registration = () => {
                         id="terms"
                         name="terms"
                         className="w-4 h-4"
-                        value={terms}
-                        onChange={(e)=>{setTerms(e.target.value)}}
+                        checked={terms}
+                        onChange={(e)=>{setTerms(e.target.checked)}}
                 />
                 <label htmlFor="terms" className="text-gray-700 text-sm">I agree to the{" "}
                     <a href="/terms" className="text-blue-500 underline hover:text-blue-600">Terms and Conditions</a>{" "}
