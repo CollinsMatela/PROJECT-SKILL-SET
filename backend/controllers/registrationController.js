@@ -7,6 +7,11 @@ export const registrationController = async (req, res) => {
     const {Lastname, Firstname ,Middlename ,Email ,Password ,Terms} = req.body;
     const uniqueId = nanoid();
 
+    const existingEmail = await RegisterModel.findOne({email : Email})
+    if(existingEmail){
+      return res.status("").json({message:"Email address is already existing."})
+    }
+
     const inputUser = await RegisterModel.create({
       accountId: uniqueId,
       lastname: Lastname,

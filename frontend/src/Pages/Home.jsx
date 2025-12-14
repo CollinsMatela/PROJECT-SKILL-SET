@@ -19,7 +19,7 @@ const Home = () => {
                          <h1 className="text-[170px] font-nanum font-extrabold text-black">SKILL SET+</h1>
                     </div>
                     
-                    <div className="bg-white flex-1 flex flex-col items-center justify-center md:pr-60 md:pl-10 border-2 border-green-500">
+                    <div className="bg-white flex-1 flex flex-col items-center justify-center md:pr-60 md:pl-10 border-b-2 border-green-500">
                         <div className="w-full">
                             <h1 className="text-md text-white font-nanum rounded-md bg-green-500 h-8 w-40 justify-center flex items-center">— Register now</h1>
                         </div>
