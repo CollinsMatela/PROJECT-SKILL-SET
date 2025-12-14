@@ -1,15 +1,28 @@
 import { useState } from "react";
 import InputField from "./InputField";
+import handleLoginSubmit from "../Services/handleLoginSubmit";
 
 const LoginModal = ({onClose}) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
     
-    const loginSubmit = () => {
+    const loginSubmit = async () => {
     
+    setErrors({});
+
     if(!email){setErrors({email:"Email is required"}); return;}
     if(!password){setErrors({password:"Password is required"}); return;}
+
+    const loginData = { email : email, password : password }
+    try {
+        const res = await handleLoginSubmit(loginData);
+        // console.log(res);          // ✅ this is the data object from backend
+        // console.log(res.message);  // ✅ the backend message
+    } catch (error) {
+        console.error(error)
+    }
+    
     }
     
     return(
