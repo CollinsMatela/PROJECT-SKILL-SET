@@ -4,6 +4,7 @@ import LoginModal from "./LoginModal";
 const NavigationBar = () =>{
 
     const [showLogin, setShowLogin] = useState(false);
+
     const handleLogin = () =>{
         setShowLogin(true)
     }
@@ -14,7 +15,7 @@ const NavigationBar = () =>{
             <h1 className="text-green-500 font-nanum font-extrabold text-2xl">SKILL SETS+</h1>
         </div>
         <button className="bg-green-500 h-8 w-25 text-white font-bold font-nanum text-md rounded-md border-b-2 border-black hover:bg-green-600"
-                onClick={handleLogin}>Login</button>
+                onClick={handleLogin}>— Login</button>
     </div>
 
     {showLogin && (<LoginModal 

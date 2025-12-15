@@ -17,10 +17,16 @@ const LoginModal = ({onClose}) =>{
     const loginData = { email : email, password : password }
     try {
         const res = await handleLoginSubmit(loginData);
-        // console.log(res);          // ✅ this is the data object from backend
-        // console.log(res.message);  // ✅ the backend message
+
+        if(res.isUser){
+            console.log(`${res.message} : ${res.accountId}`);
+            onClose();
+        } else {
+            setErrors({email: res.message,
+                       password: res.message})
+        }
     } catch (error) {
-        console.error(error)
+        error.response.data
     }
     
     }

@@ -5,7 +5,6 @@ const Home = () => {
     const navigate = useNavigate();
 
     const handleGetConnect = () =>{
-        alert("working")
         navigate("/Registration");
     }
 
