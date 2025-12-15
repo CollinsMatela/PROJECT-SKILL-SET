@@ -1,35 +1,53 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import InputField from "./InputField";
 import handleLoginSubmit from "../Services/handleLoginSubmit";
+import {AuthContext} from "../Context/AuthContext"
+import { useNavigate } from "react-router-dom";
+
+
 
 const LoginModal = ({onClose}) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
+
+
+    const {setUser} = useContext(AuthContext);
+    const navigate = useNavigate();
     
     const loginSubmit = async () => {
-    
-    setErrors({});
+            setErrors({});
 
-    if(!email){setErrors({email:"Email is required"}); return;}
-    if(!password){setErrors({password:"Password is required"}); return;}
+            if (!email) { setErrors({ email: "Email is required" }); return; }
+            if (!password) { setErrors({ password: "Password is required" }); return; }
 
-    const loginData = { email : email, password : password }
-    try {
-        const res = await handleLoginSubmit(loginData);
+            const loginData = { email, password };
 
-        if(res.isUser){
-            console.log(`${res.message} : ${res.accountId}`);
-            onClose();
-        } else {
-            setErrors({email: res.message,
-                       password: res.message})
-        }
-    } catch (error) {
-        error.response.data
-    }
-    
-    }
+            try {
+                const res = await handleLoginSubmit(loginData);
+
+                if (res.data.user?.isUser) { // optional chaining to avoid errors
+                console.log(`${res.data.message} : ${res.data.user.accountId}`);
+                // localStorage.setItem("user", JSON.stringify(res.data.user));
+                // setUser(res.data.user);
+                // navigate("/dashboard");
+                // onClose();
+                } else {
+                setErrors({
+                    email: res.data?.message || "Login failed",
+                    password: res.data?.message || "Login failed"
+                });
+                }
+            } catch (error) {
+                // Use `error` here, not `res`
+                console.log("Login failed:", error);
+
+                setErrors({
+                email: error.response?.data?.message || "Login failed",
+                password: error.response?.data?.message || "Login failed"
+                });
+            }
+};
     
     return(
     <div className="fixed z-50 h-screen w-full justify-center items-center flex ">
