@@ -5,6 +5,7 @@ import LoginModal from "./Components/LoginModal";
 import Dashboard from "./Pages/Dashboard"
 import Profile from "./Pages/Profile"
 import AuthProvider from "./Context/AuthContext";
+import EditProfile from "./Pages/EditProfile";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
     
     <Routes>  
       <Route path={"/"} element={<Website/>}/>
+      <Route path={"/edit-profile"} element={<EditProfile/>}/>
       <Route path={"/Profile"} element={<Profile/>}/>
       <Route path={"/Dashboard"} element={<Dashboard/>}/>
       <Route path={"/LoginModal"} element={<LoginModal/>}></Route>
