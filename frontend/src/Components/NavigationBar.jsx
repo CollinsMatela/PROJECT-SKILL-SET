@@ -1,9 +1,11 @@
 import { useState } from "react";
 import LoginModal from "./LoginModal";
 
+
 const NavigationBar = () =>{
 
     const [showLogin, setShowLogin] = useState(false);
+
 
     const handleLogin = () =>{
         setShowLogin(true)

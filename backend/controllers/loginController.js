@@ -1,4 +1,4 @@
-import  RegisterModel  from "../models/RegisterModel.js"
+import UserAccountModel from "../models/UserAccountModel.js"
 import bcrypt from "bcrypt";
 
 export const loginController = async (req, res) =>{
@@ -7,13 +7,13 @@ export const loginController = async (req, res) =>{
     
     const {email, password} = req.body;// Recieve the data from frontend
     
-    const user = await RegisterModel.findOne({email});// Check the email
+    const user = await UserAccountModel.findOne({email});// Check the email
     if(!user){
-        return res.status(401).json({message: "Invalid email or password"})
+        return res.status(401).json({isEmail: "Invalid email address"})
     }
     
     if (password !== user.password) {// Match the user password and input password
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ isPassword: "Invalid password" });
     }
    
     return res.status(200).json({
@@ -22,6 +22,12 @@ export const loginController = async (req, res) =>{
                                     isUser : true,
                                     accountId : user.accountId,
                                     email : user.email,
+                                    firstname : user.firstname,
+                                    middlename : user.middlename,
+                                    lastname : user.lastname,
+                                    contact : user.contact,
+                                    profile : user.profile,
+                                    description : user.description
                                  },
                                 })
     } catch (error) {

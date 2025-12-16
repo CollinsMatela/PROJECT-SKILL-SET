@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid"; // unique short Id
-import RegisterModel from "../models/RegisterModel.js"
+import UserAccountModel from "../models/UserAccountModel.js"
 
 export const registrationController = async (req, res) => {
   try {
@@ -7,18 +7,21 @@ export const registrationController = async (req, res) => {
     const {Lastname, Firstname ,Middlename ,Email ,Password ,Terms} = req.body;
     const uniqueId = nanoid();
 
-    const existingEmail = await RegisterModel.findOne({email : Email})
+    const existingEmail = await UserAccountModel.findOne({email : Email})
     if(existingEmail){
       return res.status("").json({message:"Email address is already existing."})
     }
 
-    const inputUser = await RegisterModel.create({
+    const inputUser = await UserAccountModel.create({
       accountId: uniqueId,
       lastname: Lastname,
       firstname: Firstname,
       middlename: Middlename,
       email: Email,
       password: Password,
+      contact : null,
+      profile : null,
+      description : null,
       terms: Terms
     })
 

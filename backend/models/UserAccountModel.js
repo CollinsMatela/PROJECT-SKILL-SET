@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const registerSchema = new mongoose.Schema(
+const userAccountSchema = new mongoose.Schema(
     {
         accountId : String,
         lastname : String,
@@ -8,9 +8,12 @@ const registerSchema = new mongoose.Schema(
         middlename : String,
         email : String,
         password : String,
+        contact : String,
+        profile : String,
+        description : String,
         terms : Boolean
     }
 )
 
-const RegisterModel = mongoose.model("RegisterModel",registerSchema)
-export default RegisterModel
+const UserAccount = mongoose.model("UserAccount",userAccountSchema)
+export default UserAccount

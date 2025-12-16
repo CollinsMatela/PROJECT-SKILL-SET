@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
+import { useContext } from "react";
 
 const DashboardNav = () =>{
     const navigate = useNavigate();
+    const {userAccount} = useContext(AuthContext);
 
     const handleProfile = () =>{
           alert("Go to profile");
@@ -13,7 +16,7 @@ const DashboardNav = () =>{
                  <div className="h-10 flex justify-center items-center gap-2 cursor-pointer"
                       onClick={handleProfile}>
                     <div className="h-9 w-9 rounded-4xl bg-transparent border-2 border-green-500"></div>
-                    <h1 className="text-2xl text-black text-xl font-nanum font-bold mr-4 hover:bg-gray-200 rounded-4xl px-2">Collins C. Matela</h1>
+                    <h1 className="text-2xl text-black text-xl font-nanum font-bold mr-4 hover:bg-gray-200 rounded-4xl px-2">{userAccount.firstname} {userAccount.lastname}</h1>
                  </div>
         </nav>
      )

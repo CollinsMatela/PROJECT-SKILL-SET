@@ -12,7 +12,7 @@ const LoginModal = ({onClose}) =>{
     const [errors, setErrors] = useState({});
 
 
-    const {setUser} = useContext(AuthContext);
+    const {setUserAccount} = useContext(AuthContext);
     const navigate = useNavigate();
     
     const loginSubmit = async () => {
@@ -26,26 +26,15 @@ const LoginModal = ({onClose}) =>{
             try {
                 const res = await handleLoginSubmit(loginData);
 
-                if (res.data.user?.isUser) { // optional chaining to avoid errors
+                if (res.data.user.isUser) { 
                 console.log(`${res.data.message} : ${res.data.user.accountId}`);
-                // localStorage.setItem("user", JSON.stringify(res.data.user));
-                // setUser(res.data.user);
-                // navigate("/dashboard");
-                // onClose();
-                } else {
-                setErrors({
-                    email: res.data?.message || "Login failed",
-                    password: res.data?.message || "Login failed"
-                });
+                localStorage.setItem("user", JSON.stringify(res.data.user));
+                setUserAccount(res.data.user);
+                navigate("/Dashboard");
+                onClose();
                 }
             } catch (error) {
-                // Use `error` here, not `res`
-                console.log("Login failed:", error);
-
-                setErrors({
-                email: error.response?.data?.message || "Login failed",
-                password: error.response?.data?.message || "Login failed"
-                });
+                console.log("Login failed", error);
             }
 };
     
