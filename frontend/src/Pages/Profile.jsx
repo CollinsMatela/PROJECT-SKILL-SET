@@ -1,15 +1,20 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import DashboardNav from "../Components/DashboardNav";
+import EditProfileModal from "../Components/EditProfileModal";
 import { useNavigate } from "react-router-dom";
+import LoginModal from "../Components/LoginModal";
 
 const Profile = () =>{
     const {userAccount} =useContext(AuthContext);
     const navigate = useNavigate();
 
+    const [showEditProfile, setEditProfile] = useState(false);
+
     const handleEditProfile = () =>{
-        console.log("go to edit profile");
-        navigate("/edit-profile");
+        alert("go to edit profile");
+        setEditProfile(true);
+        
     }
     const name = userAccount.isUser ? `${userAccount.firstname} ${userAccount.middlename} ${userAccount.lastname}` : "Empty";
     const description = userAccount.description ? `${userAccount.description}` : "No description yet";
@@ -51,6 +56,7 @@ const Profile = () =>{
 
                  </div>
             </section>
+            {showEditProfile && (<EditProfileModal onClose={()=> setEditProfile(false)}/>)}
         </main>
         
     )
