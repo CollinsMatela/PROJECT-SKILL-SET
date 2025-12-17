@@ -1,16 +1,57 @@
+import { useState, useRef } from "react";
 
 
 const EditProfileModal = ({onClose}) =>{
+
+      const [profile, setProfile] = useState("");
+      const [lastname, setLastname] = useState("");
+      const [firstname, setFirstname] = useState("");
+      const [middlename, setMiddlename] = useState("");
+      const [bio, setBio] = useState("");
+      const [skills, setSkills] = useState([]);
+      const [links, setLinks] = useState([]);
+      const [availability, setAvailability] = useState("");
+      const [email, setEmail] = useState("");
+      const [contact, setContact] = useState("");
+      const [baranggay, setBaranggay] = useState("");
+      const [city, setCity] = useState("");
+      const [province, setProvince] = useState("");
+
+      const filePicker = useRef(null);
+      
+      const showFileExplorer = () =>{
+            filePicker.current.click();
+      }
+      // Handle Functions
+      const handleUploadProfile = (e) =>{
+            const picture =  e.target.files[0];
+            if(!picture) return;
+
+            const previewUrl = URL.createObjectURL(picture); //it convert the image
+            setProfile(previewUrl);
+      }
+
       return(
       <div className="fixed inset-0 z-50  h-screen w-full justify-center items-center flex">
            <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div> {/* backdrop */}
             <div className="relative bg-white w-250 p-10 rounded-xl flex flex-col gap-6">
                   <h1 className="font-nanum text-xl">Edit your profile</h1>
                   <div className="justify-between items-end flex">
-                        <img src="profile" alt="profile" className="bg-gray-100 h-25 w-25"/>
-                        <button className="bg-green-500 h-12 w-40 border-b-2 border-black rounded-md p-2 text-white hover:bg-green-600 cursor-pointer">
-                              — Upload Profile</button>
+                        <img src={profile} alt="profile" className="bg-gray-100 h-25 w-25 object-cover"/>
+                        <button className="bg-green-500 h-12 w-40 border-b-2 border-black rounded-md p-2 text-white hover:bg-green-600 cursor-pointer"
+                                onClick={showFileExplorer}>
+                              — Upload Profile
+                        </button>
+                        {/* THIS is what opens the file explorer */}
+                        <input
+                        type="file"
+                        ref={filePicker}
+                        accept="image/*"
+                        onChange={handleUploadProfile}
+                        hidden
+                        />
                   </div>
+                  
                   <div className="justify-between items-center flex gap-2">
                         <input type="text" className="bg-gray-100 h-12 w-full outline-none rounded-md p-4" placeholder="Enter Lastname"/>
                         <input type="text" className="bg-gray-100 h-12 w-full outline-none rounded-md p-4" placeholder="Enter Firstname"/>
