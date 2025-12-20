@@ -65,7 +65,9 @@ const EditProfileModal = ({onClose}) =>{
                    city: city,
                    province: province
                    }
-                  const res = await handleEditProfile(ProfileInformations); 
+                  const res = await handleEditProfile(ProfileInformations);
+                  alert(res.data.message);
+                  onClose();
             } catch (error) {
                   console.log(error)
             }   
@@ -177,7 +179,7 @@ const EditProfileModal = ({onClose}) =>{
                         onChange={(e) => {setCity(e.target.value)}}/>
                         <input type="text" className="bg-gray-100 h-10 w-full outline-none rounded-md p-4" placeholder="Enter Province"
                         value={province}
-                        onChange={(e) => {setProfile(e.target.value)}}/>    
+                        onChange={(e) => {setProvince(e.target.value)}}/>    
                   </div>
                   <button className="bg-green-500 h-15 w-full w-50 border-b-2 border-black rounded-md p-2 text-white hover:bg-green-600 cursor-pointer font-nanum text-2xl"
                           onClick={SaveProfileData}>— Save</button>

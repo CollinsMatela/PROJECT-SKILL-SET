@@ -1,6 +1,28 @@
+import { useContext, useEffect } from "react"
 import DashboardNav from "../Components/DashboardNav"
+import { AuthContext } from "../Context/AuthContext"
+import axios from "axios"
 
 const Dashboard = () =>{
+      const {userAccount, setUserProfile} = useContext(AuthContext);
+
+      useEffect(() => {
+      if (!userAccount?.accountId) return
+      alert(userAccount.accountId);
+
+      const fetchProfile = async () => {
+            try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/${userAccount.accountId}`);
+            console.log(res.data.message);
+            console.log(res.data.ProfileInformation);
+            setUserProfile(res.data.ProfileInformation);
+            } catch (error) {
+            console.log(res.data.message);
+            }
+      }
+      fetchProfile();
+      },[userAccount])
+      
       return(
       <>
       <main>

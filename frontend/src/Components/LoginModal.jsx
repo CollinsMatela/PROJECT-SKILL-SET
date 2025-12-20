@@ -12,7 +12,7 @@ const LoginModal = ({onClose}) =>{
     const [errors, setErrors] = useState({});
 
 
-    const {setUserAccount} = useContext(AuthContext);
+    const {setUserAccount, setUserProfile} = useContext(AuthContext);
     const navigate = useNavigate();
     
     const loginSubmit = async () => {

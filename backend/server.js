@@ -6,6 +6,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import RegistrationRoute from "./routes/registrationRoute.js";
 import LoginRoute from "./routes/loginRoute.js";
+import EditProfileRoute from "./routes/editProfileRoute.js"
+import GetProfileRoute from "./routes/getProfileRoute.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +19,8 @@ app.use(express.json());
 // 🔥 ROUTES AFTER MIDDLEWARE
 app.use("/", RegistrationRoute);
 app.use("/", LoginRoute);
+app.use("/", EditProfileRoute);
+app.use("/", GetProfileRoute);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
