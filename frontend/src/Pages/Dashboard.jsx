@@ -4,6 +4,7 @@ import { AuthContext } from "../Context/AuthContext"
 import axios from "axios"
 
 const Dashboard = () =>{
+
       const {userAccount, setUserProfile} = useContext(AuthContext);
 
       useEffect(() => {
@@ -17,8 +18,8 @@ const Dashboard = () =>{
             console.log(res.data.ProfileInformation);
             setUserProfile(res.data.ProfileInformation);
             } catch (error) {
-            console.log(res.data.message);
-            }
+             console.error(error.response?.data?.message || error.message);
+            } 
       }
       fetchProfile();
       },[userAccount])
