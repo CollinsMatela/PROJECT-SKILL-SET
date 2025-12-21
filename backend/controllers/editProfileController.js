@@ -1,14 +1,19 @@
 import ProfileModel from "../models/UserProfileModel.js"
+import cloudinary from "../config/cloudinary.js"
 
 export const editProfileController = async (req, res) =>{
     try {
         const {accountId, profile, lastname, firstname, middlename, bio, skills, links,
                availability, email, contact, baranggay, city, province} = req.body;
+
+        
+
+        const uploadedResponse = await cloudinary.v2.uploader.upload(profile);
         
         // Success
         const createProfile = await ProfileModel.create({
                 accountId : accountId, 
-                profile : profile, 
+                profile : uploadedResponse.secure_url, 
                 lastname : lastname, 
                 firstname : firstname, 
                 middlename : middlename, 
@@ -43,6 +48,7 @@ export const editProfileController = async (req, res) =>{
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Server error" })
+        console.log("Cloudinary upload error:", error);
+  return res.status(500).json({ message: "Image upload failed", error: error.message });
     }
 }

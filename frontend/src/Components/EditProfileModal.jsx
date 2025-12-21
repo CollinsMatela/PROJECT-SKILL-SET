@@ -19,6 +19,7 @@ const EditProfileModal = ({onClose}) =>{
       const [province, setProvince] = useState("");
 
       // Profile Function
+      const [previewProfile, setPreviewProfile] = useState("");
       const filePicker = useRef(null);
       const showFileExplorer = () =>{
             filePicker.current.click();
@@ -27,8 +28,12 @@ const EditProfileModal = ({onClose}) =>{
             const picture =  e.target.files[0];
             if(!picture) return;
 
-            const previewUrl = URL.createObjectURL(picture); //it convert the image
-            setProfile(previewUrl);
+            const reader = new FileReader();
+            reader.readAsDataURL(picture);// convert to base64
+            reader.onloadend = () => {
+                  setPreviewProfile(reader.result); // for preview
+                  setProfile(reader.result); // send this base64 to backend
+            };
       }
       // Add skills Function
       const [skills, setSkills] = useState([]);
@@ -79,7 +84,13 @@ const EditProfileModal = ({onClose}) =>{
             <div className="relative bg-white w-250 p-10 rounded-xl flex flex-col gap-6">
                   <h1 className="font-nanum text-xl">FILL YOUR PROFILE</h1>
                   <div className="justify-between items-end flex">
-                        <img src={profile} alt="profile" className="bg-gray-100 h-25 w-25 object-cover"/>
+                     {previewProfile && (
+                        <img
+                        src={previewProfile}
+                        alt="profile"
+                        className="bg-gray-100 h-25 w-25 object-cover"
+                        />
+                        )}
                         <button className="bg-gray-100 h-10 w-40 border-1 border-gray-300 rounded-md p-2 text-gray-500 text-sm hover:bg-gray-200 cursor-pointer"
                                 onClick={showFileExplorer}>
                               — Upload Profile
