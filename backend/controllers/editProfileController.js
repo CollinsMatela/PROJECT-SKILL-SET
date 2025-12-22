@@ -5,46 +5,39 @@ export const editProfileController = async (req, res) =>{
     try {
         const {accountId, profile, lastname, firstname, middlename, bio, skills, links,
                availability, email, contact, baranggay, city, province} = req.body;
-
         
+        const updates = {
+                        accountId : accountId, 
+                        lastname : lastname, 
+                        firstname : firstname, 
+                        middlename : middlename, 
+                        bio : bio, 
+                        skills : skills, 
+                        links : links,
+                        availability : availability, 
+                        email : email, 
+                        contact : contact, 
+                        baranggay : baranggay, 
+                        city : city, 
+                        province : province
+                        };
 
-        const uploadedResponse = await cloudinary.v2.uploader.upload(profile);
+        if(profile && !profile.startsWith("http")){
+            const uploadedResponse = await cloudinary.v2.uploader.upload(profile, {folder: "profiles"});
+            updates.profile = uploadedResponse.secure_url;
+        } 
+        else if (profile && profile.startsWith("http")){
+            updates.profile = profile; // goes to updates()
+        }
+        
         
         // Success
-        const createProfile = await ProfileModel.create({
-                accountId : accountId, 
-                profile : uploadedResponse.secure_url, 
-                lastname : lastname, 
-                firstname : firstname, 
-                middlename : middlename, 
-                bio : bio, 
-                skills : skills, 
-                links : links,
-                availability : availability, 
-                email : email, 
-                contact : contact, 
-                baranggay : baranggay, 
-                city : city, 
-                province : province
-        })
-        return res.status(201).json({ message : "Successfully registered profile information",
-                                      ProfileInformation : {
-                                                    isUserProfile : true,
-                                                    accountId : createProfile.accountId, 
-                                                    profile : createProfile.profile, 
-                                                    lastname : createProfile.lastname, 
-                                                    firstname : createProfile.firstname, 
-                                                    middlename : createProfile.middlename, 
-                                                    bio : createProfile.bio, 
-                                                    skills : createProfile.skills, 
-                                                    links : createProfile.links,
-                                                    availability : createProfile.availability, 
-                                                    email : createProfile.email, 
-                                                    contact : createProfile.contact, 
-                                                    baranggay : createProfile.baranggay, 
-                                                    city : createProfile.city, 
-                                                    province : createProfile.province
-                                      }
+        const savedProfile = await ProfileModel.findOneAndUpdate({accountId},
+                                                                 {$set:updates},
+                                                                 {new:true, upsert:true});
+ 
+        return res.status(201).json({ message : "Successfully update/registered profile information",
+                                      ProfileInformation : savedProfile
         })
 
     } catch (error) {

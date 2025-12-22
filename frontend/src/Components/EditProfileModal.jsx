@@ -4,19 +4,19 @@ import handleEditProfile from "../Services/handleEditProfile";
 
 const EditProfileModal = ({onClose}) =>{
 
-      const {userAccount} = useContext(AuthContext);
+      const {userAccount, userProfile} = useContext(AuthContext);
 
-      const [profile, setProfile] = useState("");
-      const [lastname, setLastname] = useState(userAccount.lastname);
-      const [firstname, setFirstname] = useState(userAccount.firstname);
-      const [middlename, setMiddlename] = useState(userAccount.middlename);
-      const [bio, setBio] = useState("");
-      const [availability, setAvailability] = useState("");
-      const [email, setEmail] = useState(userAccount.email);
-      const [contact, setContact] = useState("");
-      const [baranggay, setBaranggay] = useState("");
-      const [city, setCity] = useState("");
-      const [province, setProvince] = useState("");
+      const [profile, setProfile] = useState(userProfile?.profile || "");
+      const [lastname, setLastname] = useState(userProfile?.lastname || "");
+      const [firstname, setFirstname] = useState(userProfile?.firstname || "");
+      const [middlename, setMiddlename] = useState(userProfile?.middlename || "");
+      const [bio, setBio] = useState(userProfile?.bio || "");
+      const [availability, setAvailability] = useState(userProfile?.availability || "");
+      const [email, setEmail] = useState(userProfile?.email || "");
+      const [contact, setContact] = useState(userProfile?.contact || "");
+      const [baranggay, setBaranggay] = useState(userProfile?.baranggay || "");
+      const [city, setCity] = useState(userProfile?.city || "");
+      const [province, setProvince] = useState(userProfile?.province || "");
 
       // Profile Function
       const [previewProfile, setPreviewProfile] = useState("");
@@ -36,7 +36,7 @@ const EditProfileModal = ({onClose}) =>{
             };
       }
       // Add skills Function
-      const [skills, setSkills] = useState([]);
+      const [skills, setSkills] = useState(userProfile?.skills || []);
       const [skillInput, setSkillInput] = useState("");
       const handleAddSkills = (e) =>{
             if(!skillInput) return;
@@ -44,7 +44,7 @@ const EditProfileModal = ({onClose}) =>{
             setSkillInput("");
       }
       // Add profile links
-      const [links, setLinks] = useState([]);
+      const [links, setLinks] = useState(userProfile?.links || []);
       const [inputLinks, setInputLinks] = useState("");
       const handleProfileLink = () => {
             if(!inputLinks) return;
@@ -64,7 +64,7 @@ const EditProfileModal = ({onClose}) =>{
                    skills: skills,
                    links: links,
                    availability: availability,
-                   email: contact,
+                   email: email,
                    contact: contact,
                    baranggay: baranggay,
                    city: city,
@@ -72,6 +72,7 @@ const EditProfileModal = ({onClose}) =>{
                    }
                   const res = await handleEditProfile(ProfileInformations);
                   alert(res.data.message);
+                  console.log(res.data.ProfileInformation.accountId);
                   onClose();
             } catch (error) {
                   console.log(error)
@@ -82,15 +83,11 @@ const EditProfileModal = ({onClose}) =>{
       <div className="fixed inset-0 z-50  h-screen w-full justify-center items-center flex">
            <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div> {/* backdrop */}
             <div className="relative bg-white w-250 p-10 rounded-xl flex flex-col gap-6">
-                  <h1 className="font-nanum text-xl">FILL YOUR PROFILE</h1>
+                  <h1 className="text-md">FILL YOUR PROFILE</h1>
                   <div className="justify-between items-end flex">
-                     {previewProfile && (
-                        <img
-                        src={previewProfile}
-                        alt="profile"
-                        className="bg-gray-100 h-25 w-25 object-cover"
-                        />
-                        )}
+                     
+                        <img src={previewProfile ? previewProfile : userProfile?.profile} alt="profile" className="bg-gray-100 h-25 w-25 object-cover"/>
+                        
                         <button className="bg-gray-100 h-10 w-40 border-1 border-gray-300 rounded-md p-2 text-gray-500 text-sm hover:bg-gray-200 cursor-pointer"
                                 onClick={showFileExplorer}>
                               — Upload Profile
@@ -134,11 +131,20 @@ const EditProfileModal = ({onClose}) =>{
                         </div>
                         <div className="justify-center items-start w-full overflow-hidden">
                               <ul className="justify-start items-center flex gap-2">
-                              {skills.map((skill, index) => (
+                              {userProfile?.skills ?  
+                              userProfile?.skills.map((skill, index) => (
                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
                                           <h1 className="text-white text-sm font-medium uppercase">{skill}</h1>
                                     </li>
-                              ))}
+                              ))
+                              : 
+                              skills.map((skill, index) => (
+                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
+                                          <h1 className="text-white text-sm font-medium uppercase">{skill}</h1>
+                                    </li>
+                              ))
+                              }
+                              
                               </ul>
                         </div>
                         
@@ -153,11 +159,19 @@ const EditProfileModal = ({onClose}) =>{
                         </div>
                         <div className="justify-center items-start w-full overflow-hidden">
                               <ul className="justify-start items-center flex gap-2">
-                                    {links.map((link, index) => (
+                                    {userProfile?.links ?
+                                    userProfile?.links.map((link, index) => (
                                      <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
                                           <h1 className="text-white text-sm font-medium uppercase">{link}</h1>
                                     </li>
-                                    ))}
+                                    ))
+                                    :
+                                    links.map((link, index) => (
+                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
+                                          <h1 className="text-white text-sm font-medium uppercase">{link}</h1>
+                                    </li>
+                                    ))
+                                    }
                               </ul>
                               
                         </div>
