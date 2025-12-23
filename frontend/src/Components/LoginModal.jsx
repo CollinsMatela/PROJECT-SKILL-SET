@@ -3,6 +3,7 @@ import InputField from "./InputField";
 import handleLoginSubmit from "../Services/handleLoginSubmit";
 import {AuthContext} from "../Context/AuthContext"
 import { useNavigate } from "react-router-dom";
+import Loading from "../Components/Loading"
 
 
 
@@ -10,6 +11,8 @@ const LoginModal = ({onClose}) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
+
+    const [loading, setLoading] = useState(false);
 
 
     const {setUserAccount, setUserProfile} = useContext(AuthContext);
@@ -24,12 +27,14 @@ const LoginModal = ({onClose}) =>{
             const loginData = { email, password };
 
             try {
+                setLoading(true);
                 const res = await handleLoginSubmit(loginData);
 
                 if (res.data.user.isUser) { 
                 console.log(`${res.data.message} : ${res.data.user.accountId}`);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
                 setUserAccount(res.data.user);
+                setLoading(false);
                 navigate("/Dashboard");
                 onClose();
                 }
@@ -39,8 +44,9 @@ const LoginModal = ({onClose}) =>{
 };
     
     return(
+    
     <div className="fixed z-50 h-screen w-full justify-center items-center flex ">
-       
+       {loading ? <Loading/> : ""}
         <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div> {/* backdrop */}
 
         <div className="relative bg-white w-100 p-10 rounded-xl flex flex-col gap-2">

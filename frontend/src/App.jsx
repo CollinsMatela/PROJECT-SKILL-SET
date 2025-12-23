@@ -6,6 +6,7 @@ import Dashboard from "./Pages/Dashboard"
 import Profile from "./Pages/Profile"
 import AuthProvider from "./Context/AuthContext";
 import EditProfileModal from "./Components/EditProfileModal";
+import Loading from "./Components/Loading"
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     
     <Routes>  
       <Route path={"/"} element={<Website/>}/>
+      <Route path={"/Loading"} element={<Loading/>}/>
       <Route path={"/Profile"} element={<Profile/>}/>
       <Route path={"/Dashboard"} element={<Dashboard/>}/>
       <Route path={"/LoginModal"} element={<LoginModal/>}></Route>
