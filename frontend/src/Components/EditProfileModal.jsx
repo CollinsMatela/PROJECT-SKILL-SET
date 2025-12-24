@@ -4,7 +4,7 @@ import handleEditProfile from "../Services/handleEditProfile";
 
 const EditProfileModal = ({onClose}) =>{
 
-      const {userAccount, userProfile} = useContext(AuthContext);
+      const {userAccount, userProfile, setUserProfile} = useContext(AuthContext);
 
       const [profile, setProfile] = useState(userProfile?.profile || "");
       const [lastname, setLastname] = useState(userProfile?.lastname || "");
@@ -133,13 +133,19 @@ const EditProfileModal = ({onClose}) =>{
                               <ul className="justify-start items-center flex gap-2">
                               {userProfile?.skills ?  
                               userProfile?.skills.map((skill, index) => (
-                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
+                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
+                                        onClick={() => {setUserProfile(prev => (
+                                                                  {...prev, skills: prev.skills.filter(z => z !== skill)}
+                                                                  ))}}>
                                           <h1 className="text-white text-sm font-medium uppercase">{skill}</h1>
                                     </li>
                               ))
                               : 
                               skills.map((skill, index) => (
-                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
+                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
+                                    onClick={() => {setUserProfile(prev => (
+                                                                  {...prev, skills: prev.skills.filter(z => z !== skill)}
+                                                                  ))}}>
                                           <h1 className="text-white text-sm font-medium uppercase">{skill}</h1>
                                     </li>
                               ))
@@ -161,13 +167,17 @@ const EditProfileModal = ({onClose}) =>{
                               <ul className="justify-start items-center flex gap-2">
                                     {userProfile?.links ?
                                     userProfile?.links.map((link, index) => (
-                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
+                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
+                                     onClick={() => setUserProfile(prev => 
+                                                   ({...prev, links: prev.links.filter(z => z !== link)}))}>
                                           <h1 className="text-white text-sm font-medium uppercase">{link}</h1>
                                     </li>
                                     ))
                                     :
                                     links.map((link, index) => (
-                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full">
+                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
+                                     onClick={() => setUserProfile(prev => 
+                                                   ({...prev, links: prev.links.filter(z => z !== link)}))}>
                                           <h1 className="text-white text-sm font-medium uppercase">{link}</h1>
                                     </li>
                                     ))
