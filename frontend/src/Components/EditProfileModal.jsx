@@ -41,6 +41,12 @@ const EditProfileModal = ({onClose}) =>{
       const handleAddSkills = (e) =>{
             if(!skillInput) return;
             setSkills(prev => [...prev, skillInput]);
+
+            if(userProfile?.skills){
+               setUserProfile(prev => ({...prev, 
+                                     skills: [...(prev.skills), skillInput]
+                                    }))   
+            }
             setSkillInput("");
       }
       // Add profile links
@@ -49,6 +55,12 @@ const EditProfileModal = ({onClose}) =>{
       const handleProfileLink = () => {
             if(!inputLinks) return;
             setLinks(prev => [...prev, inputLinks]);
+
+            if(userProfile?.links){
+                  setUserProfile(prev => ({...prev,
+                                  links: [...(prev.links), inputLinks]            
+                  }))
+            }
             setInputLinks("");
       }
       // Save data function
@@ -132,27 +144,34 @@ const EditProfileModal = ({onClose}) =>{
                         <div className="justify-center items-start w-full overflow-hidden">
                               <ul className="justify-start items-center flex gap-2">
                               {userProfile?.skills ?  
-                              userProfile?.skills.map((skill, index) => (
-                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
-                                        onClick={() => {setUserProfile(prev => (
-                                                                  {...prev, skills: prev.skills.filter(z => z !== skill)}
-                                                                  ))}}>
-                                          <h1 className="text-white text-sm font-medium uppercase">{skill}</h1>
+                                    userProfile?.skills.map((skill, index) => (
+                                    <li 
+                                    key={index} 
+                                    className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                    onClick={() => { 
+                                          setSkills(prev => prev.filter(z => z !== skill)); 
+                                          setUserProfile(prev => ({...prev, skills: prev.skills.filter(z => z !== skill)}));
+                                    }}
+                                    >
+                                    <h1>{skill}</h1>
                                     </li>
-                              ))
-                              : 
-                              skills.map((skill, index) => (
-                                    <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
-                                    onClick={() => {setUserProfile(prev => (
-                                                                  {...prev, skills: prev.skills.filter(z => z !== skill)}
-                                                                  ))}}>
-                                          <h1 className="text-white text-sm font-medium uppercase">{skill}</h1>
-                                    </li>
-                              ))
+                                    ))
+                                    : 
+                                    skills.map((skill, index) => (
+                                          <li 
+                                          key={index} 
+                                          className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                          onClick={() => { 
+                                                setSkills(prev => prev.filter(z => z !== skill)); 
+                                          }}
+                                          >
+                                          <h1>{skill}</h1>
+                                          </li>
+                                    ))
                               }
-                              
                               </ul>
-                        </div>
+                              </div>
+
                         
                   </div>
                   <div className="justify-center items-center flex flex-col gap-2">
@@ -167,18 +186,18 @@ const EditProfileModal = ({onClose}) =>{
                               <ul className="justify-start items-center flex gap-2">
                                     {userProfile?.links ?
                                     userProfile?.links.map((link, index) => (
-                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
-                                     onClick={() => setUserProfile(prev => 
-                                                   ({...prev, links: prev.links.filter(z => z !== link)}))}>
-                                          <h1 className="text-white text-sm font-medium uppercase">{link}</h1>
+                                     <li key={index} className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                     onClick={() => {setLinks(prev => prev.filter(z => z !== link));
+                                                     setUserProfile(prev => ({...prev, links: prev.links.filter(z => z !== link)}))
+                                     }}>
+                                          <h1>{link}</h1>
                                     </li>
                                     ))
                                     :
                                     links.map((link, index) => (
-                                     <li key={index} className="bg-green-500 px-4 border-b-1 border-black rounded-full"
-                                     onClick={() => setUserProfile(prev => 
-                                                   ({...prev, links: prev.links.filter(z => z !== link)}))}>
-                                          <h1 className="text-white text-sm font-medium uppercase">{link}</h1>
+                                     <li key={index} className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                     onClick={() => setLinks(prev => prev.filter(z => z ==! link))}>
+                                          <h1>{link}</h1>
                                     </li>
                                     ))
                                     }

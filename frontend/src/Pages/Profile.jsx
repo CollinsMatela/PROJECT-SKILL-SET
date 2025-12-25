@@ -30,7 +30,7 @@ const Profile = () =>{
                  <div className="h-3/4 flex flex-col gap-2">
 
                  <div className="w-full rounded-2xl flex justify-start items-center">
-                     <img src={userProfile.profile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
+                     <img src={userProfile?.profile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
                      <div className=" h-full w-full p-5">
                         <h1 className="font-bold text-xl text-black">{name} {" "} 
                              <span className={`${availability}`? "text-green-500" : "text-gray-300"}>{availability}</span>
@@ -61,7 +61,7 @@ const Profile = () =>{
 
                    <label htmlFor="Skills" className="mb-2">Social & Links —</label>
                    <div className="w-200 justify-start items-start flex flex-col">
-                        {userProfile.links.map((link, index) => (
+                        {userProfile?.links.map((link, index) => (
                             <a href={`https://${link}`} key={index}><span className="text-sm text-gray-400 hover:text-green-500 hover:underline">{link}</span></a>
                         ))}
                    </div>
