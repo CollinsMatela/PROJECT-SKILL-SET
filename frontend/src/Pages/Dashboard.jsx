@@ -9,7 +9,7 @@ import axios from "axios"
 const Dashboard = () =>{
 
       const [loading, setLoading] = useState(false);
-      const {userAccount, setUserProfile} = useContext(AuthContext);
+      const {userAccount, setUserProfile, userProfile} = useContext(AuthContext);
 
       useEffect(() => {
       if (!userAccount?.accountId) return
@@ -35,11 +35,14 @@ const Dashboard = () =>{
         {loading ? <Loading/> : ""}
         <DashboardNav/>
         <LeftSidebar/>
-        <section className="bg-white h-screen w-full flex flex-col justify-start items-center px-20">
+        <section className="bg-white h-screen w-full flex flex-col justify-start items-center px-20 pt-20">
           
-          <div className="bg-white h-100 w-full justify-center items-center flex flex-col">
-            <h1 className="font-bold text-2xl text-gray-900">Welcome back! 🎉</h1>
-            <h1 className="font-bold text-2xl text-gray-900">Ready to share your skills or find someone awesome today?</h1>
+          <div className="justify-start items-start flex rounded-md p-2 gap-2">
+            <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500" />
+            <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
+                      className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"></textarea>
+            <button className="h-12 w-12 bg-gray-100 rounded-full">B</button>
+            <button className="h-12 w-12 bg-blue-400 rounded-full">B</button>
           </div>
                 
             
