@@ -3,6 +3,7 @@ import DashboardNav from "../Components/DashboardNav"
 import { AuthContext } from "../Context/AuthContext"
 import Loading from "../Components/Loading"
 import Footer from "../Components/Footer"
+import LeftSidebar from "../Components/LeftSidebar"
 import axios from "axios"
 
 const Dashboard = () =>{
@@ -33,6 +34,7 @@ const Dashboard = () =>{
       <main className="relative">
         {loading ? <Loading/> : ""}
         <DashboardNav/>
+        <LeftSidebar/>
         <section className="bg-white h-screen w-full flex flex-col justify-start items-center px-20">
           
           <div className="bg-white h-100 w-full justify-center items-center flex flex-col">
@@ -43,7 +45,7 @@ const Dashboard = () =>{
             
            
         </section>
-        <Footer/>
+
       </main>
       </>
       )

@@ -1,8 +1,11 @@
 import { useState, useRef, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import handleEditProfile from "../Services/handleEditProfile";
+import Loading from "./Loading"
 
 const EditProfileModal = ({onClose}) =>{
+
+      const [loading, setLoading] = useState(false);
 
       const {userAccount, userProfile, setUserProfile} = useContext(AuthContext);
 
@@ -66,6 +69,7 @@ const EditProfileModal = ({onClose}) =>{
       // Save data function
       const SaveProfileData = async () =>{
             try {
+                  setLoading(true);
                  const ProfileInformations = {
                    accountId: userAccount.accountId,
                    profile: profile,
@@ -83,8 +87,11 @@ const EditProfileModal = ({onClose}) =>{
                    province: province
                    }
                   const res = await handleEditProfile(ProfileInformations);
-                  alert(res.data.message);
+                  console.log(res.data.message);
                   console.log(res.data.ProfileInformation.accountId);
+                  setUserProfile(prev => ({...prev, 
+                                           ...res.data.ProfileInformation}))
+                  setLoading(false);
                   onClose();
             } catch (error) {
                   console.log(error)
@@ -93,6 +100,7 @@ const EditProfileModal = ({onClose}) =>{
 
       return(
       <div className="fixed inset-0 z-50  h-screen w-full justify-center items-center flex">
+            {loading && <Loading/>}
            <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div> {/* backdrop */}
             <div className="relative bg-white w-250 p-10 rounded-xl flex flex-col gap-6">
                   <h1 className="text-md">FILL YOUR PROFILE</h1>
@@ -147,7 +155,7 @@ const EditProfileModal = ({onClose}) =>{
                                     userProfile?.skills.map((skill, index) => (
                                     <li 
                                     key={index} 
-                                    className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                    className="bg-blue-100 border-1 border-blue-400 text-blue-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
                                     onClick={() => { 
                                           setSkills(prev => prev.filter(z => z !== skill)); 
                                           setUserProfile(prev => ({...prev, skills: prev.skills.filter(z => z !== skill)}));
@@ -160,7 +168,7 @@ const EditProfileModal = ({onClose}) =>{
                                     skills.map((skill, index) => (
                                           <li 
                                           key={index} 
-                                          className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                          className="bg-blue-100 border-1 border-blue-400 text-blue-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
                                           onClick={() => { 
                                                 setSkills(prev => prev.filter(z => z !== skill)); 
                                           }}
@@ -186,7 +194,7 @@ const EditProfileModal = ({onClose}) =>{
                               <ul className="justify-start items-center flex gap-2">
                                     {userProfile?.links ?
                                     userProfile?.links.map((link, index) => (
-                                     <li key={index} className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                     <li key={index} className="bg-blue-100 border-1 border-blue-400 text-blue-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
                                      onClick={() => {setLinks(prev => prev.filter(z => z !== link));
                                                      setUserProfile(prev => ({...prev, links: prev.links.filter(z => z !== link)}))
                                      }}>
@@ -195,7 +203,7 @@ const EditProfileModal = ({onClose}) =>{
                                     ))
                                     :
                                     links.map((link, index) => (
-                                     <li key={index} className="bg-green-100 border-1 border-green-400 text-green-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
+                                     <li key={index} className="bg-blue-100 border-1 border-blue-400 text-blue-400 px-4 rounded-md hover:bg-red-100 hover:border-red-400 hover:text-red-400 cursor-pointer text-sm font-medium uppercase"
                                      onClick={() => setLinks(prev => prev.filter(z => z ==! link))}>
                                           <h1>{link}</h1>
                                     </li>
