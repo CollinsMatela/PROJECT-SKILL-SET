@@ -15,6 +15,7 @@ import RegistrationRoute from "./routes/registrationRoute.js";
 import LoginRoute from "./routes/loginRoute.js";
 import EditProfileRoute from "./routes/editProfileRoute.js"
 import GetProfileRoute from "./routes/getProfileRoute.js"
+import PostingRoute from "./routes/postingRoute.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,7 @@ app.use("/", RegistrationRoute);
 app.use("/", LoginRoute);
 app.use("/", EditProfileRoute);
 app.use("/", GetProfileRoute);
+app.use("/", PostingRoute);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

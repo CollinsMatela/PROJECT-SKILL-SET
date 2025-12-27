@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import DashboardNav from "../Components/DashboardNav"
 import { AuthContext } from "../Context/AuthContext"
+import handlePosting from "../Services/handlePosting"
 import Loading from "../Components/Loading"
 import Footer from "../Components/Footer"
 import LeftSidebar from "../Components/LeftSidebar"
@@ -12,6 +13,10 @@ const Dashboard = () =>{
 
       const [loading, setLoading] = useState(false);
       const {userAccount, setUserProfile, userProfile} = useContext(AuthContext);
+
+      const [userId, setUserId] = useState(userProfile?.accountId);
+      const [text, setText] = useState("");
+      const [media, setMedia] = useState([]);
 
       useEffect(() => {
       if (!userAccount?.accountId) return
@@ -31,6 +36,21 @@ const Dashboard = () =>{
       fetchProfile();
       },[userAccount])
       
+      const SubmitPosting = async () => {
+         try {
+          const postingDetails = {
+              accountId : userId,
+              text : text,
+              media: media  
+            }
+            const res = await handlePosting(postingDetails);
+            console.log(res.data.message);
+            alert("Post sent");
+        } catch (error) {
+           console.log(error);
+        }
+            
+      }
       return(
       <>
       <main className="relative">
@@ -42,11 +62,16 @@ const Dashboard = () =>{
           <div className="justify-start items-start flex rounded-md p-2 gap-2">
             <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
             <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
-                      className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"></textarea>
+                      className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}>
+                  
+                      </textarea>
             <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer">
               <img src={ImageIcon} alt="image" />
             </button>
-            <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer">
+            <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer"
+                    onClick={SubmitPosting}>
               <img src={SendArrowIcon} alt="arrow" />
             </button>
           </div>
