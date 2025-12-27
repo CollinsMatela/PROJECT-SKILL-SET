@@ -4,6 +4,8 @@ import { AuthContext } from "../Context/AuthContext"
 import Loading from "../Components/Loading"
 import Footer from "../Components/Footer"
 import LeftSidebar from "../Components/LeftSidebar"
+import SendArrowIcon from "../Images/send_arrow.png"
+import ImageIcon from "../Images/image.png"
 import axios from "axios"
 
 const Dashboard = () =>{
@@ -38,11 +40,15 @@ const Dashboard = () =>{
         <section className="bg-white h-screen w-full flex flex-col justify-start items-center px-20 pt-20">
           
           <div className="justify-start items-start flex rounded-md p-2 gap-2">
-            <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500" />
+            <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
             <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
                       className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"></textarea>
-            <button className="h-12 w-12 bg-gray-100 rounded-full">B</button>
-            <button className="h-12 w-12 bg-blue-400 rounded-full">B</button>
+            <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer">
+              <img src={ImageIcon} alt="image" />
+            </button>
+            <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer">
+              <img src={SendArrowIcon} alt="arrow" />
+            </button>
           </div>
                 
             
