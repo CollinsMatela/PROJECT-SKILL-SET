@@ -15,6 +15,7 @@ import RegistrationRoute from "./routes/registrationRoute.js";
 import LoginRoute from "./routes/loginRoute.js";
 import EditProfileRoute from "./routes/editProfileRoute.js"
 import GetProfileRoute from "./routes/getProfileRoute.js"
+import GetPostingRoute from "./routes/getPostingRoute.js"
 import PostingRoute from "./routes/postingRoute.js"
 
 const app = express();
@@ -32,7 +33,8 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use("/", RegistrationRoute);
 app.use("/", LoginRoute);
 app.use("/", EditProfileRoute);
-app.use("/", GetProfileRoute);
+app.use("/get-profile", GetProfileRoute);
+app.use("/get-posting", GetPostingRoute);
 app.use("/", PostingRoute);
 
 app.get("/", (req, res) => {

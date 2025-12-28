@@ -24,7 +24,7 @@ const Dashboard = () =>{
       const fetchProfile = async () => {
             try {
             setLoading(true);
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/${userAccount.accountId}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-profile/${userAccount.accountId}`);
             console.log(res.data.message);
             console.log(res.data.ProfileInformation);
             setUserProfile(res.data.ProfileInformation);
@@ -35,6 +35,21 @@ const Dashboard = () =>{
       }
       fetchProfile();
       },[userAccount])
+
+      useEffect(() => {
+        
+          const fetchAllPosting = async () =>{
+
+           try {
+           const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting`);
+           console.log(res.data.message);
+           console.log(res.data.posting);
+           } catch (error) {
+              console.log(error);
+           }
+           }
+           fetchAllPosting();   
+      },[])
       
       const SubmitPosting = async () => {
          try {

@@ -8,4 +8,4 @@ const handlePosting = async (postingDetails) =>{
         console.log(error);
     }
 }
-export default handlePosting;
+export default handlePosting;   
