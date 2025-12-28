@@ -12,7 +12,7 @@ import axios from "axios"
 const Dashboard = () =>{
 
       const [loading, setLoading] = useState(false);
-      const {userAccount, setUserProfile, userProfile} = useContext(AuthContext);
+      const {userAccount, setUserProfile, userProfile, setPostings, postings} = useContext(AuthContext);
 
       const [userId, setUserId] = useState(userProfile?.accountId);
       const [text, setText] = useState("");
@@ -43,7 +43,8 @@ const Dashboard = () =>{
            try {
            const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting`);
            console.log(res.data.message);
-           console.log(res.data.posting);
+           setPostings(res.data.posting);
+           console.log("fetched: ", postings);
            } catch (error) {
               console.log(error);
            }
@@ -90,7 +91,10 @@ const Dashboard = () =>{
               <img src={SendArrowIcon} alt="arrow" />
             </button>
           </div>
-                
+              {postings?.map((posting, index) => (
+                <div key = {index} className="bg-gray-100 h-100 w-140">{posting?.accountId}</div>
+              ))  
+              }
             
            
         </section>
