@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 
 const UserPostingSchema = new mongoose.Schema({
       accountId: String,
+      profile: String,
+      lastname: String,
+      firstname: String,
+      middlename: String,
+      baranggay: String,
+      city: String,
+      province: String,
       text: String,
       media: [String],
       likes: Number,
@@ -11,5 +18,5 @@ const UserPostingSchema = new mongoose.Schema({
 },
 {timestamps : true}
 )
-const UserPosting = mongoose.model("UserPostingModel",UserPostingSchema);
+const UserPosting = mongoose.model("UserPosting",UserPostingSchema);
 export default UserPosting

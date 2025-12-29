@@ -1,10 +1,21 @@
 import cloudinary from "../config/cloudinary.js";
 import UserPostingModel from "../models/UserPostingModel.js"
+import UserProfileModel from "../models/UserProfileModel.js"
 
 export const postingController = async (req, res) =>{
        try {
         
               const {accountId, text, media} = req.body;
+              
+              const account_details = await UserProfileModel.findOne({accountId});
+
+              const profile = account_details.profile;
+              const lastname = account_details.lastname;
+              const firstname = account_details.firstname;
+              const middlename = account_details.middlename;
+              const baranggay = account_details.baranggay;
+              const city = account_details.city;
+              const province = account_details.province;
               
               let mediaUrls = [];
                      
@@ -28,6 +39,13 @@ export const postingController = async (req, res) =>{
 
               const posting = await UserPostingModel.create({
                      accountId : accountId,
+                     profile: profile,
+                     lastname: lastname,
+                     firstname: firstname,
+                     middlename: middlename,
+                     baranggay: baranggay,
+                     city: city,
+                     province: province,
                      text : text,
                      media : media,
                      likes : 0,

@@ -1,7 +1,7 @@
 import UserPostingModel from "../models/UserPostingModel.js"
 
 export const getPostingController = async (req, res) => {
-       console.log("/GET?POSTING");
+       
        try {
        const allPosting = await UserPostingModel.find();
        res.status(200).json({

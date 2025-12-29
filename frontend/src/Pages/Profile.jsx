@@ -3,6 +3,7 @@ import { AuthContext } from "../Context/AuthContext";
 import DashboardNav from "../Components/DashboardNav";
 import EditProfileModal from "../Components/EditProfileModal";
 import { useNavigate } from "react-router-dom";
+import LeftSidebar from "../Components/LeftSidebar";
 import Footer from "../Components/Footer";
 
 const Profile = () =>{
@@ -26,6 +27,7 @@ const Profile = () =>{
     return(
         <main>
             <DashboardNav/>
+            <LeftSidebar/>
             <section className="bg-white h-screen w-full justify-center items-center flex px-20">
                  <div className="h-3/4 flex flex-col gap-2">
 
