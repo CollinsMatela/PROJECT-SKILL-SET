@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import DashboardNav from "../Components/DashboardNav"
 import { AuthContext } from "../Context/AuthContext"
 import handlePosting from "../Services/handlePosting"
@@ -54,6 +54,28 @@ const Dashboard = () =>{
            }
            fetchAllPosting();   
       },[])
+
+      const [previewMedia, setPreviewMedia] = useState([]);
+      const filePicker = useRef(null);
+      const showExplorer = () =>{
+            filePicker.current.click();
+      }
+      const handleUploadMedia = (e) =>{
+            const files = Array.from(e.target.files);
+            if(!files.length) return;
+
+            const readers = files.map((file) => {
+                           return new Promise((resolve) => {
+                           const reader = new FileReader();
+                           reader.readAsDataURL(file);
+                           reader.onloadend = () => resolve(reader.result);
+                           })
+            })
+                           Promise.all(readers).then((results) => {
+                           setPreviewMedia((prev) => [...prev, ...results]);
+                           setMedia((prev) => [...prev, ...results]);
+                           });
+      }
       
       const SubmitPosting = async () => {
          try {
@@ -96,14 +118,31 @@ const Dashboard = () =>{
                       onChange={(e) => setText(e.target.value)}>
                   
                       </textarea>
-            <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer">
+            <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer"
+                    onClick={showExplorer}>
               <img src={ImageIcon} alt="image" />
             </button>
+            {/* Open file explorer */}
+            <input type="file" ref={filePicker} accept="image/*" onChange={handleUploadMedia} hidden />
             <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer"
                     onClick={SubmitPosting}>
               <img src={SendArrowIcon} alt="arrow" />
             </button>
           </div>
+          
+          {previewMedia.length > 0 && 
+          (<div className="grid grid-cols-4 flex justify-start items-center p-2 mb-4 gap-2 border-b-2 border-gray-100">
+            {previewMedia.map((file, index) => (
+                 <img key={index} src={file} alt={`preview-${index}`} className={"bg-gray-300 h-35 w-35 object-cover rounded-xl border-2 border-gray-300 cursor-pointer hover:border-red-400"}
+                      onClick={() => { setPreviewMedia(prev => prev.filter(z => z !== file));
+                                       setMedia(prev => prev.filter(z => z !== file));
+                      }} />
+            ))}
+          </div>)
+          }
+          
+
+          {/* New-Feed Card */}
               {postings?.map((posting, index) => (
                 <div key = {index} className="bg-gray-100 w-140 mb-4 shadow-md rounded-xl">
                   <div className="bg-white h-15 w-full justify-start items-center flex p-2 gap-2">
