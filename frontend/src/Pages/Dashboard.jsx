@@ -9,6 +9,8 @@ import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
 import HeartInactive from "../Images/heart.png"
 import HeartActive from "../Images/heart_active.png"
+import BackArrow from "../Images/back_arrow.png"
+import NextArrow from "../Images/next_arrow.png"
 import Comments from "../Images/comments.png"
 import axios from "axios"
 
@@ -20,6 +22,14 @@ const Dashboard = () =>{
       const userId = userProfile?.accountId;
       const [text, setText] = useState("");
       const [media, setMedia] = useState([]);
+
+      const [currentCount, setCount] = useState(0);
+      const nextSlide = () => {
+            setCount((prev) => prev < postings?.media.length - 1 ? prev + 1 : prev)
+      }
+      const prevSlide = () => {
+            setCount((prev) => (prev > 0 ? prev - 1 : prev))
+      }
 
       useEffect(() => {
       if (!userAccount?.accountId) return
@@ -86,6 +96,10 @@ const Dashboard = () =>{
             }
             const res = await handlePosting(postingDetails);
             console.log(res.data.message);
+
+            setText("");
+            setMedia([]);
+            setPreviewMedia([]);
             alert("Posting: sent request");
         } catch (error) {
            console.log(error);
@@ -156,7 +170,17 @@ const Dashboard = () =>{
                     </div>
                   </div>
 
-                  {posting?.media ? <img src={posting?.media} alt="picture" className="bg-gray-100 h-100 w-full object-cover"/> : ""}
+                  {posting?.media.length > 0 && (
+                  <div className="relative bg-black aspect-square w-full justify-center items-center flex">
+                    <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={() => setCount(prev => (prev > 0 ? prev - 1 : prev))}>
+                      <img src={BackArrow} alt="backarrow" />
+                    </button>
+                    <img src={posting?.media[currentCount]} alt="media" className="w-full object-cover"/>
+                    <button className="z-1 absolute right-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={()=>setCount(prev => prev < posting?.media.length - 1 ? prev + 1 : prev)}>
+                    <img src={NextArrow} alt="nextarrow" />
+                    </button>
+                  </div>
+                  )}
                   
                   <div className="bg-white w-full p-2 text-xs">
                     <p className="mb-2">{posting?.text}</p>

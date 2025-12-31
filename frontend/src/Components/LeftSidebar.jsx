@@ -5,7 +5,7 @@ import HomeIcon from "../Images/home.png"
 
 const LeftSidebar = () =>{
     return(
-        <aside className="abosolute fixed z-50 bg-white justify-start items-center flex flex-col h-220 w-100 left-0 top-15 border-r-2 border-gray-100 pl-20 pr-2 pt-10">
+        <aside className="abosolute fixed z-50 bg-white justify-start items-center flex flex-col h-220 w-90 left-0 top-15 border-r-2 border-gray-100 pl-20 pr-2 pt-10">
             <h1 className="font-nanum justify-items-start w-full font-bold text-4xl text-green-500 mb-4">SKILL SET+</h1>
             <button className="h-12 w-full justify-items-start flex bg-white rounded-md hover:bg-gray-100 cursor-pointer mb-2 p-2 gap-2">
                 <img src={HomeIcon} alt="home" className="h-7 w-7" />

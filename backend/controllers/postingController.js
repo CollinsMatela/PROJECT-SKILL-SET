@@ -20,16 +20,16 @@ export const postingController = async (req, res) =>{
               let mediaUrls = [];
                      
               if(Array.isArray(media)){
-                     for (item in media){
+                     for (const item of media){
                             if (item.startsWith("http")) {
-                                   mediaUrls.push(media);
+                                   mediaUrls.push(item);
                             } else {
-                            const uploadedResponse = await cloudinary.v2.uploader.upload(media, {folder: "media",});
+                            const uploadedResponse = await cloudinary.v2.uploader.upload(item, {folder: "media",});
                             mediaUrls.push(uploadedResponse.secure_url);    
                             }
                      }
               } else if (typeof media === "string"){
-                            if (item.startsWith("http")) {
+                            if (media.startsWith("http")) {
                                    mediaUrls.push(media);
                             } else {
                             const uploadedResponse = await cloudinary.v2.uploader.upload(media, {folder: "media",});
@@ -47,7 +47,7 @@ export const postingController = async (req, res) =>{
                      city: city,
                      province: province,
                      text : text,
-                     media : media,
+                     media : mediaUrls,
                      likes : 0,
                      comments : 0,
                      isEdited : false,
