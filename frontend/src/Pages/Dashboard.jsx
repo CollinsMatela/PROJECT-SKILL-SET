@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState, useRef } from "react"
 import DashboardNav from "../Components/DashboardNav"
+import handleLike from "../Services/handleLike"
 import { AuthContext } from "../Context/AuthContext"
 import handlePosting from "../Services/handlePosting"
 import Loading from "../Components/Loading"
@@ -24,12 +25,6 @@ const Dashboard = () =>{
       const [media, setMedia] = useState([]);
 
       const [currentCount, setCount] = useState(0);
-      const nextSlide = () => {
-            setCount((prev) => prev < postings?.media.length - 1 ? prev + 1 : prev)
-      }
-      const prevSlide = () => {
-            setCount((prev) => (prev > 0 ? prev - 1 : prev))
-      }
 
       useEffect(() => {
       if (!userAccount?.accountId) return
@@ -56,8 +51,8 @@ const Dashboard = () =>{
            try {
            const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting`);
            console.log(res.data.message);
-           setPostings(res.data.posting);
            console.log("fetched: ", postings);
+           setPostings(res.data.posting);
            } catch (error) {
               console.log(error);
            }
@@ -85,6 +80,16 @@ const Dashboard = () =>{
                            setPreviewMedia((prev) => [...prev, ...results]);
                            setMedia((prev) => [...prev, ...results]);
                            });
+      }
+      // Handle Liking
+      const PressLike = async (posting) => {
+            const details = {
+              postingId : posting?.postingId,
+              accountId : posting?.accountId
+            }
+            const res = await handleLike(details);
+            console.log(res.data.message);
+            console.log(res.data.liked);
       }
       
       const SubmitPosting = async () => {
@@ -172,13 +177,19 @@ const Dashboard = () =>{
 
                   {posting?.media.length > 0 && (
                   <div className="relative bg-black aspect-square w-full justify-center items-center flex">
-                    <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={() => setCount(prev => (prev > 0 ? prev - 1 : prev))}>
-                      <img src={BackArrow} alt="backarrow" />
-                    </button>
+                      {currentCount > 0 && ( 
+                        <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={() => setCount(prev => (prev > 0 ? prev - 1 : prev))}>
+                          <img src={BackArrow} alt="backarrow" />
+                        </button>
+                      )}
+                   
+
                     <img src={posting?.media[currentCount]} alt="media" className="w-full object-cover"/>
+                    {currentCount < posting?.media.length - 1 && ( 
                     <button className="z-1 absolute right-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={()=>setCount(prev => prev < posting?.media.length - 1 ? prev + 1 : prev)}>
                     <img src={NextArrow} alt="nextarrow" />
                     </button>
+                    )}
                   </div>
                   )}
                   
@@ -186,7 +197,7 @@ const Dashboard = () =>{
                     <p className="mb-2">{posting?.text}</p>
                     <div className="h-10 w-full flex gap-2">
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
-                        <img src={HeartInactive} alt="heart" />
+                        <img src={HeartInactive} alt="heart" onClick={() => PressLike(posting)}/>
                         <h1>0</h1>
                        </div>
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">

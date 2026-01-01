@@ -1,4 +1,5 @@
 import cloudinary from "../config/cloudinary.js";
+import { nanoid } from "nanoid";
 import UserPostingModel from "../models/UserPostingModel.js"
 import UserProfileModel from "../models/UserProfileModel.js"
 
@@ -38,6 +39,7 @@ export const postingController = async (req, res) =>{
               }
 
               const posting = await UserPostingModel.create({
+                     postingId : `POST-${nanoid()}`,
                      accountId : accountId,
                      profile: profile,
                      lastname: lastname,

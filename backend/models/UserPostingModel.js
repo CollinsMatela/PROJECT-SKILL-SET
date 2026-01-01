@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const UserPostingSchema = new mongoose.Schema({
+      postingId: String,
       accountId: String,
       profile: String,
       lastname: String,
