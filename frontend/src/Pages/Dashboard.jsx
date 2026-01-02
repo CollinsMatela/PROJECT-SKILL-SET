@@ -26,6 +26,9 @@ const Dashboard = () =>{
 
       const [currentCount, setCount] = useState(0);
 
+      const [likesCount, setLikesCount] = useState(0);
+      const [like, setLike] = useState(false);
+
       useEffect(() => {
       if (!userAccount?.accountId) return
 
@@ -82,14 +85,25 @@ const Dashboard = () =>{
                            });
       }
       // Handle Liking
-      const PressLike = async (posting) => {
-            const details = {
-              postingId : posting?.postingId,
-              accountId : posting?.accountId
-            }
+      const PressLike = async (details) => {
+
+            // console.log(details?.postingId)
+            // console.log(details?.accountId)
             const res = await handleLike(details);
             console.log(res.data.message);
             console.log(res.data.liked);
+            console.log(res.data.countsOfLike);
+            setLikesCount(res.data.countsOfLike);
+            setLike(res.data.liked);
+
+            setPostings(prev =>  
+              prev.map(
+                post => post?.postingId === postings?.postingId
+                ? 
+                { ...post, liked: res.data.liked, likesCount: res.data.likesCount }
+                : 
+                post
+              ));
       }
       
       const SubmitPosting = async () => {
@@ -162,8 +176,8 @@ const Dashboard = () =>{
           
 
           {/* New-Feed Card */}
-              {postings?.map((posting, index) => (
-                <div key = {index} className="bg-gray-100 w-140 mb-4 shadow-md rounded-xl">
+              {postings?.map((posting) => (
+                <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 shadow-md rounded-xl">
                   <div className="bg-white h-15 w-full justify-start items-center flex p-2 gap-2">
                     <img src={posting?.profile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
                     <div className="bg-white h-10 w-full">
@@ -197,8 +211,8 @@ const Dashboard = () =>{
                     <p className="mb-2">{posting?.text}</p>
                     <div className="h-10 w-full flex gap-2">
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
-                        <img src={HeartInactive} alt="heart" onClick={() => PressLike(posting)}/>
-                        <h1>0</h1>
+                        <img src={HeartInactive} alt="heart" onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}/>
+                        <h1>{likesCount}</h1>
                        </div>
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
                         <img src={Comments} alt="comments" />

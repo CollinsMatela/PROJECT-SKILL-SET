@@ -8,15 +8,17 @@ export const LikeController = async (req, res) => {
 
          if(!accountId){ return res.json({message: "It requires account Id"})}
 
-          const existingLike = await LikeModel.findOne({ postingId, userId });
+          const existingLike = await LikeModel.findOne({ postingId, accountId });
 
           if(existingLike){
             await LikeModel.deleteOne({_id: existingLike._id})
-            return res.status(200).json({liked: false, message: "Post unliked"})
+            const likeCounts = await LikeModel.countDocuments({ postingId });
+            return res.status(200).json({liked: false, message: "Post unliked", countsOfLike: likeCounts - 1})
           }
 
-          await LikeModel.create({postingId, accountId});
-          res.status(200).json({liked: false, message: "Post liked"})
+          const likeCounts = await LikeModel.countDocuments({ postingId });
+          await LikeModel.create({postingId, accountId, likeCounts });
+          res.status(200).json({liked: true, message: "Post liked", countsOfLike: likeCounts + 1})
 
     } catch (error) {
           console.error(error);
