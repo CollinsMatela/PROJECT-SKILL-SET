@@ -50,10 +50,11 @@ const Dashboard = () =>{
           const fetchAllPosting = async () =>{
 
            try {
-           const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting`);
+            // alert(userProfile?.accountId)
+           const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting?userId=${userProfile?.accountId}`);
            console.log(res.data.message);
-           console.log("fetched: ", postings);
-           setPostings(res.data.posting);
+           console.log("fetched: ", res.data.postings);
+           setPostings(res.data.postings);
            } catch (error) {
               console.log(error);
            }
@@ -90,10 +91,23 @@ const Dashboard = () =>{
             const res = await handleLike(details);
             console.log(res.data.message);
             console.log(res.data.countsOfLike);
+
+            setPostings(prev =>
+        prev.map(post =>
+          post.postingId === details.postingId
+            ? {
+                ...post,
+                liked: res.data.liked,
+                likesCount: res.data.likesCount
+              }
+            : post
+        )
+  );
       }
       const CountOfLikes = async (postingId) => {
             
             const res = await handleLikesCount(postingId);
+            
       }
       
       const SubmitPosting = async () => {
@@ -201,10 +215,7 @@ const Dashboard = () =>{
                     <p className="mb-2">{posting?.text}</p>
                     <div className="h-10 w-full flex gap-2">
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
-                        <img src={HeartInactive} alt="heart" onClick={() => {
-                                                                            PressLike({postingId: posting.postingId, accountId: userProfile.accountId}),
-                                                                            CountOfLikes(posting.postingId);
-                        }}/>
+                        <img src={HeartInactive} alt="heart" onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}/>
                         <h1>{postings?.likesCount}</h1>
                        </div>
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
