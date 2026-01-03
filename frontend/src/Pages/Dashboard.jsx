@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react"
 import DashboardNav from "../Components/DashboardNav"
 import handleLike from "../Services/handleLike"
+import handleLikesCount from "../Services/handleLikesCount"
 import { AuthContext } from "../Context/AuthContext"
 import handlePosting from "../Services/handlePosting"
 import Loading from "../Components/Loading"
@@ -25,9 +26,6 @@ const Dashboard = () =>{
       const [media, setMedia] = useState([]);
 
       const [currentCount, setCount] = useState(0);
-
-      const [likesCount, setLikesCount] = useState(0);
-      const [like, setLike] = useState(false);
 
       useEffect(() => {
       if (!userAccount?.accountId) return
@@ -91,19 +89,11 @@ const Dashboard = () =>{
             // console.log(details?.accountId)
             const res = await handleLike(details);
             console.log(res.data.message);
-            console.log(res.data.liked);
             console.log(res.data.countsOfLike);
-            setLikesCount(res.data.countsOfLike);
-            setLike(res.data.liked);
-
-            setPostings(prev =>  
-              prev.map(
-                post => post?.postingId === postings?.postingId
-                ? 
-                { ...post, liked: res.data.liked, likesCount: res.data.likesCount }
-                : 
-                post
-              ));
+      }
+      const CountOfLikes = async (postingId) => {
+            
+            const res = await handleLikesCount(postingId);
       }
       
       const SubmitPosting = async () => {
@@ -211,8 +201,11 @@ const Dashboard = () =>{
                     <p className="mb-2">{posting?.text}</p>
                     <div className="h-10 w-full flex gap-2">
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
-                        <img src={HeartInactive} alt="heart" onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}/>
-                        <h1>{likesCount}</h1>
+                        <img src={HeartInactive} alt="heart" onClick={() => {
+                                                                            PressLike({postingId: posting.postingId, accountId: userProfile.accountId}),
+                                                                            CountOfLikes(posting.postingId);
+                        }}/>
+                        <h1>{postings?.likesCount}</h1>
                        </div>
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
                         <img src={Comments} alt="comments" />

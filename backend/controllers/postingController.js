@@ -50,7 +50,7 @@ export const postingController = async (req, res) =>{
                      province: province,
                      text : text,
                      media : mediaUrls,
-                     likes : 0,
+                     likesCount : 0,
                      comments : 0,
                      isEdited : false,
                      isDeleted : false,

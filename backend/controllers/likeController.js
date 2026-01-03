@@ -1,29 +1,35 @@
-import LikeModel from "../models/UserLikeModel.js"
+import UserPostingModel from "../models/UserPostingModel.js"
+import UserLikeModel from "../models/UserLikeModel.js"
 
 export const LikeController = async (req, res) => {
 
-    try {
-         const {postingId} = req.params;
-         const {accountId} = req.body;
+     const { postingId } = req.body;
+  const accountId = req.user.accountId; // or req.body.accountId
 
-         if(!accountId){ return res.json({message: "It requires account Id"})}
+  const existingLike = await UserLikeModel.findOne({ postingId, accountId });
 
-          const existingLike = await LikeModel.findOne({ postingId, accountId });
+  if (existingLike) {
+    // UNLIKE
+    await UserLikeModel.deleteOne({ postingId, accountId });
 
-          if(existingLike){
-            await LikeModel.deleteOne({_id: existingLike._id})
-            const likeCounts = await LikeModel.countDocuments({ postingId });
-            return res.status(200).json({liked: false, message: "Post unliked", countsOfLike: likeCounts - 1})
-          }
+    await UserPostingModel.updateOne(
+      { postingId },
+      { $inc: { likesCount: -1 } }
+    );
+  } else {
+    // LIKE
+    await UserLikeModel.create({ postingId, accountId });
 
-          const likeCounts = await LikeModel.countDocuments({ postingId });
-          await LikeModel.create({postingId, accountId, likeCounts });
-          res.status(200).json({liked: true, message: "Post liked", countsOfLike: likeCounts + 1})
+    await UserPostingModel.updateOne(
+      { postingId },
+      { $inc: { likesCount: 1 } }
+    );
+  }
 
-    } catch (error) {
-          console.error(error);
-          res.status(500).json({ message: "Server error" });
-    }
-   
+  const post = await UserPostingModel.findOne({ postingId });
 
+  res.json({
+    liked: !existingLike,
+    likesCount: post.likesCount,
+  });
 }

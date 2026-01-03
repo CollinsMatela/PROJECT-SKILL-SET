@@ -12,7 +12,7 @@ const UserPostingSchema = new mongoose.Schema({
       province: String,
       text: String,
       media: [String],
-      likes: Number,
+      likesCount : { type: Number, default: 0 },
       comments: Number,
       isEdited: Boolean,
       isDeleted: Boolean,
