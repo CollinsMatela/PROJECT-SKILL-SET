@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 const DashboardNav = () =>{
     const [selectionMenu, setSelectionMenu] = useState(false);
     const navigate = useNavigate();
-    const {userProfile} = useContext(AuthContext);
+    const {userProfile, setUserProfile, setPostings} = useContext(AuthContext);
 
     const handleSelectionMenu = () =>{
           setSelectionMenu(prev => !prev);
@@ -16,8 +16,10 @@ const DashboardNav = () =>{
     const goToDashboard = () =>{
           navigate("/Dashboard");
     }
-    const goToWebsite = () =>{
+    const handleLogout = () =>{
           navigate("/");
+          setPostings([]);
+          setUserProfile(null);
     }
      return(
       <>
@@ -31,7 +33,7 @@ const DashboardNav = () =>{
         <div className="w-full justify-end items-end flex px-20">
             <div className={`${selectionMenu ? "" : "hidden"} bg-white border-2 border-gray-100 rounded-md justify-center items-center flex flex-col p-1 gap-1`}>
                   <button className="bg-white h-6 w-40 hover:bg-gray-100 cursor-pointer text-gray-500 text-xs rounded-md" onClick={goToProfile}>Profile</button>
-                  <button className="bg-white h-6 w-40 hover:bg-gray-100 cursor-pointer text-gray-500 text-xs rounded-md" onClick={goToWebsite}>Logout</button>
+                  <button className="bg-white h-6 w-40 hover:bg-gray-100 cursor-pointer text-gray-500 text-xs rounded-md" onClick={handleLogout}>Logout</button>
             </div>
             
         </div>

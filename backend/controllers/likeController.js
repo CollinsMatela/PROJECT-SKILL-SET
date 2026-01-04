@@ -6,6 +6,10 @@ export const LikeController = async (req, res) => {
      const { postingId } = req.params;
      const {accountId} = req.body; // or req.body.accountId
 
+     if (!postingId || !accountId) {
+    return res.status(400).json({ message: "Missing data" });
+  }
+
   const existingLike = await UserLikeModel.findOne({ postingId, accountId });
 
   if (existingLike) {

@@ -28,39 +28,72 @@ const Dashboard = () =>{
       const [currentCount, setCount] = useState(0);
 
       useEffect(() => {
-      if (!userAccount?.accountId) return
+      if (!userAccount?.accountId) return;
 
-      const fetchProfile = async () => {
-            try {
-            setLoading(true);
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-profile/${userAccount.accountId}`);
-            console.log(res.data.message);
-            console.log(res.data.ProfileInformation);
-            setUserProfile(res.data.ProfileInformation);
-            setLoading(false);
-            } catch (error) {
-             console.error(error.response?.data?.message || error.message);
-            }
-      }
-      fetchProfile();
-      },[userAccount])
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          // 1️⃣ Fetch profile
+          const profileRes = await axios.get(
+            `${import.meta.env.VITE_API_URL}/get-profile/${userAccount.accountId}`
+          );
+          setUserProfile(profileRes.data.ProfileInformation);
 
-      useEffect(() => {
+          // 2️⃣ Fetch posts using the profile's accountId
+          const postsRes = await axios.get(
+            `${import.meta.env.VITE_API_URL}/get-posting/all-posting?accountId=${profileRes.data.ProfileInformation.accountId}`
+          );
+          setPostings(postsRes.data.postings);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, [userAccount?.accountId]);
+
+
+      // useEffect(() => {
+      // if (!userAccount?.accountId) return
+
+      // const fetchProfile = async () => {
+      //       try {
+      //       setLoading(true);
+
+      //       const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-profile/${userAccount.accountId}`);
+      //       console.log(res.data.message);
+      //       console.log(res.data.ProfileInformation);
+      //       setUserProfile(res.data.ProfileInformation);
+
+      //       } catch (error) {
+      //        console.error(error.response?.data?.message || error.message);
+      //       } finally {
+      //         setLoading(false);
+      //       }
+      // }
+      // fetchProfile();
+      // },[userAccount?.accountId])
+
+      // useEffect(() => {
         
-          const fetchAllPosting = async () =>{
-          if(!userProfile?.accountId) return;
-           try {
-            // alert(userProfile?.accountId)
-           const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting?userId=${userProfile?.accountId}`);
-           console.log(res.data.message);
-           console.log("fetched: ", res.data.postings);
-           setPostings(res.data.postings);
-           } catch (error) {
-              console.log(error);
-           }
-           }
-           fetchAllPosting();   
-      },[userProfile])
+      //     const fetchAllPosting = async () =>{
+      //     if(!userProfile?.accountId) {
+      //       setPostings([]);
+      //       return;
+      //     }
+      //      try {
+      //      const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting?userId=${userProfile?.accountId}`);
+      //      console.log(res.data.message);
+      //      console.log("fetched: ", res.data.postings);
+      //      setPostings(res.data.postings);
+      //      } catch (error) {
+      //         console.log(error);
+      //      }
+      //      }
+      //      fetchAllPosting();   
+      // },[userProfile?.accountId])
 
       const [previewMedia, setPreviewMedia] = useState([]);
       const filePicker = useRef(null);
@@ -89,6 +122,7 @@ const Dashboard = () =>{
             // console.log(details?.postingId)
             // console.log(details?.accountId)
             const res = await handleLike({ postingId, accountId });
+            console.log(res.data.message);
             console.log(res.data.liked);
             console.log(res.data.likesCount);
 
@@ -149,7 +183,7 @@ const Dashboard = () =>{
           
           <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
             <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
-            <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
+            <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.accountId}, share your thoughts!`}
                       className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
                       value={text}
                       onChange={(e) => setText(e.target.value)}>

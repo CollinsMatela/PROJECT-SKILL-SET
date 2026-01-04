@@ -5,6 +5,13 @@ export const getPostingController = async (req, res) => {
   try {
     const accountId = req.query.accountId;
 
+    if (!accountId) {
+      return res.json({
+        postings: [],
+        message: "No user logged in"
+      });
+    }
+
     // Fetch posts
     const posts = await UserPostingModel.find({ isDeleted: false }).sort({ createdAt: -1 }).lean();
 
