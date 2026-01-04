@@ -48,7 +48,7 @@ const Dashboard = () =>{
       useEffect(() => {
         
           const fetchAllPosting = async () =>{
-
+          if(!userProfile?.accountId) return;
            try {
             // alert(userProfile?.accountId)
            const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting?userId=${userProfile?.accountId}`);
@@ -60,7 +60,7 @@ const Dashboard = () =>{
            }
            }
            fetchAllPosting();   
-      },[])
+      },[userProfile])
 
       const [previewMedia, setPreviewMedia] = useState([]);
       const filePicker = useRef(null);
@@ -84,17 +84,17 @@ const Dashboard = () =>{
                            });
       }
       // Handle Liking
-      const PressLike = async (details) => {
+      const PressLike = async ({ postingId, accountId }) => {
 
             // console.log(details?.postingId)
             // console.log(details?.accountId)
-            const res = await handleLike(details);
-            console.log(res.data.message);
-            console.log(res.data.countsOfLike);
+            const res = await handleLike({ postingId, accountId });
+            console.log(res.data.liked);
+            console.log(res.data.likesCount);
 
             setPostings(prev =>
         prev.map(post =>
-          post.postingId === details.postingId
+          post.postingId === postingId
             ? {
                 ...post,
                 liked: res.data.liked,
@@ -214,9 +214,10 @@ const Dashboard = () =>{
                   <div className="bg-white w-full p-2 text-xs">
                     <p className="mb-2">{posting?.text}</p>
                     <div className="h-10 w-full flex gap-2">
-                       <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
-                        <img src={HeartInactive} alt="heart" onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}/>
-                        <h1>{postings?.likesCount}</h1>
+                       <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1"
+                            onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}>
+                        
+                        <h1>{posting?.liked ? "❤️" : "🤍"} {posting?.likesCount}</h1>
                        </div>
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
                         <img src={Comments} alt="comments" />

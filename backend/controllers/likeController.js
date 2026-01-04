@@ -3,8 +3,8 @@ import UserLikeModel from "../models/UserLikeModel.js"
 
 export const LikeController = async (req, res) => {
 
-     const { postingId } = req.body;
-  const accountId = req.user.accountId; // or req.body.accountId
+     const { postingId } = req.params;
+     const {accountId} = req.body; // or req.body.accountId
 
   const existingLike = await UserLikeModel.findOne({ postingId, accountId });
 
