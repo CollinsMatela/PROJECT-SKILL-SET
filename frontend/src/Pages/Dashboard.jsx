@@ -7,6 +7,7 @@ import handlePosting from "../Services/handlePosting"
 import Loading from "../Components/Loading"
 import Footer from "../Components/Footer"
 import LeftSidebar from "../Components/LeftSidebar"
+import RightSideBar from "../Components/rightSideBar"
 import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
 import HeartInactive from "../Images/heart.png"
@@ -53,47 +54,6 @@ const Dashboard = () =>{
 
       fetchData();
     }, [userAccount?.accountId]);
-
-
-      // useEffect(() => {
-      // if (!userAccount?.accountId) return
-
-      // const fetchProfile = async () => {
-      //       try {
-      //       setLoading(true);
-
-      //       const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-profile/${userAccount.accountId}`);
-      //       console.log(res.data.message);
-      //       console.log(res.data.ProfileInformation);
-      //       setUserProfile(res.data.ProfileInformation);
-
-      //       } catch (error) {
-      //        console.error(error.response?.data?.message || error.message);
-      //       } finally {
-      //         setLoading(false);
-      //       }
-      // }
-      // fetchProfile();
-      // },[userAccount?.accountId])
-
-      // useEffect(() => {
-        
-      //     const fetchAllPosting = async () =>{
-      //     if(!userProfile?.accountId) {
-      //       setPostings([]);
-      //       return;
-      //     }
-      //      try {
-      //      const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting?userId=${userProfile?.accountId}`);
-      //      console.log(res.data.message);
-      //      console.log("fetched: ", res.data.postings);
-      //      setPostings(res.data.postings);
-      //      } catch (error) {
-      //         console.log(error);
-      //      }
-      //      }
-      //      fetchAllPosting();   
-      // },[userProfile?.accountId])
 
       const [previewMedia, setPreviewMedia] = useState([]);
       const filePicker = useRef(null);
@@ -177,8 +137,9 @@ const Dashboard = () =>{
       <>
       <main className="relative">
         {loading ? <Loading/> : ""}
-        <DashboardNav/>
+        {/* <DashboardNav/> */}
         <LeftSidebar/>
+        <RightSideBar/>
         <section className="bg-white w-full flex flex-col justify-start items-center px-20 pt-20">
           
           <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
