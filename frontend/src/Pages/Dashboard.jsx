@@ -140,11 +140,11 @@ const Dashboard = () =>{
         {/* <DashboardNav/> */}
         <LeftSidebar/>
         <RightSideBar/>
-        <section className="bg-white w-full flex flex-col justify-start items-center px-20 pt-20">
+        <section className="bg-white w-full flex flex-col justify-start items-center px-20 pt-10">
           
           <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
             <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
-            <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.accountId}, share your thoughts!`}
+            <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
                       className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
                       value={text}
                       onChange={(e) => setText(e.target.value)}>

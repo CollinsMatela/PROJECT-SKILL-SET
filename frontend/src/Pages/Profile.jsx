@@ -26,7 +26,6 @@ const Profile = () =>{
 
     return(
         <main>
-            <DashboardNav/>
             <LeftSidebar/>
             <section className="bg-white h-screen w-full justify-center items-center flex px-20">
                  <div className="h-3/4 flex flex-col gap-2">
