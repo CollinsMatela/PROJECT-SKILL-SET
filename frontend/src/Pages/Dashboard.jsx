@@ -138,31 +138,34 @@ const Dashboard = () =>{
       <main className="relative">
         {loading ? <Loading/> : ""}
         {/* <DashboardNav/> */}
-        <LeftSidebar/>
-        <RightSideBar/>
-        <section className="bg-white w-full flex flex-col justify-start items-center px-20 pt-10">
-          
-          <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
-            <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
-            <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
-                      className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
-                      value={text}
-                      onChange={(e) => setText(e.target.value)}>
-                  
-                      </textarea>
-            <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer"
-                    onClick={showExplorer}>
-              <img src={ImageIcon} alt="image" />
-            </button>
-            {/* Open file explorer */}
-            <input type="file" ref={filePicker} accept="image/*" onChange={handleUploadMedia} hidden />
-            <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer"
-                    onClick={SubmitPosting}>
-              <img src={SendArrowIcon} alt="arrow" />
-            </button>
+        <section className="bg-white w-full flex justify-center items-start px-20">
+
+          {/* Left Sidebar */}
+          <div className="sticky flex-1 bg-white h-screen w-100">
+            <LeftSidebar/>
           </div>
-          
-          {previewMedia.length > 0 && 
+          <div className="bg-white flex-1 justify-center items-center flex flex-col pt-10">
+                  <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
+                  <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
+                  <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
+                            className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}>
+                        
+                            </textarea>
+                  <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer"
+                          onClick={showExplorer}>
+                    <img src={ImageIcon} alt="image" />
+                  </button>
+                  {/* Open file explorer */}
+                  <input type="file" ref={filePicker} accept="image/*" onChange={handleUploadMedia} hidden />
+                  <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer"
+                          onClick={SubmitPosting}>
+                    <img src={SendArrowIcon} alt="arrow" />
+                  </button>
+                </div>
+
+                {previewMedia.length > 0 && 
           (<div className="grid grid-cols-4 flex justify-start items-center p-2 mb-4 gap-2 border-b-2 border-gray-100">
             {previewMedia.map((file, index) => (
                  <img key={index} src={file} alt={`preview-${index}`} className={"bg-gray-300 h-35 w-35 object-cover rounded-xl border-2 border-gray-300 cursor-pointer hover:border-red-400"}
@@ -224,6 +227,12 @@ const Dashboard = () =>{
                 </div>
               ))  
               }
+          </div>
+          {/* Right Sidebar */}
+            <RightSideBar/> 
+          
+          
+          
             
            
         </section>
