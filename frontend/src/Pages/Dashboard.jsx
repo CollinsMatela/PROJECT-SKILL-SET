@@ -10,8 +10,8 @@ import LeftSidebar from "../Components/LeftSidebar"
 import RightSideBar from "../Components/rightSideBar"
 import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
-import HeartInactive from "../Images/heart.png"
-import HeartActive from "../Images/heart_active.png"
+import BlackHeartIcon from "../Images/blackheart25.png"
+import RedHeartIcon from "../Images/redheart25.png"
 import BackArrow from "../Images/back_arrow.png"
 import NextArrow from "../Images/next_arrow.png"
 import Comments from "../Images/comments.png"
@@ -214,8 +214,8 @@ const Dashboard = () =>{
                     <div className="h-10 w-full flex gap-2">
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1"
                             onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}>
-                        
-                        <h1>{posting?.liked ? "❤️" : "🤍"} {posting?.likesCount}</h1>
+                        <img src={posting?.liked ? RedHeartIcon : BlackHeartIcon} alt="heart" />
+                        <h1>{posting?.likesCount}</h1>
                        </div>
                        <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
                         <img src={Comments} alt="comments" />
