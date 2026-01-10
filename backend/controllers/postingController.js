@@ -18,25 +18,25 @@ export const postingController = async (req, res) =>{
               const city = account_details.city;
               const province = account_details.province;
               
-              let mediaUrls = [];
+              // let mediaUrls = [];
                      
-              if(Array.isArray(media)){
-                     for (const item of media){
-                            if (item.startsWith("http")) {
-                                   mediaUrls.push(item);
-                            } else {
-                            const uploadedResponse = await cloudinary.v2.uploader.upload(item, {folder: "media",});
-                            mediaUrls.push(uploadedResponse.secure_url);    
-                            }
-                     }
-              } else if (typeof media === "string"){
-                            if (media.startsWith("http")) {
-                                   mediaUrls.push(media);
-                            } else {
-                            const uploadedResponse = await cloudinary.v2.uploader.upload(media, {folder: "media",});
-                            mediaUrls.push(uploadedResponse.secure_url);    
-                            }
-              }
+              // if(Array.isArray(media)){
+              //        for (const item of media){
+              //               if (item.startsWith("http")) {
+              //                      mediaUrls.push(item);
+              //               } else {
+              //               const uploadedResponse = await cloudinary.v2.uploader.upload(item, {folder: "media",});
+              //               mediaUrls.push(uploadedResponse.secure_url);    
+              //               }
+              //        }
+              // } else if (typeof media === "string"){
+              //               if (media.startsWith("http")) {
+              //                      mediaUrls.push(media);
+              //               } else {
+              //               const uploadedResponse = await cloudinary.v2.uploader.upload(media, {folder: "media",});
+              //               mediaUrls.push(uploadedResponse.secure_url);    
+              //               }
+              // }
 
               const posting = await UserPostingModel.create({
                      postingId : `POST-${nanoid()}`,
@@ -49,7 +49,7 @@ export const postingController = async (req, res) =>{
                      city: city,
                      province: province,
                      text : text,
-                     media : mediaUrls,
+                     media : media,
                      likesCount : 0,
                      comments : 0,
                      isEdited : false,

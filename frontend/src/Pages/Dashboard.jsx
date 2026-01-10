@@ -60,21 +60,27 @@ const Dashboard = () =>{
       const showExplorer = () =>{
             filePicker.current.click();
       }
-      const handleUploadMedia = (e) =>{
+      const handleUploadMedia = async (e) =>{
             const files = Array.from(e.target.files);
             if(!files.length) return;
 
-            const readers = files.map((file) => {
-                           return new Promise((resolve) => {
-                           const reader = new FileReader();
-                           reader.readAsDataURL(file);
-                           reader.onloadend = () => resolve(reader.result);
-                           })
-            })
-                           Promise.all(readers).then((results) => {
-                           setPreviewMedia((prev) => [...prev, ...results]);
-                           setMedia((prev) => [...prev, ...results]);
-                           });
+            try {
+              const uploadedImages = await Promise.all(
+                files.map(async(file) => {
+                      const formData = new FormData();
+                      formData.append("file", file);
+                      formData.append("upload_preset", "unsigned_media_upload"); // replace with your upload preset
+
+                      const res = await axios.post("https://api.cloudinary.com/v1_1/dhgn8rvvn/image/upload", formData);
+                      return res.data.secure_url;
+                })
+              );
+                setPreviewMedia((prev) => [...prev, ...uploadedImages]);
+                setMedia((prev) => [...prev, ...uploadedImages]);
+            } catch (error) {
+              console.log("Error uploading images:", error);
+            }
+            
       }
       // Handle Liking
       const PressLike = async ({ postingId, accountId }) => {
@@ -98,12 +104,7 @@ const Dashboard = () =>{
         )
   );
       }
-      const CountOfLikes = async (postingId) => {
-            
-            const res = await handleLikesCount(postingId);
-            
-      }
-      
+
       const SubmitPosting = async () => {
          try {
           const postingDetails = {
@@ -122,6 +123,7 @@ const Dashboard = () =>{
            console.log(error);
         }
         }
+
         const timeAgo = (createdAt) =>{
           const time = Date.now() - new Date(createdAt);
           const minutes = Math.floor(time / 60000);
