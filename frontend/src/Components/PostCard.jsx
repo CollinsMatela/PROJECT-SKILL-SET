@@ -10,10 +10,10 @@ const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
     const [imageIndex, setImageIndex] = useState(0);
     return(
     <>
-    <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 shadow-md rounded-xl">
+    <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 rounded-t-xl rounded-t-xl border-1 border-gray-100">
 
                   {/* HEADER*/}
-                  <div className="bg-white h-15 w-full justify-start items-center flex p-2 gap-2">
+                  <div className="bg-white h-15 w-full justify-start items-center rounded-t-xl flex p-2 gap-2">
                     <img src={posting?.profile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
                     <div className="bg-white h-10 w-full">
                       <h1 className="text-sm font-bold">{`${posting?.firstname} ${posting?.lastname}`}</h1>
@@ -28,7 +28,7 @@ const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
                   {posting?.media.length > 0 && (
                   <div className="relative bg-black aspect-square w-full justify-center items-center flex">
 
-                      {posting?.media.length > 0 && ( 
+                      {imageIndex > 0 && ( 
                         <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" 
                                 onClick={() => setImageIndex(prev => (prev > 0 ? prev - 1 : prev))
                                   }>

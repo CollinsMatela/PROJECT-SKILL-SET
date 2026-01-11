@@ -21,12 +21,13 @@ const Dashboard = () =>{
       const userId = userProfile?.accountId;
       const [text, setText] = useState("");
       const [media, setMedia] = useState([]);
-      
-      useEffect(() => {
-      if (!userAccount?.accountId) return;
 
+      const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+      
       const fetchData = async () => {
         setLoading(true);
+        setPostings([]);
+      
         try {
           // 1️⃣ Fetch profile
           const profileRes = await axios.get(
@@ -39,15 +40,20 @@ const Dashboard = () =>{
             `${import.meta.env.VITE_API_URL}/get-posting/all-posting?accountId=${profileRes.data.ProfileInformation.accountId}`
           );
           setPostings(postsRes.data.postings);
+          await delay(3000); 
+          setLoading(false);
         } catch (err) {
           console.error(err);
         } finally {
           setLoading(false);
+          
         }
       };
 
+      useEffect(() => {
+      if (!userAccount?.accountId) return;
       fetchData();
-    }, [userAccount?.accountId]);
+      }, [userAccount?.accountId]);
 
       const [previewMedia, setPreviewMedia] = useState([]);
       const filePicker = useRef(null);
@@ -113,6 +119,7 @@ const Dashboard = () =>{
             setMedia([]);
             setPreviewMedia([]);
             alert("Posting: sent request");
+            fetchData();
         } catch (error) {
            console.log(error);
         }

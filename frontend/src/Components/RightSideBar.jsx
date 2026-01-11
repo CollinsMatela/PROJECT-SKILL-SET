@@ -34,7 +34,7 @@ const RightSideBar = () =>{
                         </div>
                         {/* Name */}
                         <div className="flex flex-col">
-                            <h1 className="font-bold text-sm">{user?.lastname} {user?.firstname}</h1>
+                            <h1 className="font-bold text-sm cursor-pointer hover:underline" onClick={() => alert(user?.accountId)}>{user?.lastname} {user?.firstname}</h1>
                             <h1 className="text-xs text-gray-500">Suggested for you</h1>
                         </div>
                         </div>
