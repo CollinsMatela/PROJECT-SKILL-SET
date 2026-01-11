@@ -6,6 +6,7 @@ import MessageIcon from "../Images/message30.png"
 import HomeIcon from "../Images/home30.png"
 import ProfileIcon from "../Images/profile30.png"
 import LogoutIcon from "../Images/logout30.png"
+import SkillSetLogo from "../Images/skillsetlogo30.png"
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 
@@ -27,7 +28,15 @@ const LeftSidebar = () =>{
     return(
         <aside className="fixed bg-white justify-start items-start flex h-full left-0 top-0">
             <div className={`${search ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-2 border-gray-200 pt-10 px-4`}>
-               <h1 className="font-nanum text-4xl font-bold mb-4">SKILL SET</h1>
+               
+               {search ? 
+               <div className="bg-green-500 h-12 w-full rounded-xl justify-center items-center flex mb-2">
+                      <div className="h-5 w-5 justify-center items-center flex font-nanum font-bold text-white text-2xl">SS+</div>
+               </div>
+               :
+               <h1 className="text-4xl font-nanum font-extrabold text-green-500 mb-2">SKILLSET</h1>
+             }
+
             <button className="h-12 w-full justify-start items-start flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 p-2 gap-2"
                      onClick={handleHome}>
                 <img src={HomeIcon} alt="home" className="h-7 w-7" />
@@ -47,7 +56,7 @@ const LeftSidebar = () =>{
                 <h1>{search ? "" : "Notification"}</h1>
             </button>
             <button className="h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2" onClick={() => setMyButton(prev => !prev)}>
-                <img src={userProfile?.profile} alt="profile" className="h-10 w-10 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
+                <img src={userProfile?.profile} alt="profile" className="h-7 w-7 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
                 <h1>{search ? "" : `${userProfile?.lastname} ${userProfile?.firstname}`}</h1>
             </button>
 

@@ -14,6 +14,7 @@ const LoginModal = ({onClose}) =>{
 
     const [loading, setLoading] = useState(false);
 
+    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
     const {setUserAccount, setUserProfile} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ const LoginModal = ({onClose}) =>{
                 console.log(`${res.data.message} : ${res.data.user.accountId}`);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
                 setUserAccount(res.data.user);
+                await delay(5000);
                 setLoading(false);
                 navigate("/Dashboard");
                 onClose();
