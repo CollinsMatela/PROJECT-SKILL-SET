@@ -10,11 +10,7 @@ import LeftSidebar from "../Components/LeftSidebar"
 import RightSideBar from "../Components/rightSideBar"
 import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
-import BlackHeartIcon from "../Images/blackheart25.png"
-import RedHeartIcon from "../Images/redheart25.png"
-import BackArrow from "../Images/back_arrow.png"
-import NextArrow from "../Images/next_arrow.png"
-import Comments from "../Images/comments.png"
+import PostCard from "../Components/PostCard"
 import axios from "axios"
 
 const Dashboard = () =>{
@@ -25,11 +21,7 @@ const Dashboard = () =>{
       const userId = userProfile?.accountId;
       const [text, setText] = useState("");
       const [media, setMedia] = useState([]);
-
-      const [currentCount, setCount] = useState({});
-      const [mediaIndex, setMediaIndex] = useState({});
       
-
       useEffect(() => {
       if (!userAccount?.accountId) return;
 
@@ -181,66 +173,14 @@ const Dashboard = () =>{
           }
           
 
-          {/* New-Feed Card */}
+          {/* Post Cards */}
               {postings?.map((posting) => (
-                 
-               
-                <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 shadow-md rounded-xl">
-                  <div className="bg-white h-15 w-full justify-start items-center flex p-2 gap-2">
-                    <img src={posting?.profile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
-                    <div className="bg-white h-10 w-full">
-                      <h1 className="text-sm font-bold">{`${posting?.firstname} ${posting?.lastname}`}</h1>
-                      <h1 className="text-sm text-gray-400">{`${posting?.baranggay}, ${posting?.city}, ${posting?.province}  • ${timeAgo(posting?.createdAt)}`}</h1>
-                    </div>
-                    <div className="bg-white h-10 w-10 justify-center items-center flex text-center rounded-md hover:bg-gray-100 cursor-pointer">
-                      <h1>...</h1>
-                    </div>
-                  </div>
-                  {/* Side Arrows Slides */}
-                  {posting?.media.length > 0 && (
-                  <div className="relative bg-black aspect-square w-full justify-center items-center flex">
-                      {(currentCount[posting.postingId] || 0) && ( 
-                        <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" 
-                                onClick={() => setCount(prev => ({
-                                                      ...prev,
-                                                      [posting.postingId]: (prev[posting.postingId] || 0) - 1
-                                                    }))
-                                  }>
-                          <img src={BackArrow} alt="backarrow" />
-                        </button>
-                      )}
-
-                    <img src={posting?.media[currentCount[posting.postingId] || 0]} alt="media" className="w-full object-cover"/>
-
-                    {(currentCount[posting.postingId] || 0) < posting?.media.length - 1 && ( 
-                    <button className="z-1 absolute right-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" 
-                             onClick={()=> setCount(prev => ({
-                                                  ...prev,
-                                                  [posting.postingId]: (prev[posting.postingId] || 0) + 1
-                                                }))
-}>
-                    <img src={NextArrow} alt="nextarrow" />
-                    </button>
-                    )}
-                  </div>
-                  )}
-                  
-                  <div className="bg-white w-full p-2 text-xs">
-                    <p className="mb-2">{posting?.text}</p>
-                    <div className="h-10 w-full flex gap-2">
-                       <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1"
-                            onClick={() => PressLike({postingId: posting.postingId, accountId: userProfile.accountId})}>
-                        <img src={posting?.liked ? RedHeartIcon : BlackHeartIcon} alt="heart" />
-                        <h1>{posting?.likesCount}</h1>
-                       </div>
-                       <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
-                        <img src={Comments} alt="comments" />
-                        <h1>0</h1>                
-                       </div>
-                       
-                    </div>
-                  </div>
-                </div>
+                 <PostCard key={posting.postingId} 
+                           posting={posting} 
+                           timeAgo={timeAgo} 
+                           PressLike={PressLike}
+                           userProfile={userProfile}
+                 />
               ))  
               }
           </div>
