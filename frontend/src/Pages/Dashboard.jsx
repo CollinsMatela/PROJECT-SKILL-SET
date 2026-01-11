@@ -26,7 +26,9 @@ const Dashboard = () =>{
       const [text, setText] = useState("");
       const [media, setMedia] = useState([]);
 
-      const [currentCount, setCount] = useState(0);
+      const [currentCount, setCount] = useState({});
+      const [mediaIndex, setMediaIndex] = useState({});
+      
 
       useEffect(() => {
       if (!userAccount?.accountId) return;
@@ -181,6 +183,8 @@ const Dashboard = () =>{
 
           {/* New-Feed Card */}
               {postings?.map((posting) => (
+                 
+               
                 <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 shadow-md rounded-xl">
                   <div className="bg-white h-15 w-full justify-start items-center flex p-2 gap-2">
                     <img src={posting?.profile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
@@ -192,19 +196,29 @@ const Dashboard = () =>{
                       <h1>...</h1>
                     </div>
                   </div>
-
+                  {/* Side Arrows Slides */}
                   {posting?.media.length > 0 && (
                   <div className="relative bg-black aspect-square w-full justify-center items-center flex">
-                      {currentCount > 0 && ( 
-                        <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={() => setCount(prev => (prev > 0 ? prev - 1 : prev))}>
+                      {(currentCount[posting.postingId] || 0) && ( 
+                        <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" 
+                                onClick={() => setCount(prev => ({
+                                                      ...prev,
+                                                      [posting.postingId]: (prev[posting.postingId] || 0) - 1
+                                                    }))
+                                  }>
                           <img src={BackArrow} alt="backarrow" />
                         </button>
                       )}
-                   
 
-                    <img src={posting?.media[currentCount]} alt="media" className="w-full object-cover"/>
-                    {currentCount < posting?.media.length - 1 && ( 
-                    <button className="z-1 absolute right-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" onClick={()=>setCount(prev => prev < posting?.media.length - 1 ? prev + 1 : prev)}>
+                    <img src={posting?.media[currentCount[posting.postingId] || 0]} alt="media" className="w-full object-cover"/>
+
+                    {(currentCount[posting.postingId] || 0) < posting?.media.length - 1 && ( 
+                    <button className="z-1 absolute right-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" 
+                             onClick={()=> setCount(prev => ({
+                                                  ...prev,
+                                                  [posting.postingId]: (prev[posting.postingId] || 0) + 1
+                                                }))
+}>
                     <img src={NextArrow} alt="nextarrow" />
                     </button>
                     )}
