@@ -30,7 +30,7 @@ const RightSideBar = () =>{
  return(
         <aside className="flex-1 justify-center items-center flex flex-col p-2 pt-10">
             <div className="flex flex-col">
-                <h1 className="text-sm mb-2">Suggested for you!</h1>
+                <h1 className="text-sm mb-2 font-medium">Suggested for you!</h1>
             
             {users.map((user) => (           
                     <div key={user?.accountId} className="border-1 border-gray-100  rounded-2xl w-80 flex justify-between items-center mb-2 gap-2 p-2">
