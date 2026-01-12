@@ -7,6 +7,7 @@ import Profile from "./Pages/Profile"
 import AuthProvider from "./Context/AuthContext";
 import EditProfileModal from "./Components/EditProfileModal";
 import Loading from "./Components/Loading"
+import ViewProfile from "./Pages/ViewProfile";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path={"/LoginModal"} element={<LoginModal/>}></Route>
       <Route path={"/Registration"} element={<Registration/>}/>
       <Route path={"/edit-profile-modal"} element={<EditProfileModal/>}></Route>
+      <Route path={"/view-profile/:accountId"} element={<ViewProfile/>}></Route>
     </Routes>
      
     </BrowserRouter>

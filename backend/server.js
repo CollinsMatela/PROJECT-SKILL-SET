@@ -20,6 +20,7 @@ import PostingRoute from "./routes/postingRoute.js"
 import LikePostingRoute from "./routes/likePostingRoute.js"
 import LikesCountRoute from "./routes/likesCountRoute.js"
 import GetUsersRoute from "./routes/getUsersRoute.js"
+import GetViewProfileRoute from "./routes/getViewProfile.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,6 +43,7 @@ app.use("/", PostingRoute);
 app.use("/", LikePostingRoute);
 app.use("/", LikesCountRoute);
 app.use("/", GetUsersRoute);
+app.use("/", GetViewProfileRoute);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

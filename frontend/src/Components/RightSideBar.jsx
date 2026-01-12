@@ -1,11 +1,14 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import ViewProfile from "../Pages/ViewProfile"
+import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
 
 
 const RightSideBar = () =>{
 
     const [users, setUsers] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         try {
@@ -19,6 +22,10 @@ const RightSideBar = () =>{
             console.log(error)
         }
     },[])
+
+    const handleUserClick = (accountId) => {
+        navigate(`/view-profile/${accountId}`);
+    }
 
  return(
         <aside className="flex-1 justify-center items-center flex flex-col p-2 pt-10">
@@ -34,7 +41,7 @@ const RightSideBar = () =>{
                         </div>
                         {/* Name */}
                         <div className="flex flex-col">
-                            <h1 className="font-bold text-sm cursor-pointer hover:underline" onClick={() => alert(user?.accountId)}>{user?.lastname} {user?.firstname}</h1>
+                            <h1 className="font-bold text-sm cursor-pointer hover:underline" onClick={() => handleUserClick(user?.accountId)}>{user?.lastname} {user?.firstname}</h1>
                             <h1 className="text-xs text-gray-500">Suggested for you</h1>
                         </div>
                         </div>

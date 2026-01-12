@@ -30,7 +30,7 @@ const LeftSidebar = () =>{
             <div className={`${search ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-2 border-gray-200 pt-10 px-4`}>
                
                {search ? 
-               <div className="bg-green-500 h-12 w-full rounded-xl justify-center items-center flex mb-2">
+               <div className="bg-green-500 h-12 w-full rounded-xl justify-center items-center flex mb-2 cursor-pointer hover:bg-green-600">
                       <div className="h-5 w-5 justify-center items-center flex font-nanum font-bold text-white text-2xl">SS+</div>
                </div>
                :
