@@ -36,7 +36,7 @@ const RightSideBar = () =>{
                     <div key={user?.accountId} className="border-1 border-gray-100  rounded-2xl w-80 flex justify-between items-center mb-2 gap-2 p-2">
                         <div className="flex gap-2">
                         {/* Image */}
-                        <div className="bg-green-500 h-11 w-11 rounded-full justify-center items-center flex">
+                        <div className="bg-green-500 h-11 w-11 rounded-full justify-center items-center flex cursor-pointer" onClick={() => handleUserClick(user?.accountId)}>
                             <img src={user?.profile} alt="profile" className="object-cover h-10 w-10 rounded-full border-2 border-white" />
                         </div>
                         {/* Name */}

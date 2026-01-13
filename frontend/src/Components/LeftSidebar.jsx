@@ -13,6 +13,7 @@ import axios from "axios";
 
 const LeftSidebar = () =>{
     const {userProfile} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [myButton, setMyButton] = useState(false);
     const [search, setSearch] = useState(false);
@@ -36,7 +37,10 @@ const LeftSidebar = () =>{
           setPostings([]);
           setUserProfile(null);
     }
-    const navigate = useNavigate();
+    const handleUserClick = (accountId) => {
+         navigate(`/view-profile/${accountId}`)
+    }
+    
     const handleHome = () =>{
     navigate("/Dashboard");
 }
@@ -100,7 +104,8 @@ const LeftSidebar = () =>{
                 />
                 <h1 className="text-md">Recent</h1>
                 {searchedUsers.map((user) => (
-                    <div key={user?.accountId} className="h-15 w-full border-1 border-gray-100 rounded-md mb-2 justify-start items-center flex gap-2 p-2 hover:bg-gray-100 cursor-pointer">
+                    <div key={user?.accountId} className="h-15 w-full border-1 border-gray-100 rounded-md mb-2 justify-start items-center flex gap-2 p-2 hover:bg-gray-100 cursor-pointer"
+                         onClick={() => handleUserClick(user?.accountId)}>
                         <div className="h-11 w-11 bg-green-500 justify-center items-center flex rounded-full">
                             <img src={user?.profile} className="h-10 w-10 object-cover rounded-full border-2 border-white" />
                         </div>
