@@ -9,12 +9,27 @@ import LogoutIcon from "../Images/logout30.png"
 import SkillSetLogo from "../Images/skillsetlogo30.png"
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
 
 const LeftSidebar = () =>{
     const {userProfile} = useContext(AuthContext);
 
-    const [search, setSearch] = useState(false);
     const [myButton, setMyButton] = useState(false);
+    const [search, setSearch] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchedUsers, setSearchedUsers] = useState([]);
+    
+    const fetchSearchedUsers = async (value) => {
+        setSearchedUsers([]);
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/search?firstname=${value}&lastname=${value}`);
+            setSearchedUsers(res.data.users)
+            console.log(res.data.message, res.data.users);
+        } catch (error) {
+            console.error("Error fetching searched users:", error);
+        }
+    }
+    
 
     const handleLogout = () => {
           navigate("/");
@@ -30,7 +45,7 @@ const LeftSidebar = () =>{
             <div className={`${search ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-2 border-gray-200 pt-10 px-4`}>
                
                {search ? 
-               <div className="bg-green-500 h-12 w-full rounded-xl justify-center items-center flex mb-2 cursor-pointer hover:bg-green-600">
+               <div className="bg-green-500 h-12 w-full rounded-md border-b-4 border-black justify-center items-center flex mb-2 cursor-pointer hover:bg-green-600">
                       <div className="h-5 w-5 justify-center items-center flex font-nanum font-bold text-white text-2xl">SS+</div>
                </div>
                :
@@ -80,8 +95,22 @@ const LeftSidebar = () =>{
                        name="search"
                        id="search" 
                        placeholder="Search"
+                       value={searchInput}
+                       onChange={(e) => {setSearchInput(e.target.value), fetchSearchedUsers(e.target.value)}}
                 />
                 <h1 className="text-md">Recent</h1>
+                {searchedUsers.map((user) => (
+                    <div key={user?.accountId} className="h-15 w-full border-1 border-gray-100 rounded-md mb-2 justify-start items-center flex gap-2 p-2 hover:bg-gray-100 cursor-pointer">
+                        <div className="h-11 w-11 bg-green-500 justify-center items-center flex rounded-full">
+                            <img src={user?.profile} className="h-10 w-10 object-cover rounded-full border-2 border-white" />
+                        </div>
+                    <div className="flex flex-col">
+                        <h1 className="text-sm font-bold">{user?.firstname} {user?.lastname}</h1>
+                        <h1 className="text-xs text-gray-500">{user?.baranggay}{" , "}{user?.city}{" , "}{user?.province}</h1>
+                    </div>
+                    
+                    </div>
+                ))}
             </div>
             
                 
