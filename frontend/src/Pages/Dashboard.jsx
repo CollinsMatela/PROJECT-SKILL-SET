@@ -11,7 +11,9 @@ import RightSideBar from "../Components/rightSideBar"
 import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
 import PostCard from "../Components/PostCard"
+import EditProfileModal from "../Components/EditProfileModal"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const Dashboard = () =>{
 
@@ -21,6 +23,9 @@ const Dashboard = () =>{
       const userId = userProfile?.accountId;
       const [text, setText] = useState("");
       const [media, setMedia] = useState([]);
+
+      const navigate = useNavigate();
+      const [showEditProfile, setShowEditProfile] = useState(false);
       
       const fetchData = async () => {
         setLoading(true);
@@ -136,9 +141,17 @@ const Dashboard = () =>{
         }
       return(
       <>
+      {showEditProfile && <EditProfileModal onClose={() => setShowEditProfile(false)} />}
+      <div className="bg-green-500 h-10 top-0 w-full justify-center items-center flex">
+                       <h1 className="font-nanum text-white text-xl">💬 Kindly fill-up your profile to gain full access to the website.{" "} 
+                        <span className="underline cursor-pointer"
+                        onClick={() => setShowEditProfile(true)}>Click Me!</span>
+                        </h1>
+      </div>
       <main className="relative">
         {loading ? <Loading/> : ""}
         {/* <DashboardNav/> */}
+        
         <section className="bg-white w-full flex justify-center items-start px-20">
 
           {/* Left Sidebar */}
@@ -146,6 +159,7 @@ const Dashboard = () =>{
             <LeftSidebar/>
           </div>
           <div className="bg-white flex-1 justify-center items-center flex flex-col pt-10">
+
                   <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
                   <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
                   <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}

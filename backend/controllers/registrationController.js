@@ -23,6 +23,7 @@ export const registrationController = async (req, res) => {
       profile : null,
       description : null,
       terms: Terms
+      
     })
 
     res.status(201).json({ message: "Successfully registered", 

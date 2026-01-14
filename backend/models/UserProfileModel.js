@@ -14,7 +14,10 @@ const UserProfileSchema = new mongoose.Schema({
     contact : String, 
     baranggay : String, 
     city : String, 
-    province : String
+    province : String,
+    isOnline : Boolean,
+    ratings : Number,
+    followers : Number,
 })
     
 
