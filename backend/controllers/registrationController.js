@@ -1,27 +1,21 @@
 import { nanoid } from "nanoid"; // unique short Id
-import UserAccountModel from "../models/UserAccountModel.js"
+import ProfileModel from "../models/UserProfileModel.js"
 
 export const registrationController = async (req, res) => {
   try {
     // Data information from frontend
-    const {Lastname, Firstname ,Middlename ,Email ,Password ,Terms} = req.body;
+    const {Email ,Password ,Terms} = req.body;
     const uniqueId = nanoid();
 
-    const existingEmail = await UserAccountModel.findOne({email : Email})
+    const existingEmail = await ProfileModel.findOne({email : Email})
     if(existingEmail){
-      return res.status("").json({message:"Email address is already existing."})
+      return res.status(400).json({message:"Email address is already existing."})
     }
 
-    const inputUser = await UserAccountModel.create({
+    const inputUser = await ProfileModel.create({
       accountId: uniqueId,
-      lastname: Lastname,
-      firstname: Firstname,
-      middlename: Middlename,
       email: Email,
       password: Password,
-      contact : null,
-      profile : null,
-      description : null,
       terms: Terms
       
     })
