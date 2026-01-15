@@ -1,8 +1,10 @@
 import InputField from "../Components/InputField";
 import handleRegistrationSubmit from "../Services/handleRegistrationSubmit";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const Registration = () => {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -45,6 +47,7 @@ const Registration = () => {
 
             if(res.data.account){
                 alert("Registration successful!");
+                navigate(`/basic-info/${res.data.account}`);
             }
 
         } catch (error) {

@@ -26,7 +26,8 @@ function App() {
       <Route path={"/Registration"} element={<Registration/>}/>
       <Route path={"/edit-profile-modal"} element={<EditProfileModal/>}></Route>
       <Route path={"/view-profile/:accountId"} element={<ViewProfile/>}></Route>
-      <Route path={"/basic-info"} element={<Basic_Info/>}></Route>
+      <Route path={"/basic-info/:accountId"} element={<Basic_Info/>}></Route>
+      
 
     </Routes>
      
