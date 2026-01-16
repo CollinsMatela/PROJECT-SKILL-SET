@@ -16,7 +16,7 @@ const LoginModal = ({onClose}) =>{
 
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-    const {setUserAccount, setUserProfile} = useContext(AuthContext);
+    const {setUserProfile} = useContext(AuthContext);
     const navigate = useNavigate();
     
     const loginSubmit = async () => {
@@ -31,15 +31,22 @@ const LoginModal = ({onClose}) =>{
                 setLoading(true);
                 const res = await handleLoginSubmit(loginData);
 
-                if (res.data.user.isUser) { 
-                console.log(`${res.data.message} : ${res.data.user.accountId}`);
+                if(res.data.user.firstname === "" || res.data.user.lastname === "" || res.data.user.middle === ""
+                || res.data.user.age === "" || res.data.user.birthdate === "")
+                {
+                     setLoading(false);
+                     navigate(`/basic-info/${res.data.user.accountId}`);
+                     return;
+                } 
+
                 localStorage.setItem("user", JSON.stringify(res.data.user));
-                setUserAccount(res.data.user);
+                console.log("Login successful", res.data.user);
+                setUserProfile(res.data.user);
                 await delay(5000);
                 setLoading(false);
-                navigate("/Dashboard");
+                navigate(`/dashboard/${res.data.user.accountId}`);
                 onClose();
-                }
+                
             } catch (error) {
                 console.log("Login failed", error);
             }

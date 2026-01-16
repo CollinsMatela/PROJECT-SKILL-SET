@@ -1,9 +1,13 @@
 import InputField from "../Components/InputField";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 
 const Basic_Info = () => {
+
+    const {setUserProfile} = useContext(AuthContext);
 
     const navigate = useNavigate();
     const {accountId} = useParams();
@@ -22,7 +26,8 @@ const Basic_Info = () => {
               const res = await axios.post(`${import.meta.env.VITE_API_URL}/basic-info`, details);
               console.log(res.data.message);
               if(res.data.user){
-                 navigate(`/Dashboard`);
+                 navigate(`/dashboard/${accountId}`);
+                 setUserProfile(res.data.user);
               }
           } catch (error) {
               console.log(error);
@@ -84,7 +89,7 @@ const Basic_Info = () => {
            
 
             <div className="flex-1 justify-end items-start flex"> {/* Buttons*/}
-                <button className="h-12 w-110 bg-green-500 text-white rounded-xl border-b-4 font-nanum text-2xl border-black hover:bg-green-600"
+                <button className="h-12 w-110 bg-green-500 text-white rounded-xl border-b-4 font-nanum text-2xl border-black hover:bg-green-600 cursor-pointer"
                         onClick={handleSubmit}>Submit</button>
             </div>  
         </div>

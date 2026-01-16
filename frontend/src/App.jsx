@@ -21,7 +21,7 @@ function App() {
       <Route path={"/"} element={<Website/>}/>
       <Route path={"/Loading"} element={<Loading/>}/>
       <Route path={"/Profile"} element={<Profile/>}/>
-      <Route path={"/Dashboard"} element={<Dashboard/>}/>
+      <Route path={"/dashboard/:accountId"} element={<Dashboard/>}/>
       <Route path={"/LoginModal"} element={<LoginModal/>}></Route>
       <Route path={"/Registration"} element={<Registration/>}/>
       <Route path={"/edit-profile-modal"} element={<EditProfileModal/>}></Route>

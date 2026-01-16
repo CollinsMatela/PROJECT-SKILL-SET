@@ -12,7 +12,7 @@ import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 
 const LeftSidebar = () =>{
-    const {userProfile} = useContext(AuthContext);
+    const {userProfile, setUserProfile, setPostings} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [myButton, setMyButton] = useState(false);
@@ -33,9 +33,13 @@ const LeftSidebar = () =>{
     
 
     const handleLogout = () => {
-          navigate("/");
+          localStorage.removeItem("user");
+
+          
           setPostings([]);
           setUserProfile(null);
+
+          navigate("/");
     }
     const handleUserClick = (accountId) => {
          navigate(`/view-profile/${accountId}`)

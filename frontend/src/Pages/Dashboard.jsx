@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom"
 const Dashboard = () =>{
 
       const [loading, setLoading] = useState(false);
-      const {userAccount, setUserProfile, userProfile, setPostings, postings} = useContext(AuthContext);
+      const {userProfile, setUserProfile, setPostings, postings} = useContext(AuthContext);
 
       const userId = userProfile?.accountId;
       const [text, setText] = useState("");
@@ -33,15 +33,11 @@ const Dashboard = () =>{
       
         try {
           // 1️⃣ Fetch profile
-          const profileRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/get-profile/${userAccount.accountId}`
-          );
+          const profileRes = await axios.get(`${import.meta.env.VITE_API_URL}/get-profile/${userProfile.accountId}`);
           setUserProfile(profileRes.data.ProfileInformation);
 
           // 2️⃣ Fetch posts using the profile's accountId
-          const postsRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/get-posting/all-posting?accountId=${profileRes.data.ProfileInformation.accountId}`
-          );
+          const postsRes = await axios.get(`${import.meta.env.VITE_API_URL}/get-posting/all-posting?accountId=${profileRes.data.ProfileInformation.accountId}`);
           setPostings(postsRes.data.postings);
  
           setLoading(false);
@@ -54,9 +50,9 @@ const Dashboard = () =>{
       };
 
       useEffect(() => {
-      if (!userAccount?.accountId) return;
+      if (!userProfile?.accountId) return;
       fetchData();
-      }, [userAccount?.accountId]);
+      }, [userProfile?.accountId]);
 
       const [previewMedia, setPreviewMedia] = useState([]);
       const filePicker = useRef(null);
@@ -141,13 +137,7 @@ const Dashboard = () =>{
         }
       return(
       <>
-      {showEditProfile && <EditProfileModal onClose={() => setShowEditProfile(false)} />}
-      <div className="bg-green-500 h-10 top-0 w-full justify-center items-center flex">
-                       <h1 className="font-nanum text-white text-xl">💬 Kindly fill-up your profile to gain full access to the website.{" "} 
-                        <span className="underline cursor-pointer"
-                        onClick={() => setShowEditProfile(true)}>Click Me!</span>
-                        </h1>
-      </div>
+      
       <main className="relative">
         {loading ? <Loading/> : ""}
         {/* <DashboardNav/> */}
