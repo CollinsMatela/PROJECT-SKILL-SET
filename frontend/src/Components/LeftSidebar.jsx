@@ -47,7 +47,7 @@ const LeftSidebar = () =>{
     }
     
     const handleHome = () =>{
-    navigate("/Dashboard");
+    navigate(`/dashboard/${userProfile?.accountId}`);
 }
     return(
         <aside className="fixed bg-white justify-start items-start flex h-full left-0 top-0">

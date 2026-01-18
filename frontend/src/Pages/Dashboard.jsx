@@ -171,16 +171,22 @@ const Dashboard = () =>{
                   </button>
                 </div>
 
-                {previewMedia.length > 0 && 
-          (<div className="grid grid-cols-4 flex justify-start items-center p-2 mb-4 gap-2 border-b-2 border-gray-100">
-            {previewMedia.map((file, index) => (
-                 <img key={index} src={file} alt={`preview-${index}`} className={"bg-gray-300 h-35 w-35 object-cover rounded-xl border-2 border-gray-300 cursor-pointer hover:border-red-400"}
-                      onClick={() => { setPreviewMedia(prev => prev.filter(z => z !== file));
-                                       setMedia(prev => prev.filter(z => z !== file));
-                      }} />
-            ))}
-          </div>)
-          }
+                      {previewMedia.length > 0 && 
+                (<div className="grid grid-cols-4 flex justify-start items-center p-2 mb-4 gap-2 border-b-2 border-gray-100">
+                  {previewMedia.map((file, index) => (
+                      <img key={index} src={file} alt={`preview-${index}`} className={"bg-gray-300 h-35 w-35 object-cover rounded-xl border-2 border-gray-300 cursor-pointer hover:border-red-400"}
+                            onClick={() => { setPreviewMedia(prev => prev.filter(z => z !== file));
+                                            setMedia(prev => prev.filter(z => z !== file));
+                            }} />
+                  ))}
+                </div>)
+                }
+
+          {/*For you feed filter*/}
+                <div className="h-15 w-full justify-center items-center border-y-1 border-gray-100 flex mb-4 gap-4">
+                  <h1 className="text-md text-gray-500">For you feed </h1>
+                  <div className="h-5 w-5 rounded-full border-1 border-gray-500 text-gray-500 justify-center items-center flex cursor-pointer">▾</div>
+                </div>
           
 
           {/* Post Cards */}

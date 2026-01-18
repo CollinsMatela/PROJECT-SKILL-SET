@@ -5,6 +5,7 @@ import EditProfileModal from "../Components/EditProfileModal";
 import { useNavigate } from "react-router-dom";
 import LeftSidebar from "../Components/LeftSidebar";
 import Footer from "../Components/Footer";
+import defualtProfile from "../Images/default_profile.png";
 
 const Profile = () =>{
     const {userAccount, userProfile} =useContext(AuthContext);
@@ -27,16 +28,19 @@ const Profile = () =>{
     return(
         <main>
             <LeftSidebar/>
-            <section className="bg-white h-screen w-full justify-center items-center flex px-20">
-                 <div className="h-3/4 flex flex-col gap-2">
+            <section className="bg-white h-screen w-full justify-start items-center flex flex-col px-20">
+                 {/* <div className="h-3/4 flex flex-col gap-2 bg-blue-300"> */}
 
-                 <div className="w-full rounded-2xl flex justify-start items-center">
-                     <img src={userProfile?.profile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
-                     <div className=" h-full w-full p-5">
+                 <div className="w-1/2 rounded-2xl flex justify-center items-center mt-10">
+                     <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
+                     <div className=" h-full p-5 justify-center items-start flex flex-col gap-2">
                         <h1 className="font-bold text-xl text-black">{name} {" "} 
                              <span className={`${availability}`? "text-green-500" : "text-gray-300"}>{availability}</span>
                         </h1>
-                        <h1 className="text-md text-gray-500 mb-4 gap-2">{location}{" • "} {email}{" • "} {contact}</h1>
+                        <h1 className="text-md text-gray-500 gap-2">{location ? location : "No location"}{" • "} {email}{" • "} {contact ? contact : "No contact"}</h1>
+                        <div className="flex gap-4">
+                            <h1>{"0"} post</h1> <h1>{userProfile?.followers} followers</h1> <h1>{userProfile?.ratings} ratings</h1>
+                        </div>
                         <button className="bg-green-500 h-8 w-25 rounded-md border-b-2 border-green-950 font-nanum text-white text-md hover:bg-green-600 cursor-pointer"
                                 onClick={handleEditProfile}>Edit Profile
                         </button>
@@ -72,7 +76,7 @@ const Profile = () =>{
 
 
 
-                 </div>
+                 {/* </div> */}
             </section>
             {showEditProfile && (<EditProfileModal onClose={()=> setEditProfile(false)}/>)}
             <Footer/>
