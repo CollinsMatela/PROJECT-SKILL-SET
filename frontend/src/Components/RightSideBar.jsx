@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import ViewProfile from "../Pages/ViewProfile"
+import defualtProfile from "../Images/default_profile.png"
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
 
@@ -37,7 +38,7 @@ const RightSideBar = () =>{
                         <div className="flex gap-2">
                         {/* Image */}
                         <div className="bg-green-500 h-11 w-11 rounded-full justify-center items-center flex cursor-pointer" onClick={() => handleUserClick(user?.accountId)}>
-                            <img src={user?.profile} alt="profile" className="object-cover h-10 w-10 rounded-full border-2 border-white" />
+                            <img src={user?.profile ? user?.profile : defualtProfile} alt="profile" className="object-cover h-10 w-10 rounded-full border-2 border-white" />
                         </div>
                         {/* Name */}
                         <div className="flex flex-col">

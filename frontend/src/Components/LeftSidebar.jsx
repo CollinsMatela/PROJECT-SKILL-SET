@@ -7,6 +7,7 @@ import HomeIcon from "../Images/home30.png"
 import ProfileIcon from "../Images/profile30.png"
 import LogoutIcon from "../Images/logout30.png"
 import SkillSetLogo from "../Images/skillsetlogo30.png"
+import defualtProfile from "../Images/default_profile.png"
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
@@ -79,7 +80,7 @@ const LeftSidebar = () =>{
                 <h1>{search ? "" : "Notification"}</h1>
             </button>
             <button className="h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2" onClick={() => setMyButton(prev => !prev)}>
-                <img src={userProfile?.profile} alt="profile" className="h-7 w-7 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
+                <img src={userProfile?.profile ? user?.profile : defualtProfile} alt="profile" className="h-7 w-7 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
                 <h1>{search ? "" : `${userProfile?.lastname} ${userProfile?.firstname}`}</h1>
             </button>
 
@@ -111,7 +112,7 @@ const LeftSidebar = () =>{
                     <div key={user?.accountId} className="h-15 w-full border-1 border-gray-100 rounded-md mb-2 justify-start items-center flex gap-2 p-2 hover:bg-gray-100 cursor-pointer"
                          onClick={() => handleUserClick(user?.accountId)}>
                         <div className="h-11 w-11 bg-green-500 justify-center items-center flex rounded-full">
-                            <img src={user?.profile} className="h-10 w-10 object-cover rounded-full border-2 border-white" />
+                            <img src={user?.profile ? user?.profile : defualtProfile} className="h-10 w-10 object-cover rounded-full border-2 border-white" />
                         </div>
                     <div className="flex flex-col">
                         <h1 className="text-sm font-bold">{user?.firstname} {user?.lastname}</h1>

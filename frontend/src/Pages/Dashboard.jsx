@@ -7,7 +7,8 @@ import handlePosting from "../Services/handlePosting"
 import Loading from "../Components/Loading"
 import Footer from "../Components/Footer"
 import LeftSidebar from "../Components/LeftSidebar"
-import RightSideBar from "../Components/rightSideBar"
+import RightSideBar from "../Components/RightSideBar"
+import defualtProfile from "../Images/default_profile.png"
 import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
 import PostCard from "../Components/PostCard"
@@ -151,7 +152,7 @@ const Dashboard = () =>{
           <div className="bg-white flex-1 justify-center items-center flex flex-col pt-10">
 
                   <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
-                  <img src={userProfile?.profile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
+                  <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
                   <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
                             className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
                             value={text}

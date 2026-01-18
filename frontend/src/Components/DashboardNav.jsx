@@ -25,7 +25,7 @@ const DashboardNav = () =>{
       <>
       <nav className="justify-start items-start fixed flex flex-col w-full ">
         <div className=" relative bg-white px-20 h-15 w-full justify-between items-center flex border-b-2 border-green-500 mb-2">
-                 <img src={userProfile?.profile} alt="profile" className="h-10 w-10 rounded-4xl bg-transparent border-2 border-green-500 object-cover cursor-pointer" onClick={goToDashboard}></img>
+                 <img src={userProfile} alt="profile" className="h-10 w-10 rounded-4xl bg-transparent border-2 border-green-500 object-cover cursor-pointer" onClick={goToDashboard}></img>
                  <div className="h-10 flex justify-center items-center cursor-pointer" onClick={handleSelectionMenu}>
                     <h1 className="text-2xl text-black text-xl font-nanum font-bold hover:bg-gray-200 rounded-md px-2">{userProfile ? `${userProfile.firstname} ${userProfile.lastname}` : "Guest"}</h1>
                  </div>

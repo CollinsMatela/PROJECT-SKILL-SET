@@ -4,6 +4,7 @@ import RedHeartIcon from "../Images/redheart25.png"
 import BackArrow from "../Images/back_arrow.png"
 import NextArrow from "../Images/next_arrow.png"
 import Comments from "../Images/comments.png"
+import defualtProfile from "../Images/default_profile.png"
 
 const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
 
@@ -14,7 +15,7 @@ const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
 
                   {/* HEADER*/}
                   <div className="bg-white h-15 w-full justify-start items-center rounded-t-xl flex p-2 gap-2">
-                    <img src={posting?.profile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
+                    <img src={posting?.profile ? posting?.profile : defualtProfile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
                     <div className="bg-white h-10 w-full">
                       <h1 className="text-sm font-bold">{`${posting?.firstname} ${posting?.lastname}`}</h1>
                       <h1 className="text-sm text-gray-400">{`${posting?.baranggay}, ${posting?.city}, ${posting?.province}  • ${timeAgo(posting?.createdAt)}`}</h1>
