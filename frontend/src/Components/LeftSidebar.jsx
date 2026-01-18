@@ -80,7 +80,7 @@ const LeftSidebar = () =>{
                 <h1>{search ? "" : "Notification"}</h1>
             </button>
             <button className="h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2" onClick={() => setMyButton(prev => !prev)}>
-                <img src={userProfile?.profile ? user?.profile : defualtProfile} alt="profile" className="h-7 w-7 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
+                <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="profile" className="h-7 w-7 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
                 <h1>{search ? "" : `${userProfile?.lastname} ${userProfile?.firstname}`}</h1>
             </button>
 

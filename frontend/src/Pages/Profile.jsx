@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 import LeftSidebar from "../Components/LeftSidebar";
 import Footer from "../Components/Footer";
 import defualtProfile from "../Images/default_profile.png";
+import ImageIcon from "../Images/image.png"
+import PostCard from "../Components/PostCard";
 
 const Profile = () =>{
-    const {userAccount, userProfile} =useContext(AuthContext);
+
+    const {userProfile, postings, setPostings} =useContext(AuthContext);
     const navigate = useNavigate();
 
     const [showEditProfile, setEditProfile] = useState(false);
@@ -72,6 +75,21 @@ const Profile = () =>{
                    </div>
                  </div>
 
+                 <div className="h-10 w-200 border-b-2 border-gray-100 justify-center items-center flex">
+                    <img src={ImageIcon} />
+                 </div>
+                 <div className="w-200 grid grid-cols-3 gap-1">
+                            {postings.filter(p => p.accountId === userProfile.accountId).map((posting) => (
+                            <div key={posting.postingId} className="relative border-1 border-gray-100 h-80 w-full justify-center items-center flex bg-gray-200 cursor-pointer overflow-hidden">
+                                <img src={posting?.media} className="object-cover"/>
+                                <div className="inset-0 absolute opacity-0 hover:opacity-100 hover:bg-black/30 hover:backdrop-blur-md justify-center items-center flex">
+                                       <h1 className="text-white text-sm p-2">{posting?.text}</h1>
+                                </div>
+                            </div>
+                            ))}
+                            
+                 </div>
+                 
                  
 
 

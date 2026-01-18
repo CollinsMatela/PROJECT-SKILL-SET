@@ -68,10 +68,11 @@ const EditProfileModal = ({onClose}) =>{
       }
       // Save data function
       const SaveProfileData = async () =>{
+                  // setLoading(true);
             try {
-                  setLoading(true);
+                  
                  const ProfileInformations = {
-                   accountId: userAccount.accountId,
+                   accountId: userProfile.accountId,
                    profile: profile,
                    lastname: lastname,
                    firstname: firstname,
@@ -91,7 +92,7 @@ const EditProfileModal = ({onClose}) =>{
                   console.log(res.data.ProfileInformation.accountId);
                   setUserProfile(prev => ({...prev, 
                                            ...res.data.ProfileInformation}))
-                  setLoading(false);
+                  // setLoading(false);
                   onClose();
             } catch (error) {
                   console.log(error)
