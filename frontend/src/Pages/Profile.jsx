@@ -16,6 +16,8 @@ const Profile = () =>{
 
     const [showEditProfile, setEditProfile] = useState(false);
 
+    const numberOfPost = postings.filter(posting => posting.accountId === userProfile.accountId).length;
+
     const handleEditProfile = () =>{
         alert("go to edit profile");
         setEditProfile(true);
@@ -24,7 +26,7 @@ const Profile = () =>{
     const name = userProfile ? `${userProfile.firstname} ${userProfile.middlename} ${userProfile.lastname}` : "No name yet";
     const description = userProfile ? `${userProfile.bio}` : "No description yet";
     const availability = userProfile ? `${userProfile.availability}` : "No status";
-    const location = userProfile ? `${userProfile.baranggay} , ${userProfile.city} , ${userProfile.province}` : "No location yet";
+    const location = userProfile ? `${userProfile.baranggay + ","} ${userProfile.city + ","} ${userProfile.province}` : "No location yet";
     const email = userProfile ? `${userProfile.email}` : 'No email';
     const contact = userProfile ? `${userProfile.contact}` : 'No contact';
 
@@ -42,7 +44,7 @@ const Profile = () =>{
                         </h1>
                         <h1 className="text-md text-gray-500 gap-2">{location ? location : "No location"}{" • "} {email}{" • "} {contact ? contact : "No contact"}</h1>
                         <div className="flex gap-4">
-                            <h1>{"0"} post</h1> <h1>{userProfile?.followers} followers</h1> <h1>{userProfile?.ratings} ratings</h1>
+                            <h1>{numberOfPost} post</h1> <h1>{userProfile?.followers} followers</h1> <h1>{userProfile?.ratings} ratings</h1>
                         </div>
                         <button className="bg-green-500 h-8 w-25 rounded-md border-b-2 border-green-950 font-nanum text-white text-md hover:bg-green-600 cursor-pointer"
                                 onClick={handleEditProfile}>Edit Profile
@@ -79,14 +81,25 @@ const Profile = () =>{
                     <img src={ImageIcon} />
                  </div>
                  <div className="w-200 grid grid-cols-3 gap-1">
-                            {postings.filter(p => p.accountId === userProfile.accountId).map((posting) => (
-                            <div key={posting.postingId} className="relative border-1 border-gray-100 h-80 w-full justify-center items-center flex bg-gray-200 cursor-pointer overflow-hidden">
-                                <img src={posting?.media} className="object-cover"/>
-                                <div className="inset-0 absolute opacity-0 hover:opacity-100 hover:bg-black/30 hover:backdrop-blur-md justify-center items-center flex">
+                            {postings.filter(p => p.accountId === userProfile.accountId && p.media).map((posting) => (
+                            <div key={posting.postingId} className={`relative border-1 border-gray-100 h-80 w-full justify-center items-center flex ${!posting?.media ? 'bg-gray-200' : 'bg-white'} cursor-pointer overflow-hidden`}>
+
+                                <img src={posting?.media.length >= 0 ? posting?.media : null} className={`${posting?.media.length !== 0 ? '' : 'hidden'} object-cover h-full w-full`}/>
+
+                                <div className={`${posting?.media.length !== 0 ? 'bg-black hidden' : 'bg-gray-100'} p-4 w-full`}>
+                                    <h1 className="text-black text-xs"># {posting?.text}</h1>
+                                </div>
+
+                                <div className={`inset-0 absolute opacity-0 hover:opacity-100 hover:bg-black/30 hover:backdrop-blur-md justify-center items-center flex`}>
                                        <h1 className="text-white text-sm p-2">{posting?.text}</h1>
                                 </div>
+                                
+                                
+                                
+                                
                             </div>
                             ))}
+                            
                             
                  </div>
                  
