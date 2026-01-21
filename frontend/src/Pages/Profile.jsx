@@ -8,8 +8,12 @@ import Footer from "../Components/Footer";
 import defualtProfile from "../Images/default_profile.png";
 import ImageIcon from "../Images/image.png"
 import PostCard from "../Components/PostCard";
+import ProfilePostCards from "../Components/ProfilePostCards";
+import { useParams } from "react-router-dom";
 
 const Profile = () =>{
+
+    const {accountId} = useParams();
 
     const {userProfile, postings, setPostings} =useContext(AuthContext);
     const navigate = useNavigate();
@@ -33,10 +37,9 @@ const Profile = () =>{
     return(
         <main>
             <LeftSidebar/>
-            <section className="bg-white h-screen w-full justify-start items-center flex flex-col px-20">
-                 {/* <div className="h-3/4 flex flex-col gap-2 bg-blue-300"> */}
+            <section className="bg-white h-min-screen w-full justify-start items-center flex flex-col p-10">
 
-                 <div className="w-1/2 rounded-2xl flex justify-center items-center mt-10">
+                 <div className="w-1/2 rounded-2xl flex justify-center items-center">
                      <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
                      <div className=" h-full p-5 justify-center items-start flex flex-col gap-2">
                         <h1 className="font-bold text-xl text-black">{name} {" "} 
@@ -76,38 +79,8 @@ const Profile = () =>{
                         ))}
                    </div>
                  </div>
+                 <ProfilePostCards accountId={accountId}/>
 
-                 <div className="h-10 w-200 border-b-2 border-gray-100 justify-center items-center flex">
-                    <img src={ImageIcon} />
-                 </div>
-                 <div className="w-200 grid grid-cols-3 gap-1">
-                            {postings.filter(p => p.accountId === userProfile.accountId && p.media).map((posting) => (
-                            <div key={posting.postingId} className={`relative border-1 border-gray-100 h-80 w-full justify-center items-center flex ${!posting?.media ? 'bg-gray-200' : 'bg-white'} cursor-pointer overflow-hidden`}>
-
-                                <img src={posting?.media.length >= 0 ? posting?.media : null} className={`${posting?.media.length !== 0 ? '' : 'hidden'} object-cover h-full w-full`}/>
-
-                                <div className={`${posting?.media.length !== 0 ? 'bg-black hidden' : 'bg-gray-100'} p-4 w-full`}>
-                                    <h1 className="text-black text-xs"># {posting?.text}</h1>
-                                </div>
-
-                                <div className={`inset-0 absolute opacity-0 hover:opacity-100 hover:bg-black/30 hover:backdrop-blur-md justify-center items-center flex`}>
-                                       <h1 className="text-white text-sm p-2">{posting?.text}</h1>
-                                </div>
-                                
-                                
-                                
-                                
-                            </div>
-                            ))}
-                            
-                            
-                 </div>
-                 
-                 
-
-
-
-                 {/* </div> */}
             </section>
             {showEditProfile && (<EditProfileModal onClose={()=> setEditProfile(false)}/>)}
             <Footer/>

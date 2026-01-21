@@ -1,6 +1,7 @@
 import axios from "axios";
 import Footer from "../Components/Footer";
 import LeftSidebar from "../Components/LeftSidebar";
+import ProfilePostCards from "../Components/ProfilePostCards";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 const ViewProfile = () => {
@@ -27,10 +28,10 @@ const ViewProfile = () => {
         
      <main>
             <LeftSidebar/>
-            <section className="bg-white h-screen w-full justify-center items-center flex px-20">
-                 <div className="h-3/4 flex flex-col gap-2">
+            <section className="bg-white w-full justify-center items-center flex flex-col p-10">
+                 
 
-                 <div className="w-full rounded-2xl flex justify-start items-center">
+                 <div className="w-200 rounded-2xl flex justify-start items-center">
                      <img src={selectedUser?.profile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
                      <div className=" h-full w-full p-5">
                         <h1 className="font-bold text-xl text-black">{selectedUser?.lastname} {selectedUser?.firstname} {selectedUser?.middlename} {" "} 
@@ -69,7 +70,8 @@ const ViewProfile = () => {
 
 
 
-                 </div>
+                 
+                 <ProfilePostCards accountId={accountId}/>
             </section>
             <Footer/>
         </main>

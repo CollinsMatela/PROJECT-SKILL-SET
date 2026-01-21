@@ -48,7 +48,10 @@ const LeftSidebar = () =>{
     
     const handleHome = () =>{
     navigate(`/dashboard/${userProfile?.accountId}`);
-}
+    }
+    const handleProfile = () => {
+        navigate(`/profile/${userProfile?.accountId}`);
+    }
     return(
         <aside className="fixed bg-white justify-start items-start flex h-full left-0 top-0">
             <div className={`${search ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-2 border-gray-200 pt-10 px-4`}>
@@ -85,7 +88,7 @@ const LeftSidebar = () =>{
             </button>
 
 
-            <button className={`${myButton ? "" : "hidden"} h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={() => navigate("/Profile")}>
+            <button className={`${myButton ? "" : "hidden"} h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleProfile}>
                 <img src={ProfileIcon} alt="profile" className="h-7 w-7" />
                 <h1>{search ? "" : "Profile"}</h1>
             </button>
