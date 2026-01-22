@@ -23,6 +23,7 @@ import GetUsersRoute from "./routes/getUsersRoute.js"
 import GetViewProfileRoute from "./routes/getViewProfile.js"
 import getSearchInputRoute from "./routes/getSearchInputRoute.js";
 import BasicInfoRoute from "./routes/basicInfoRoute.js";
+import FollowRoute from "./routes/followRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -48,6 +49,7 @@ app.use("/", GetUsersRoute);
 app.use("/", GetViewProfileRoute);
 app.use("/", getSearchInputRoute);
 app.use("/", BasicInfoRoute);
+app.use("/", FollowRoute);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
