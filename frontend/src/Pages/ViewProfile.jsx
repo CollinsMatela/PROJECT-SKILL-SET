@@ -2,11 +2,15 @@ import axios from "axios";
 import Footer from "../Components/Footer";
 import LeftSidebar from "../Components/LeftSidebar";
 import ProfilePostCards from "../Components/ProfilePostCards";
-import { useEffect, useState } from "react";
+import defaultProfile from "../Images/default_profile.png"
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 const ViewProfile = () => {
     const { accountId } = useParams();
+    const {postings} = useContext(AuthContext)
     const [selectedUser, setSelectedUser] = useState(null);
+    const countOfPosting = postings.filter(p => p.accountId === accountId).length;
     
 
         const fetchProfile = async () => {
@@ -31,16 +35,19 @@ const ViewProfile = () => {
             <section className="bg-white w-full justify-center items-center flex flex-col p-10">
                  
 
-                 <div className="w-200 rounded-2xl flex justify-start items-center">
-                     <img src={selectedUser?.profile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
-                     <div className=" h-full w-full p-5">
-                        <h1 className="font-bold text-xl text-black">{selectedUser?.lastname} {selectedUser?.firstname} {selectedUser?.middlename} {" "} 
-                             <span className={`${selectedUser?.availability}`? "text-green-500" : "text-gray-300"}>{selectedUser?.availability}</span>
-                        </h1>
-                        <h1 className="text-md text-gray-500 mb-4 gap-2">{selectedUser?.baranggay}{" , "}{selectedUser?.city}{" , "}{selectedUser?.province}{" • "} {selectedUser?.email}{" • "} {selectedUser?.contact}</h1>
+                 <div className="w-1/2 rounded-2xl flex justify-center items-center mb-4">
+                     <img src={selectedUser?.profile ? selectedUser?.profile : defaultProfile} className="bg-white h-50 w-50 rounded-full border-4 border-black-500 object-cover"/>
+                     <div className=" h-full p-5 gap-2 flex flex-col">
+                        <h1 className="font-bold text-xl text-black">{selectedUser?.lastname} {selectedUser?.firstname} {selectedUser?.middlename} {" "}</h1>
+                        <h1 className="text-md text-gray-500 gap-2">{selectedUser?.baranggay}{" , "}{selectedUser?.city}{" , "}{selectedUser?.province}{" • "} {selectedUser?.email}{" • "} {selectedUser?.contact}</h1>
+                        <h1 className="flex gap-4"><h1>{countOfPosting + " post"}</h1><h1>{selectedUser?.followers + " followers"}</h1><h1>{selectedUser?.ratings + " ratings"}</h1></h1>
+                        <button className="bg-black w-full h-8 rounded-md cursor-pointer">
+                    <h1 className="text-white font-nanum text-lg font-bold">Follow</h1>
+                 </button>
                      </div>
-                     
-                 </div>
+                </div>
+
+                 
 
                  <div className="bg-white f-full flex flex-col p-5">
                      <label htmlFor="description" className="mb-2">Bio —</label>

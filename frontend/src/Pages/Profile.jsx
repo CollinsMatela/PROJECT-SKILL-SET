@@ -42,9 +42,7 @@ const Profile = () =>{
                  <div className="w-1/2 rounded-2xl flex justify-center items-center">
                      <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="Profile"  className="bg-white h-50 w-50 rounded-full border-4 border-green-300 object-cover"/>
                      <div className=" h-full p-5 justify-center items-start flex flex-col gap-2">
-                        <h1 className="font-bold text-xl text-black">{name} {" "} 
-                             <span className={`${availability}`? "text-green-500" : "text-gray-300"}>{availability}</span>
-                        </h1>
+                        <h1 className="font-bold text-xl text-black">{name}</h1>
                         <h1 className="text-md text-gray-500 gap-2">{location ? location : "No location"}{" • "} {email}{" • "} {contact ? contact : "No contact"}</h1>
                         <div className="flex gap-4">
                             <h1>{numberOfPost} post</h1> <h1>{userProfile?.followers} followers</h1> <h1>{userProfile?.ratings} ratings</h1>
