@@ -11,7 +11,9 @@ const ViewProfile = () => {
     const { accountId } = useParams();
     const {postings, userProfile} = useContext(AuthContext)
     const [selectedUser, setSelectedUser] = useState(null);
+
     const countOfPosting = postings.filter(p => p.accountId === accountId).length;
+    const [isFollowing, setIsFollowing] = useState(false);
 
     
 
@@ -22,6 +24,7 @@ const ViewProfile = () => {
             const res = await axios.post(`${import.meta.env.VITE_API_URL}/follow-user/${userProfile.accountId}`, {followingId});
             console.log("Follow Response:", res.data.message);
             fetchProfile();
+            fetchWhoFollowed();
         } catch (error) {
             console.log(error)
         }
@@ -30,6 +33,15 @@ const ViewProfile = () => {
           if(count >= 1000000) return count / 1000000 + "M";
           if(count >= 1000) return count / 1000 + "K";
           return count;
+    }
+    const fetchWhoFollowed = async () => {
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/who-followed`, {followerId : userProfile?.accountId, followingId : accountId});
+            setIsFollowing(res.data.isFollowing);
+
+        } catch (error) {
+            console.log(error);
+        }
     }
         const fetchProfile = async () => {
             try {
@@ -43,6 +55,7 @@ const ViewProfile = () => {
 
         useEffect(() => {
             fetchProfile();
+            fetchWhoFollowed();
         }, [accountId]);
 
     return(
@@ -59,8 +72,8 @@ const ViewProfile = () => {
                         <h1 className="font-bold text-xl text-black">{selectedUser?.firstname} {selectedUser?.lastname}</h1>
                         <h1 className="text-md text-gray-500 gap-2">{selectedUser?.baranggay ? selectedUser?.baranggay + " , " : ""}{selectedUser?.city ? selectedUser?.city  + " , " : ""}{selectedUser?.province} {" • " + selectedUser?.email}{selectedUser?.contact ? " • " + selectedUser?.contact : ""}</h1>
                         <h1 className="flex gap-4"><h1>{countOfPosting + " post"}</h1><h1>{followersCount(selectedUser?.followers) + " followers"}</h1><h1>{selectedUser?.ratings + " ratings"}</h1></h1>
-                        <button className="bg-black h-8 w-100 rounded-md cursor-pointer" onClick={handleFollow}>
-                            <h1 className="text-white font-nanum text-lg font-bold">Follow</h1>
+                        <button className={`${isFollowing ? "bg-blue-500 w-8" : "bg-black w-100"} rounded-md h-8 transition-all duration-3000 ease-in-out cursor-pointer`} onClick={handleFollow}>
+                            <h1 className={`${isFollowing ? "text-xs" : "text-lg"} text-white font-nanum font-bold`}>{isFollowing ? "✓" : "Follow"}</h1>
                         </button>
                      </div>
                 </div>

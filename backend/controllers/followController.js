@@ -1,4 +1,4 @@
-import { UserFollowModel } from "../models/UserFollowModel.js"
+import UserFollowModel  from "../models/UserFollowModel.js"
 import UserProfile from "../models/UserProfileModel.js";
 
 export const followController = async (req, res) => {
