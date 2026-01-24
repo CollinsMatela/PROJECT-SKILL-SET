@@ -3,7 +3,7 @@ import UserProfileModel from "../models/UserProfileModel.js";
 export const getUsersController = async (req, res) => {
 
     try {
-        const result = await UserProfileModel.find();
+        const result = await UserProfileModel.aggregate([{$sample: {size: 5}}]);
     return res.status(200).json({message: "Fetched all users",
                           users: result
     })

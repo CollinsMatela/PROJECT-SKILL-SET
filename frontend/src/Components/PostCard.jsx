@@ -15,7 +15,7 @@ const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
 
                   {/* HEADER*/}
                   <div className="bg-white h-15 w-full justify-start items-center rounded-t-xl flex p-2 gap-2">
-                    <img src={posting?.profile ? posting?.profile : defualtProfile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full border-2 border-green-500 object-cover" />
+                    <img src={posting?.profile ? posting?.profile : defualtProfile} alt="profile" className="bg-gray-100 h-10 w-10 rounded-full object-cover" />
                     <div className="bg-white h-10 w-full">
                       <h1 className="text-sm font-bold">{`${posting?.firstname} ${posting?.lastname}`}</h1>
                       <h1 className="text-sm text-gray-400">{`${posting?.baranggay}, ${posting?.city}, ${posting?.province}  • ${timeAgo(posting?.createdAt)}`}</h1>
@@ -27,7 +27,7 @@ const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
 
                   {/* ARROW SLIDES */}
                   {posting?.media.length > 0 && (
-                  <div className="relative bg-black aspect-square w-full justify-center items-center flex">
+                  <div className="relative bg-gray-100 aspect-square w-full justify-center items-center flex">
 
                       {imageIndex > 0 && ( 
                         <button className="z-1 absolute left-0 justify-items-center hover:bg-white hover:opacity-90 transition duration-500 ease-in-out h-full w-12 cursor-pointer" 

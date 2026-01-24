@@ -19,12 +19,12 @@ const ProfilePostCards = ({accountId}) => {
 
     return(
         <>
-        <div className="h-10 w-200 border-b-2 border-gray-100 justify-center items-center flex">
+                         <div className="h-10 w-250 border-b-2 border-gray-100 justify-center items-center flex">
                             <img src={ImageIcon} />
                          </div>
-                         <div className="w-200 grid grid-cols-3 gap-1">
+                         <div className="w-250 grid grid-cols-3 gap-1">
                                     {postings.filter(p => p.accountId === accountId && p.media).map((posting) => (
-                                    <div key={posting.postingId} className={`relative  h-80 w-full justify-center items-center flex ${!posting?.media ? 'bg-gray-200' : 'bg-white'} cursor-pointer overflow-hidden`}>
+                                    <div key={posting.postingId} className={`relative  h-100 w-full justify-center items-center flex ${!posting?.media ? 'bg-gray-200' : 'bg-white'} cursor-pointer overflow-hidden`}>
         
                                         <img src={posting?.media.length >= 0 ? posting?.media : null} className={`${posting?.media.length !== 0 ? '' : 'hidden'} object-cover h-full w-full`}/>
         

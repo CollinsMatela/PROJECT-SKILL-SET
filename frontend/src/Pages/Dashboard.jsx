@@ -152,7 +152,7 @@ const Dashboard = () =>{
           <div className="bg-white flex-1 justify-center items-center flex flex-col pt-10">
 
                   <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
-                  <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="profile" className="h-12 w-12 rounded-full object-cover border-2 border-green-500 cursor-pointer" />
+                  <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="profile" className="h-12 w-12 rounded-full object-cover cursor-pointer" />
                   <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
                             className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
                             value={text}
@@ -165,7 +165,7 @@ const Dashboard = () =>{
                   </button>
                   {/* Open file explorer */}
                   <input type="file" ref={filePicker} accept="image/*" onChange={handleUploadMedia} hidden />
-                  <button className="h-12 w-12 bg-green-500 justify-items-center rounded-full hover:bg-green-600 cursor-pointer"
+                  <button className="h-12 w-12 bg-black justify-items-center rounded-md transition-all duration-3000 ease-in-out hover:rounded-4xl hover:-translate-y-1 cursor-pointer"
                           onClick={SubmitPosting}>
                     <img src={SendArrowIcon} alt="arrow" />
                   </button>
@@ -181,13 +181,11 @@ const Dashboard = () =>{
                   ))}
                 </div>)
                 }
-
-          {/*For you feed filter*/}
-                <div className="h-15 w-full justify-center items-center border-y-1 border-gray-100 flex mb-4 gap-4">
-                  <h1 className="text-md text-gray-500">For you feed </h1>
-                  <div className="h-5 w-5 rounded-full border-1 border-gray-500 text-gray-500 justify-center items-center flex cursor-pointer">▾</div>
+                {/*For you feed filter*/}
+                <div className="h-8 w-full justify-between items-center flex mb-4 gap-4 p-2 border-b-1 border-gray-100">
+                  <h1 className="text-md text-gray-800 font-semibold">Today's pick</h1>
+                  <h1 className=" text-xs cursor-pointer text-blue-500"> Filter ▾</h1>
                 </div>
-          
 
           {/* Post Cards */}
               {postings?.map((posting) => (

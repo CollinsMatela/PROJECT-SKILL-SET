@@ -25,7 +25,7 @@ const Profile = () =>{
     const handleEditProfile = () =>{
         setEditProfile(true);
     }
-    const name = userProfile ? `${userProfile.firstname} ${userProfile.middlename} ${userProfile.lastname}` : "No name yet";
+    const name = userProfile ? `${userProfile.firstname} ${userProfile.lastname}` : "User";
     const description = userProfile ? `${userProfile.bio}` : "No description yet";
     const availability = userProfile ? `${userProfile.availability}` : "No status";
     const location = userProfile ? `${userProfile.baranggay + ","} ${userProfile.city + ","} ${userProfile.province}` : "No location yet";
@@ -45,7 +45,7 @@ const Profile = () =>{
                         <div className="flex gap-4">
                             <h1>{numberOfPost} post</h1> <h1>{userProfile?.followers} followers</h1> <h1>{userProfile?.ratings} ratings</h1>
                         </div>
-                        <button className="bg-black h-8 w-full rounded-md font-nanum text-white text-lg cursor-pointer"
+                        <button className="bg-black h-8 w-full rounded-md font-nanum text-white text-lg cursor-pointer hover:-translate-y-1 transition-all duration-300 ease-in-out"
                                 onClick={handleEditProfile}>Edit Profile
                         </button>
                      </div>
