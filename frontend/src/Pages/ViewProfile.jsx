@@ -72,7 +72,7 @@ const ViewProfile = () => {
                         <h1 className="font-bold text-xl text-black">{selectedUser?.firstname} {selectedUser?.lastname}</h1>
                         <h1 className="text-md text-gray-500 gap-2">{selectedUser?.baranggay ? selectedUser?.baranggay + " , " : ""}{selectedUser?.city ? selectedUser?.city  + " , " : ""}{selectedUser?.province} {" • " + selectedUser?.email}{selectedUser?.contact ? " • " + selectedUser?.contact : ""}</h1>
                         <h1 className="flex gap-4"><h1>{countOfPosting + " post"}</h1><h1>{followersCount(selectedUser?.followers) + " followers"}</h1><h1>{selectedUser?.ratings + " ratings"}</h1></h1>
-                        <button className={`${isFollowing ? "bg-blue-500 w-8" : "bg-black w-100"} rounded-md h-8 transition-all duration-3000 ease-in-out cursor-pointer`} onClick={handleFollow}>
+                        <button className={`${isFollowing ? "bg-blue-500 w-8" : "bg-black w-full"} rounded-md h-8 transition-all duration-3000 ease-in-out cursor-pointer`} onClick={handleFollow}>
                             <h1 className={`${isFollowing ? "text-xs" : "text-lg"} text-white font-nanum font-bold`}>{isFollowing ? "✓" : "Follow"}</h1>
                         </button>
                      </div>

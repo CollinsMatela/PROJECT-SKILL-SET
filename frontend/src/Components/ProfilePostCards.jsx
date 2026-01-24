@@ -6,6 +6,17 @@ const ProfilePostCards = ({accountId}) => {
 
     const {userProfile, postings} = useContext(AuthContext);
 
+    const handleDate = (date) =>{
+          const iso = date;
+          const newDate = iso.split("T")[0];
+          return newDate;
+    }
+    const limitCaption = (text) =>{
+        if(!text) return "";
+
+        return text.length > 100 ? text.substring(0, 200) + "..." : text;
+    }
+
     return(
         <>
         <div className="h-10 w-200 border-b-2 border-gray-100 justify-center items-center flex">
@@ -21,8 +32,9 @@ const ProfilePostCards = ({accountId}) => {
                                             <h1 className="text-black text-xs"># {posting?.text}</h1>
                                         </div>
         
-                                        <div className={`inset-0 absolute opacity-0 hover:opacity-100 hover:bg-black/30 hover:backdrop-blur-md justify-center items-center flex`}>
-                                               <h1 className="text-white text-sm p-2">{posting?.text}</h1>
+                                        <div className={`inset-0 absolute opacity-0 hover:opacity-100 hover:bg-black/30 hover:backdrop-blur-md justify-center items-center flex flex-col`}>
+                                               <h1 className="text-white text-sm p-2">{limitCaption(posting?.text)}</h1>
+                                               <h1 className="text-white font-bold text-sm p-2">{handleDate(posting?.createdAt)}</h1>
                                         </div>
                                         
                                         
