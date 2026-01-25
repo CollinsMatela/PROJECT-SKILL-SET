@@ -13,6 +13,7 @@ import SendArrowIcon from "../Images/send_arrow.png"
 import ImageIcon from "../Images/image.png"
 import PostCard from "../Components/PostCard"
 import EditProfileModal from "../Components/EditProfileModal"
+import FilterContainer from "../Components/FilterContainer"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
@@ -182,10 +183,7 @@ const Dashboard = () =>{
                 </div>)
                 }
                 {/*For you feed filter*/}
-                <div className="h-8 w-full justify-between items-center flex mb-4 gap-4 p-2 border-b-1 border-gray-100">
-                  <h1 className="text-md text-gray-800 font-semibold">Today's pick</h1>
-                  <h1 className=" text-xs cursor-pointer text-blue-500"> Filter ▾</h1>
-                </div>
+                <FilterContainer/>
 
           {/* Post Cards */}
               {postings?.map((posting) => (
