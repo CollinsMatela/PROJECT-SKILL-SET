@@ -9,6 +9,7 @@ import EditProfileModal from "./Components/EditProfileModal";
 import Loading from "./Components/Loading"
 import ViewProfile from "./Pages/ViewProfile";
 import Basic_Info from "./Pages/Basic_Info";
+import FilterPostModal from "./Components/FilterPostModal";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Route path={"/edit-profile-modal"} element={<EditProfileModal/>}></Route>
       <Route path={"/view-profile/:accountId"} element={<ViewProfile/>}></Route>
       <Route path={"/basic-info/:accountId"} element={<Basic_Info/>}></Route>
+      <Route path={"/filter-post-modal"} element={<FilterPostModal/>}></Route>
       
 
     </Routes>
