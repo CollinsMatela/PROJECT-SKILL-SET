@@ -50,7 +50,7 @@ const Dashboard = () =>{
           
         }
       };
-
+      
       useEffect(() => {
       if (!userProfile?.accountId) return;
       fetchData();

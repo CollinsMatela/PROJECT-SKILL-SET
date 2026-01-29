@@ -2,6 +2,7 @@ import { useContext, useMemo, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import FilterPostModal from "./FilterPostModal";
+import Dashboard from "../Pages/Dashboard";
 
 const FilterContainer = () =>{
 
@@ -9,32 +10,31 @@ const FilterContainer = () =>{
 
     const [filterBtn, setFilterBtn] = useState(false);
     const [showFilterPostModal, setFilterPostModal] = useState(false);
+    const [filteredPost, setFilteredPost] = useState([]);
 
     const [town, setTown] = useState(null);
     const [city, setCity] = useState(null);
     const [province, setProvince] = useState(null);
 
     const filteredPosts = () => {
-         if(!postings) return [];
-        const filtered = postings.filter(p => {
-        (
+        if(!postings) return [];
+
+        const filtered = postings.filter(p => 
             (town === null || p.baranggay === town) &&
             (city === null || p.city === city) &&
             (province === null || p.province === province)
             );
             
-        }); 
-        alert("Working bro!")
-        setFilterPostModal(prev => !prev);
-
-        return filtered;
-
-        
-};
+        setFilteredPost(filtered);
+        setFilterPostModal(prev => !prev);  
+    };
 
     return(
         <>
-        {showFilterPostModal && (<FilterPostModal onClose={() => setFilterPostModal(false)}/>)}
+        {showFilterPostModal && (<FilterPostModal onClose={() => setFilterPostModal(false)}
+                                                  filteredPostings={filteredPost}/>)}
+        {/* {<Dashboard showFilterPostModal={showFilterPostModal}/>} */}
+
         <div className={`${filterBtn ? "gap-2" : "h-10"} w-full justify-start items-center flex flex-col mb-4 py-2 border-b-1 border-gray-100 transition-all duration-1000 ease-in-out`}>
             <div className="w-full justify-between items-center flex">
                   <h1 className="text-md text-gray-800 font-semibold">Today's pick</h1>
