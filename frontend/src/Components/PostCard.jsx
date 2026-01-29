@@ -6,9 +6,22 @@ import NextArrow from "../Images/next_arrow.png"
 import Comments from "../Images/comments.png"
 import defualtProfile from "../Images/default_profile.png"
 
-const PostCard = ({posting, timeAgo, PressLike, userProfile}) => {
+const PostCard = ({posting, PressLike, userProfile}) => {
 
     const [imageIndex, setImageIndex] = useState(0);
+
+    const timeAgo = (createdAt) =>{
+          const time = Date.now() - new Date(createdAt);
+          const minutes = Math.floor(time / 60000);
+          const hours = Math.floor(time / 3600000);
+          const days = Math.floor(time / 86400000);
+
+          if (minutes < 1) return "Just now";
+          if (minutes < 60) return `${minutes} min ago`;
+          if (hours < 24) return `${hours} hr ago`;
+          return `${days} day${days > 1 ? "s" : ""} ago`;
+        }
+
     return(
     <>
     <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 rounded-t-xl rounded-t-xl border-1 border-gray-100">

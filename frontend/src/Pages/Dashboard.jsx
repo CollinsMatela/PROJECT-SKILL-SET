@@ -86,8 +86,6 @@ const Dashboard = () =>{
       // Handle Liking
       const PressLike = async ({ postingId, accountId }) => {
 
-            // console.log(details?.postingId)
-            // console.log(details?.accountId)
             const res = await handleLike({ postingId, accountId });
             console.log(res.data.message);
             console.log(res.data.liked);
@@ -126,17 +124,7 @@ const Dashboard = () =>{
         }
         }
 
-        const timeAgo = (createdAt) =>{
-          const time = Date.now() - new Date(createdAt);
-          const minutes = Math.floor(time / 60000);
-          const hours = Math.floor(time / 3600000);
-          const days = Math.floor(time / 86400000);
 
-          if (minutes < 1) return "Just now";
-          if (minutes < 60) return `${minutes} min ago`;
-          if (hours < 24) return `${hours} hr ago`;
-          return `${days} day${days > 1 ? "s" : ""} ago`;
-        }
       return(
       <>
       
@@ -188,8 +176,7 @@ const Dashboard = () =>{
           {/* Post Cards */}
               {postings?.map((posting) => (
                  <PostCard key={posting.postingId} 
-                           posting={posting} 
-                           timeAgo={timeAgo} 
+                           posting={posting}  
                            PressLike={PressLike}
                            userProfile={userProfile}
                  />
