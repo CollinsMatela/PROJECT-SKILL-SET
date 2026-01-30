@@ -1,12 +1,16 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import BlackHeartIcon from "../Images/blackheart25.png"
 import RedHeartIcon from "../Images/redheart25.png"
 import BackArrow from "../Images/back_arrow.png"
 import NextArrow from "../Images/next_arrow.png"
 import Comments from "../Images/comments.png"
 import defualtProfile from "../Images/default_profile.png"
+import handleLike from "../Services/handleLike"
+import { AuthContext } from "../Context/AuthContext"
 
-const PostCard = ({posting, PressLike, userProfile}) => {
+const PostCard = ({posting, userProfile}) => {
+
+    const {setPostings} = useContext(AuthContext);
 
     const [imageIndex, setImageIndex] = useState(0);
 
@@ -21,6 +25,26 @@ const PostCard = ({posting, PressLike, userProfile}) => {
           if (hours < 24) return `${hours} hr ago`;
           return `${days} day${days > 1 ? "s" : ""} ago`;
         }
+
+    const PressLike = async ({ postingId, accountId }) => {
+
+            const res = await handleLike({ postingId, accountId });
+            console.log(res.data.message);
+            console.log(res.data.liked);
+            console.log(res.data.likesCount);
+
+            setPostings(prev =>
+        prev.map(post =>
+          post.postingId === postingId
+            ? {
+                ...post,
+                liked: res.data.liked,
+                likesCount: res.data.likesCount
+              }
+            : post
+        )
+  );
+      }
 
     return(
     <>

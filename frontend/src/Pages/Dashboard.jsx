@@ -84,25 +84,25 @@ const Dashboard = () =>{
             
       }
       // Handle Liking
-      const PressLike = async ({ postingId, accountId }) => {
+  //     const PressLike = async ({ postingId, accountId }) => {
 
-            const res = await handleLike({ postingId, accountId });
-            console.log(res.data.message);
-            console.log(res.data.liked);
-            console.log(res.data.likesCount);
+  //           const res = await handleLike({ postingId, accountId });
+  //           console.log(res.data.message);
+  //           console.log(res.data.liked);
+  //           console.log(res.data.likesCount);
 
-            setPostings(prev =>
-        prev.map(post =>
-          post.postingId === postingId
-            ? {
-                ...post,
-                liked: res.data.liked,
-                likesCount: res.data.likesCount
-              }
-            : post
-        )
-  );
-      }
+  //           setPostings(prev =>
+  //       prev.map(post =>
+  //         post.postingId === postingId
+  //           ? {
+  //               ...post,
+  //               liked: res.data.liked,
+  //               likesCount: res.data.likesCount
+  //             }
+  //           : post
+  //       )
+  // );
+  //     }
 
       const SubmitPosting = async () => {
          try {
@@ -177,7 +177,6 @@ const Dashboard = () =>{
               {postings?.map((posting) => (
                  <PostCard key={posting.postingId} 
                            posting={posting}  
-                           PressLike={PressLike}
                            userProfile={userProfile}
                  />
               ))  
