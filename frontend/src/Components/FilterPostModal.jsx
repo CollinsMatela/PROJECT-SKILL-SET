@@ -11,7 +11,7 @@ const FilterPostModal = ({onClose, filteredPostings}) =>{
             <div className="absolute inset-0 bg-black/80" onClick={onClose}></div>
 
                 <div className="relative h-20 w-3xl justify-center items-center flex">
-                    <h1 className="text-2xl text-white font-bold">Filtered Post</h1>
+                    <h1 className="text-2xl text-white font-bold">{`Filtered Post (${filteredPostings.length})`}</h1>
                 </div>
             <div className="relative max-w-150 max-h-[80vh]">
                 

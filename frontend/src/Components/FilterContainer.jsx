@@ -25,16 +25,19 @@ const FilterContainer = () =>{
     const filteredPost = useMemo(() => {
         if (!postings) return [];
 
-        return postings.filter(p =>
-            (!town || p.baranggay === town) &&
-            (!city || p.city === city) &&
-            (!province || p.province === province)
+        const filtering =  postings.filter(p =>
+            (!town || p.baranggay.toLowerCase() === town.toLowerCase()) &&
+            (!city || p.city.toLowerCase() === city.toLowerCase()) &&
+            (!province || p.province.toLowerCase() === province.toLowerCase())
         );
+
+        return filtering;
     }, [postings, town, city, province]);
 
     const handleFilterClick = () => {
+        if(!town && !city && !province) return alert("Please enter at least 1");
         setFilterPostModal(true);
-    setFilterBtn(false);
+        setFilterBtn(false);
     }
 
 
