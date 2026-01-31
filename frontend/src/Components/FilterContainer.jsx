@@ -10,24 +10,33 @@ const FilterContainer = () =>{
 
     const [filterBtn, setFilterBtn] = useState(false);
     const [showFilterPostModal, setFilterPostModal] = useState(false);
-    const [filteredPost, setFilteredPost] = useState([]);
+ 
 
-    const [town, setTown] = useState(null);
-    const [city, setCity] = useState(null);
-    const [province, setProvince] = useState(null);
+    const [town, setTown] = useState("");
+    const [city, setCity] = useState("");
+    const [province, setProvince] = useState("");
 
-    const filteredPosts = () => {
-        if(!postings) return [];
+    const Refresher = () => {
+        setTown("");
+        setCity("");
+        setProvince("");
+        
+    }
+    const filteredPost = useMemo(() => {
+        if (!postings) return [];
 
-        const filtered = postings.filter(p => 
-            (town === null || p.baranggay === town) &&
-            (city === null || p.city === city) &&
-            (province === null || p.province === province)
-            );
-            
-        setFilteredPost(filtered);
-        setFilterPostModal(prev => !prev);  
-    };
+        return postings.filter(p =>
+            (!town || p.baranggay === town) &&
+            (!city || p.city === city) &&
+            (!province || p.province === province)
+        );
+    }, [postings, town, city, province]);
+
+    const handleFilterClick = () => {
+        setFilterPostModal(true);
+    setFilterBtn(false);
+    }
+
 
     return(
         <>
@@ -71,7 +80,7 @@ const FilterContainer = () =>{
              
         </div>
         <button className={`${filterBtn ? "h-8 opacity-100" : "h-0 opacity-0"} bg-black w-full rounded-md text-white cursor-pointer text-lg font-nanum transition-all duration-2000 ease-in-out`}
-                onClick={filteredPosts}>
+                onClick={handleFilterClick}>
             Filter posts
         </button>
         </div>
