@@ -10,11 +10,12 @@ import Loading from "./Components/Loading"
 import ViewProfile from "./Pages/ViewProfile";
 import Basic_Info from "./Pages/Basic_Info";
 import FilterPostModal from "./Components/FilterPostModal";
+import MapPage from "./Pages/MapPage"
 
 
 function App() {
   return (
-
+    
     <AuthProvider>
     <BrowserRouter>
     
@@ -29,6 +30,7 @@ function App() {
       <Route path={"/view-profile/:accountId"} element={<ViewProfile/>}></Route>
       <Route path={"/basic-info/:accountId"} element={<Basic_Info/>}></Route>
       <Route path={"/filter-post-modal"} element={<FilterPostModal/>}></Route>
+      <Route path={"/map-location"} element={<MapPage/>}></Route>
       
 
     </Routes>
