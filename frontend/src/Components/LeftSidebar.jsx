@@ -45,6 +45,9 @@ const LeftSidebar = () =>{
     const handleUserClick = (accountId) => {
          navigate(`/view-profile/${accountId}`)
     }
+    const handleMap = () => {
+        navigate("/map-location")
+    }
     
     const handleHome = () =>{
         
@@ -82,6 +85,10 @@ const LeftSidebar = () =>{
             <button className="h-12 w-full justify-start items-start flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 p-2 gap-2">
                 <img src={NotifIcon} alt="notification" className="h-7 w-7" />
                 <h1>{search ? "" : "Notification"}</h1>
+            </button>
+            <button className={`h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleMap}>
+                <img src={LogoutIcon} alt="profile" className="h-7 w-7" />
+                <h1>{search ? "" : "Find Location"}</h1>
             </button>
             <button className="h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2" onClick={() => setMyButton(prev => !prev)}>
                 <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="profile" className="h-7 w-7 border-2 border-green-500 rounded-full object-cover cursor-pointer" />
