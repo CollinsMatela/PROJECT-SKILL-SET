@@ -4,6 +4,7 @@ import ViewProfile from "../Pages/ViewProfile"
 import defualtProfile from "../Images/default_profile.png"
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
+import SellerRegistration from "../Pages/SellerRegistration"
 
 
 const RightSideBar = () =>{
@@ -27,9 +28,20 @@ const RightSideBar = () =>{
     const handleUserClick = (accountId) => {
         navigate(`/view-profile/${accountId}`);
     }
+    const handleSellerRegistration = () =>{
+        navigate('/seller-registration');
+    }
 
  return(
         <aside className="flex-1 justify-center items-center flex flex-col p-2 pt-10">
+
+            <div className="bg-gray-100 w-80 rounded-2xl p-2 mb-8 justify-end items-center flex">
+                <div className="bg-white h-10 w-10 rounded-xl hover:w-30 transition-all duration-300 ease-in-out cursor-pointer justify-center items-center flex"
+                     onClick={handleSellerRegistration}>
+                  
+                </div>
+            </div>
+
             <div className="flex flex-col">
                 <div className="w-full flex justify-between items-center">
                     <h1 className="text-sm mb-2 font-medium">Suggested for you!</h1>

@@ -11,6 +11,7 @@ import ViewProfile from "./Pages/ViewProfile";
 import Basic_Info from "./Pages/Basic_Info";
 import FilterPostModal from "./Components/FilterPostModal";
 import MapPage from "./Pages/MapPage"
+import SellerRegistration from "./Pages/SellerRegistration";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       <Route path={"/basic-info/:accountId"} element={<Basic_Info/>}></Route>
       <Route path={"/filter-post-modal"} element={<FilterPostModal/>}></Route>
       <Route path={"/map-location"} element={<MapPage/>}></Route>
+      <Route path={"/seller-registration"} element={<SellerRegistration/>}></Route>
       
 
     </Routes>
