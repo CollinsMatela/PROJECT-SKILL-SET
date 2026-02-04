@@ -1,16 +1,18 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import ViewProfile from "../Pages/ViewProfile"
 import defualtProfile from "../Images/default_profile.png"
 import { useNavigate } from "react-router-dom"
 import Footer from "./Footer"
 import SellerRegistration from "../Pages/SellerRegistration"
+import { AuthContext } from "../Context/AuthContext"
 
 
 const RightSideBar = () =>{
 
     const [users, setUsers] = useState([])
     const navigate = useNavigate();
+    const {userProfile} = useContext(AuthContext);
 
     useEffect(() => {
         try {
@@ -29,7 +31,7 @@ const RightSideBar = () =>{
         navigate(`/view-profile/${accountId}`);
     }
     const handleSellerRegistration = () =>{
-        navigate('/seller-registration');
+        navigate(`/seller-registration/${userProfile?.accountId}`);
     }
 
  return(

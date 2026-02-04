@@ -32,7 +32,7 @@ function App() {
       <Route path={"/basic-info/:accountId"} element={<Basic_Info/>}></Route>
       <Route path={"/filter-post-modal"} element={<FilterPostModal/>}></Route>
       <Route path={"/map-location"} element={<MapPage/>}></Route>
-      <Route path={"/seller-registration"} element={<SellerRegistration/>}></Route>
+      <Route path={"/seller-registration/:accountId"} element={<SellerRegistration/>}></Route>
       
 
     </Routes>
