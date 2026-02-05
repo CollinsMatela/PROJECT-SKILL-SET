@@ -1,6 +1,13 @@
 import LeftSidebar from "../Components/LeftSidebar";
 import InputField from "../Components/InputField";
+import ImageIcon from "../Images/image.png"
+import { useRef } from "react";
 const SellerRegistration = () => {
+
+    const explorerFile = useRef(null);
+    const showExplorerFile = () => {
+          explorerFile.current.click();
+    }
 
     return(
         
@@ -15,11 +22,17 @@ const SellerRegistration = () => {
                         <InputField label="Firstname" type="text" name="text" placeholder="Enter Firstname" error="" value="" onChange=""/>
                         <InputField label="Middlename" type="text" name="text" placeholder="Enter Middlename" error="" value="" onChange=""/>
                     </div>
-                    <div className="flex gap-2">
-                        <InputField label="email" type="email" name="email" placeholder="Enter Email Address (e.g xxx.@gmail.com)" error="" value="" onChange=""/>
+                    <div className="flex gap-2 pr-100">
+                        <InputField label="Email" type="email" name="email" placeholder="Enter Email Address (e.g xxx.@gmail.com)" error="" value="" onChange=""/>
                         <InputField label="Contact No." type="text" name="contact" placeholder="Enter Contact Number" error="" value="" onChange=""/>
-                        <InputField label="Valid ID" type="file" name="validId" placeholder="Insert valid ID" error="" value="" onChange=""/>
                     </div>
+                     <div className="justify-center items-end flex pr-100 gap-2">
+                            <InputField label="Valid ID" type="text" name="validId" placeholder="Choose 1 Valid ID" error="" value="" onChange=""/>
+                            <button className="h-12 w-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex" onClick={showExplorerFile}>
+                               <img src={ImageIcon} />
+                            </button>
+                            <input type="file" name="file" id="file" ref={explorerFile} hidden />
+                        </div>
                     
                   </div>
 
