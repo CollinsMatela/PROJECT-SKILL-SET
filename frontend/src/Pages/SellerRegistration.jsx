@@ -1,8 +1,11 @@
 import LeftSidebar from "../Components/LeftSidebar";
 import InputField from "../Components/InputField";
 import ImageIcon from "../Images/image.png"
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import LocationPicker from "../Components/LocationPicker";
 const SellerRegistration = () => {
+
+    const [locationPicker, setLocationPicker] = useState(false);
 
     const explorerFile = useRef(null);
     const showExplorerFile = () => {
@@ -11,7 +14,7 @@ const SellerRegistration = () => {
 
     return(
         
-        <section className="bg-white h-screen w-full justify-end items-start flex">
+        <section className="bg-white w-full justify-end items-start flex pb-10">
             <LeftSidebar/>
 
                   <div className="h-3/4 w-320 pt-10 px-5 space-y-4">
@@ -61,10 +64,40 @@ const SellerRegistration = () => {
                     </div>
                     
                   </div>
-                     
+
+                  <div className="w-full rounded-xl border-2 border-gray-50 p-5">
+                    <h1>Fill-out Business Document </h1>
+                    <div className="justify-center items-end flex gap-2 pr-100">
+                        <InputField label="Business Permit" type="text" name="businessPermit" placeholder="Insert Business Permit" error="" value="" onChange=""/>
+                        <button className="h-12 w-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex" onClick={showExplorerFile}>
+                                <img src={ImageIcon} />
+                        </button>
+                        <input type="file" name="file" id="file" ref={explorerFile} hidden />
+                    </div>
+                 </div>
+
+                 <div className="w-full rounded-xl border-2 border-gray-50 p-5">
+                    <h1>Fill-out Location Details </h1>
+                    <div className="justify-center items-start flex flex-col gap-2 pr-100">
+                        <InputField label="Latitude" type="text" name="Latitude" placeholder="Enter Latitude" error="" value="" onChange=""/>
+                        <InputField label="Longitude" type="text" name="Longitude" placeholder="Enter Longitude" error="" value="" onChange=""/>
+                        <button className="h-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex px-2 gap-2 mt-2" onClick={() => setLocationPicker(prev => !prev)}>
+                                <img src={ImageIcon} />
+                                <h1>Click to find location</h1>
+                        </button>
+                        
+                        {locationPicker && (<LocationPicker/>)}
+                    </div>
+                    
+                   
+                 </div>
+                      <div className="justify-end items-end flex">
+                        <button className="bg-blue-500 h-12 w-50 text-sm font-bold text-white rounded-xl cursor-pointer hover:bg-blue-600">SUBMIT</button>
+                      </div>
+                      
                   </div>
 
-                  <div className="h-screen w-80 justify-start items-center flex flex-col gap-2 border-r-2 border-gray-100 pt-10 px-5">
+                  <div className="h-screen w-75 justify-start items-center flex flex-col gap-2 border-r-2 border-gray-100 pt-10 px-5">
                     <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Identity Information</div>
                     <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Business Information</div>
                     <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Business Documents</div>
