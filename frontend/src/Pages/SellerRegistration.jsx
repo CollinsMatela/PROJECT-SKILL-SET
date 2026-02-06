@@ -1,16 +1,56 @@
 import LeftSidebar from "../Components/LeftSidebar";
 import InputField from "../Components/InputField";
 import ImageIcon from "../Images/image.png"
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import LocationPicker from "../Components/LocationPicker";
+import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
+
 const SellerRegistration = () => {
 
+    const {userProfile} = useContext(AuthContext);
     const [locationPicker, setLocationPicker] = useState(false);
+
+    const [lastname, setLastname] = useState(userProfile?.lastname || "")
+    const [firstname, setFirstname] = useState(userProfile?.firstname || "")
+    const [middlename, setMiddlename] = useState(userProfile?.middlename || "")
+    const [email, setEmail] = useState(userProfile?.email || "")
+    const [contact, setContact] = useState(userProfile?.contact || "")
+    const [validId, setValidId] = useState("")
+    const [fileName, setFileName] = useState("")
 
     const explorerFile = useRef(null);
     const showExplorerFile = () => {
           explorerFile.current.click();
     }
+
+    const uploadValidID = async (e) => {
+  const files = Array.from(e.target.files);
+  if (files.length > 1) return alert("1 Valid Id only");
+
+  try {
+    const file = files[0];
+
+    setFileName(file.name); // display the original file name immediately
+    alert(file.name); // ✅ works immediately
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "unsigned_media_upload");
+
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/dhgn8rvvn/image/upload",
+      formData
+    );
+
+    setValidId(res.data.secure_url); // store the URL for backend
+  } catch (error) {
+    console.log("Error uploading file: ", error);
+  }
+};
+
+
+    
 
     return(
         
@@ -18,24 +58,26 @@ const SellerRegistration = () => {
             <LeftSidebar/>
 
                   <div className="h-3/4 w-320 pt-10 px-5 space-y-4">
-                  <div className="w-full rounded-xl border-2 border-gray-50 p-5">
+                  <div className="w-full rounded-xl border-2 border-gray-50 p-5 space-y-2">
                     <h1>Fill-out Identity Information</h1>
                     <div className="flex gap-2">
-                        <InputField label="Lastname" type="text" name="text" placeholder="Enter Lastname" error="" value="" onChange=""/>
-                        <InputField label="Firstname" type="text" name="text" placeholder="Enter Firstname" error="" value="" onChange=""/>
-                        <InputField label="Middlename" type="text" name="text" placeholder="Enter Middlename" error="" value="" onChange=""/>
+                        <InputField label="Lastname" type="text" name="text" placeholder="Enter Lastname" error="" value={lastname}/>
+                        <InputField label="Firstname" type="text" name="text" placeholder="Enter Firstname" error="" value={firstname}/>
+                        <InputField label="Middlename" type="text" name="text" placeholder="Enter Middlename" error="" value={middlename}/>
                     </div>
                     <div className="flex gap-2 pr-100">
-                        <InputField label="Email" type="email" name="email" placeholder="Enter Email Address (e.g xxx.@gmail.com)" error="" value="" onChange=""/>
-                        <InputField label="Contact No." type="text" name="contact" placeholder="Enter Contact Number" error="" value="" onChange=""/>
+                        <InputField label="Email" type="email" name="email" placeholder="Enter Email Address (e.g xxx.@gmail.com)" error="" value={email}/>
+                        <InputField label="Contact No." type="text" name="contact" placeholder="Enter Contact Number" error="" value={contact}/>
                     </div>
                      <div className="justify-center items-end flex pr-100 gap-2">
-                            <InputField label="Valid ID" type="text" name="validId" placeholder="Choose 1 Valid ID" error="" value="" onChange=""/>
-                            <button className="h-12 w-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex" onClick={showExplorerFile}>
+                            {fileName && (<h1 className=" h-12 w-full justify-start items-center flex">Selected file: {fileName}</h1>)}
+                            
+                            
+                            <button type="button" className="h-12 w-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex" onClick={showExplorerFile}>
                                <img src={ImageIcon} />
                             </button>
-                            <input type="file" name="file" id="file" ref={explorerFile} hidden />
-                        </div>
+                            <input type="file" name="file" id="file" accept="image/*" ref={explorerFile} onChange={uploadValidID} hidden />
+                    </div>
                     
                   </div>
 
@@ -80,7 +122,7 @@ const SellerRegistration = () => {
                     <h1>Fill-out Location Details </h1>
                     <div className="justify-center items-start flex flex-col gap-2 pr-100">
                         <InputField label="Latitude" type="text" name="Latitude" placeholder="Enter Latitude" error="" value="" onChange=""/>
-                        <InputField label="Longitude" type="text" name="Longitude" placeholder="Enter Longitude" error="" value="" onChange=""/>
+                        <InputField label="Longitude" type="text" name="Longitude" placeholder="Enter Longitude" error="" value="" onChange =""/>
                         <button className="h-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex px-2 gap-2 mt-2" onClick={() => setLocationPicker(prev => !prev)}>
                                 <img src={ImageIcon} />
                                 <h1>Click to find location</h1>
