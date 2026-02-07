@@ -1,13 +1,13 @@
-
-const InputField = ({ label, type, name, placeholder, error, value, onChange }) => {
+const InputField = ({ label, type, name, placeholder, error, value, onChange, readOnly }) => {
     return(
     <div className="flex flex-col w-full">
                     <label htmlFor={name} className="mb-1 font-semibold text-gray-300">{label}</label>
                     <input type={type} 
                            name={name} 
-                           id="" 
+                           id={name} 
                            placeholder={placeholder}
                            className="bg-gray-100 h-12 w-full rounded-xl p-5 outline-0"
+                           readOnly={readOnly}
                            value={value}
                            onChange={onChange} 
                     />
