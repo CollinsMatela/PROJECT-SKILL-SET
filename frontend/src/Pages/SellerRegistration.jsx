@@ -22,7 +22,8 @@ const SellerRegistration = () => {
     const [businessName, setBusinessName] = useState("");
     const [businessAddress, setBusinessAddress] = useState("");
     const [businessType, setBusinessType] = useState("");
-    const [businessDocument, setBusinessDocument] = useState("")
+    const [businessPermit, setBusinessPermit] = useState("")
+    const [fileNameBusinessPermit, setFileNameBusinessPermit] = useState("")
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
 
@@ -31,6 +32,35 @@ const SellerRegistration = () => {
     const showExplorerFile = () => {
             explorerFileValidId.current.click();
     }
+    const showExplorerFileBusinessPermit = () => {
+            explorerFileDocument.current.click();
+    }
+
+    const uploadBusinessPermit = async (e) => {
+        const files = Array.from(e.target.files);
+        if (!files.length) return;
+        if (files.length > 1) return alert("Upload Business Permit"); 
+
+        try {
+          const file = files[0];
+
+          setFileNameBusinessPermit(file.name); // display the original file name immediately
+
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", "unsigned_media_upload");
+
+          const res = await axios.post(
+            "https://api.cloudinary.com/v1_1/dhgn8rvvn/image/upload",
+            formData
+          );
+
+          setBusinessPermit(res.data.secure_url); // store the URL for backend
+          
+        } catch (error) {
+          console.log("Error uploading file: ", error);
+        }
+    };
 
     const uploadValidID = async (e) => {
         const files = Array.from(e.target.files);
@@ -57,6 +87,33 @@ const SellerRegistration = () => {
           console.log("Error uploading file: ", error);
         }
     };
+    
+    const SubmitSellerRegistration = async () => {
+      try {
+           const BusinessData = {
+            userId: userProfile?.accountId,
+            lastname: lastname,
+            firstname: firstname,
+            middlename: middlename,
+            email: email,
+            contact: contact,
+            validId: validId,
+            businessName: businessName,
+            businessAddress: businessAddress,
+            businessType: businessType,
+            businessPermit: businessPermit,
+            latitude: latitude,
+            longitude: longitude
+           }
+           console.log("Business Data:", BusinessData);
+           const res = await axios.post(`${import.meta.env.VITE_API_URL}/business-registration`, BusinessData);
+           console.log("Response from server:", res.data.business);
+           alert("Business registration submitted successfully");
+
+      } catch (error) {
+        console.log("Error submitting seller registration: ", error);
+      }
+    }
 
 
     
@@ -105,7 +162,7 @@ const SellerRegistration = () => {
                         <div className="w-full flex flex-col">
                             <label htmlFor="Business Type" className="mb-1 font-semibold text-gray-300">Business Type</label>
                         <div className="bg-gray-100 h-12 w-full justify-center items-center flex rounded-xl p-2">
-                            <select name="businessType" className="w-full h-full outline-none">
+                            <select name="businessType" className="w-full h-full outline-none" onChange={(e) => setBusinessType(e.target.value)} value={businessType}>
                             <option value="">Select business type</option>
                             <option value="food">Food</option>
                             <option value="service">Service</option>
@@ -125,11 +182,11 @@ const SellerRegistration = () => {
                   <div className="w-full rounded-xl border-2 border-gray-50 p-5">
                     <h1>Fill-out Business Document </h1>
                     <div className="justify-center items-end flex gap-2 pr-100">
-                        <InputField label="Business Permit" type="text" name="businessPermit" placeholder="Insert Business Permit" error="" value={businessDocument} onChange={(e) => setBusinessDocument(e.target.value)} />
-                        <button className="h-12 w-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex" onClick={showExplorerFile}>
+                        <div className=" h-12 w-full items-start justify-center flex flex-col"><h1 className="font-semibold text-gray-300">{`Business Permit:`}</h1> <span className="text-blue-400">{ fileNameBusinessPermit || "N/A"}</span></div>
+                        <button className="h-12 w-12 bg-gray-100 rounded-xl cursor-pointer justify-center items-center flex" onClick={showExplorerFileBusinessPermit}>
                                 <img src={ImageIcon} />
                         </button>
-                        <input type="file" name="file" id="file" ref={explorerFileDocument} hidden />
+                        <input type="file" name="file" id="file" ref={explorerFileDocument} onChange={uploadBusinessPermit} hidden />
                     </div>
                  </div>
 
@@ -149,7 +206,8 @@ const SellerRegistration = () => {
                    
                  </div>
                       <div className="justify-end items-end flex">
-                        <button className="bg-blue-500 h-12 w-50 text-sm font-bold text-white rounded-xl cursor-pointer hover:bg-blue-600">SUBMIT</button>
+                        <button className="bg-blue-500 h-12 w-50 text-sm font-bold text-white rounded-xl cursor-pointer hover:bg-blue-600"
+                        onClick={SubmitSellerRegistration}>SUBMIT</button>
                       </div>
                       
                   </div>

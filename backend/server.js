@@ -25,6 +25,7 @@ import getSearchInputRoute from "./routes/getSearchInputRoute.js";
 import BasicInfoRoute from "./routes/basicInfoRoute.js";
 import FollowRoute from "./routes/followRoute.js";
 import WhoFollowRoute from "./routes/whoFollowRoute.js"
+import BusinessRegistrationRoute from "./routes/businessRegistrationRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -52,6 +53,7 @@ app.use("/", getSearchInputRoute);
 app.use("/", BasicInfoRoute);
 app.use("/", FollowRoute);
 app.use("/", WhoFollowRoute);
+app.use("/", BusinessRegistrationRoute);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

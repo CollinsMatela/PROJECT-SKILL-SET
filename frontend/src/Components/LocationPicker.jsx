@@ -13,11 +13,11 @@ const LocationPicker = () => {
     return(
         <div >
             
-            <h3 className="text-gray-400 text-lg">Click your exact location on the map</h3>
+            <h3 className="text-gray-400 text-md">Click your exact location on the map {`(Copy paste the coordinates to textboxes)`}</h3>
             {position && (<>
              <div className="bg-gray-100 w-full rounded-xl p-2 mb-2">
-                <h1 className="text-blue-500 text-sm font-bold">Selected Coordinates:</h1>
-                <h1 className="text-gray-400 text-sm font-bold">Latitude: {position.lat} | Longitude: {position.lng}</h1>
+                <h1 className="text-gray-400 text-sm font-bold">Selected Coordinates:</h1>
+                <h1 className="text-gray-400 text-sm font-semibold">Latitude: {position.lat} | Longitude: {position.lng}</h1>
              </div>
              </>)}
             <MapContainer center={[14.5995, 120.9842]} zoom={13} style={{ height: "400px", width: "800px" }}>
