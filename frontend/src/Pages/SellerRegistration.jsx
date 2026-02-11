@@ -139,8 +139,8 @@ const SellerRegistration = () => {
         
         <section className="bg-white w-full justify-center items-start flex">
             <LeftSidebar/>
-            {filteredRegistration ? <PendingLoading/> : null}
-                  <div className={`${filteredRegistration ? "hidden" : ""} h-3/4 w-320 pt-10 px-5 space-y-4`}>
+            {filteredRegistration.length > 0 && (<PendingLoading/>)}
+                  <div className={`${filteredRegistration.length > 0 ? "hidden" : ""} h-3/4 w-320 pt-10 px-5 space-y-4`}>
                   <div className="w-full rounded-xl border-2 border-gray-50 p-5 space-y-2">
                     <h1>Fill-out Identity Information</h1>
                     <div className="flex gap-2">
