@@ -1,12 +1,14 @@
 import LeftSidebar from "../Components/LeftSidebar";
 import InputField from "../Components/InputField";
 import ImageIcon from "../Images/image.png"
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import LocationPicker from "../Components/LocationPicker";
 import { AuthContext } from "../Context/AuthContext";
+import PendingLoading from "../Components/PendingLoading";
 import axios from "axios";
 
 const SellerRegistration = () => {
+    const [showPendingLoading, setShowPendingLoading] = useState(false);
 
     const {userProfile} = useContext(AuthContext);
     const [locationPicker, setLocationPicker] = useState(false);
@@ -26,6 +28,21 @@ const SellerRegistration = () => {
     const [fileNameBusinessPermit, setFileNameBusinessPermit] = useState("")
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
+
+    const [listOfRegistration, setListOfRegistration] = useState([]);
+    const filteredRegistration = listOfRegistration.filter(registration => registration.userId === userProfile?.accountId);
+    useEffect(() => {
+        const fetchBusinessRegistration = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/fetch-seller-registration`);
+                console.log(res.data.message, res.data.registrations);
+                setListOfRegistration(res.data.registrations);
+            } catch (error) {
+                console.error("Error fetching business registration:", error);
+            }
+        };
+        fetchBusinessRegistration();
+    }, [userProfile?.accountId]);
 
     const explorerFileValidId = useRef(null);
     const explorerFileDocument = useRef(null);
@@ -120,10 +137,10 @@ const SellerRegistration = () => {
 
     return(
         
-        <section className="bg-white w-full justify-end items-start flex pb-10">
+        <section className="bg-white w-full justify-center items-start flex">
             <LeftSidebar/>
-
-                  <div className="h-3/4 w-320 pt-10 px-5 space-y-4">
+            {filteredRegistration ? <PendingLoading/> : null}
+                  <div className={`${filteredRegistration ? "hidden" : ""} h-3/4 w-320 pt-10 px-5 space-y-4`}>
                   <div className="w-full rounded-xl border-2 border-gray-50 p-5 space-y-2">
                     <h1>Fill-out Identity Information</h1>
                     <div className="flex gap-2">
@@ -212,13 +229,6 @@ const SellerRegistration = () => {
                       
                   </div>
 
-                  <div className="h-screen w-75 justify-start items-center flex flex-col gap-2 border-r-2 border-gray-100 pt-10 px-5">
-                    <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Identity Information</div>
-                    <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Business Information</div>
-                    <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Business Documents</div>
-                    <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Location Details</div>
-                    <div className="h-10 w-full bg-gray-100 rounded-xl justify-center items-center flex text-gray-300 text-sm font-bold">Agreement & Rules</div>
-                  </div>
         </section>
     )
 }
