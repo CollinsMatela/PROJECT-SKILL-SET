@@ -12,6 +12,7 @@ import Basic_Info from "./Pages/Basic_Info";
 import FilterPostModal from "./Components/FilterPostModal";
 import MapPage from "./Pages/MapPage"
 import SellerRegistration from "./Pages/SellerRegistration";
+import Admin from "./Pages/Admin";
 
 
 function App() {
@@ -33,8 +34,7 @@ function App() {
       <Route path={"/filter-post-modal"} element={<FilterPostModal/>}></Route>
       <Route path={"/map-location"} element={<MapPage/>}></Route>
       <Route path={"/seller-registration/:accountId"} element={<SellerRegistration/>}></Route>
-      
-
+      <Route path={"/admin"} element={<Admin/>}></Route>
     </Routes>
      
     </BrowserRouter>
