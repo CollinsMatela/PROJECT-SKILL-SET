@@ -24,14 +24,15 @@ const Admin = () => {
      return(
         <section className=" h-screen w-full justify-start items-center flex flex-col">
             <LeftSidebar/>
-            <div className="h-50 w-2/4 mt-10 justify-center items-center flex gap-2">
-                 <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col">
-                    <h1>No. of Users</h1>
-                    <h1>{userProfile?.length || 0}</h1>
+            <h1 className="w-300 mt-10 mb-10 text-2xl">Overview</h1>
+            <div className="h-50 w-300 justify-start items-center flex gap-2">
+                 <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col border-2 border-gray-300">
+                    <h1 className="text-xs text-gray-500">Registered Users</h1>
+                    <h1 className="text-4xl">{userProfile?.length || 0}</h1>
                  </div>
-                 <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col">
-                    <h1>Business Registrations</h1>
-                    <h1>{businessRegistrations.length}</h1>
+                 <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col border-2 border-gray-300">
+                    <h1 className="text-xs text-gray-500">Business Registrations</h1>
+                    <h1 className="text-4xl">{businessRegistrations.length}</h1>
                  </div>
             </div>
             <div className="h-100 overflow-scroll w-300 mt-10 justify-start items-center flex flex-col gap-2">
