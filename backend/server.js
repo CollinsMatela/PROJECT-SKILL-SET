@@ -28,6 +28,7 @@ import WhoFollowRoute from "./routes/whoFollowRoute.js"
 import BusinessRegistrationRoute from "./routes/businessRegistrationRoute.js";
 import fetchBusinessRegistrationRoute from "./routes/fetchBusinessRegistrationRoute.js";
 import approvingBusinessRegistrationRoute from "./routes/approvingBusinessRegistrationRoute.js";
+import rejectingBusinessRegistrationRoute from "./routes/rejectingBusinessRegistration.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -58,6 +59,7 @@ app.use("/", WhoFollowRoute);
 app.use("/", BusinessRegistrationRoute);
 app.use("/", fetchBusinessRegistrationRoute);
 app.use("/", approvingBusinessRegistrationRoute);
+app.use("/", rejectingBusinessRegistrationRoute);
 
 
 app.get("/", (req, res) => {
