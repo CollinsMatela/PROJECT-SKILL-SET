@@ -87,6 +87,11 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                       
                     </div>
                    ))}
+                   {businessRegistrations.filter(z => z.status === "pending").length === 0 && (
+                    <div key="no-registrations" className="bg-gray-100 rounded-xl h-full w-full justify-center items-center flex">
+                      <h1 className="text-xs text-gray-500">No business registrations to display</h1>
+                    </div>
+                   )}
 
             </div>
             

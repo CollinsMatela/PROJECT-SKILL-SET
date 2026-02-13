@@ -26,7 +26,7 @@ const Admin = () => {
         <section className=" h-screen w-full justify-start items-center flex flex-col">
             <LeftSidebar/>
             <h1 className="w-300 mt-10 mb-10 text-2xl">Overview</h1>
-            <div className="h-50 w-300 justify-start items-center flex gap-2">
+            <div className="h-20 w-300 justify-start items-center flex gap-2">
                  <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col border-2 border-gray-300">
                     <h1 className="text-xs text-gray-500">Registered Users</h1>
                     <h1 className="text-4xl">{userProfile?.length || 0}</h1>
