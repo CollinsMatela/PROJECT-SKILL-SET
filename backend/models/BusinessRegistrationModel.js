@@ -15,6 +15,7 @@ const BusinessRegistrationSchema = new monggoose.Schema({
    businessPermit: { type: String, required: true },
    latitude: { type: Number, required: true },
    longitude: { type: Number, required: true },
+   status: { type: String, default: "Pending" },
    createdAt: { type: Date, default: Date.now },
 });
 
