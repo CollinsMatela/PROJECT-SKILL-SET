@@ -30,19 +30,14 @@ const RightSideBar = () =>{
     const handleUserClick = (accountId) => {
         navigate(`/view-profile/${accountId}`);
     }
-    const handleSellerRegistration = () =>{
-        navigate(`/seller-registration/${userProfile?.accountId}`);
-    }
+    
 
  return(
         <aside className="flex-1 justify-center items-center flex flex-col p-2 pt-10">
 
-            <div className="bg-gray-100 w-80 rounded-2xl p-2 mb-8 justify-end items-center flex">
-                <div className="bg-white h-10 w-10 rounded-xl hover:w-30 transition-all duration-300 ease-in-out cursor-pointer justify-center items-center flex"
-                     onClick={handleSellerRegistration}>
-                  
-                </div>
-            </div>
+            {/* <div className="bg-gray-100 w-80 rounded-2xl p-2 mb-8 justify-end items-center flex">
+                
+            </div> */}
 
             <div className="flex flex-col">
                 <div className="w-full flex justify-between items-center">

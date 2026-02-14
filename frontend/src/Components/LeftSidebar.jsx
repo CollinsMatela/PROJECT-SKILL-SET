@@ -53,11 +53,13 @@ const LeftSidebar = () =>{
     }
     
     const handleHome = () =>{
-        
     navigate(`/dashboard/${userProfile?.accountId}`);
     }
     const handleProfile = () => {
         navigate(`/profile/${userProfile?.accountId}`);
+    }
+    const handleSellerRegistration = () =>{
+        navigate(`/seller-registration/${userProfile?.accountId}`);
     }
     return(
         <aside className="fixed bg-white justify-start items-start flex h-full left-0 top-0">
@@ -92,6 +94,10 @@ const LeftSidebar = () =>{
             <button className={`h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleMap}>
                 <img src={LogoutIcon} alt="profile" className="h-7 w-7" />
                 <h1>{search ? "" : "Find Location"}</h1>
+            </button>
+            <button className={`h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleSellerRegistration}>
+                <img src={LogoutIcon} alt="profile" className="h-7 w-7" />
+                <h1>{search ? "" : "Business"}</h1>
             </button>
             <button className={`h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleAdmin}>
                 <img src={LogoutIcon} alt="profile" className="h-7 w-7" />
