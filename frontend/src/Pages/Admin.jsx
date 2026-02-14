@@ -32,8 +32,12 @@ const Admin = () => {
                     <h1 className="text-4xl">{userProfile?.length || 0}</h1>
                  </div>
                  <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col border-2 border-gray-300">
-                    <h1 className="text-xs text-gray-500">Business Registrations</h1>
-                    <h1 className="text-4xl">{businessRegistrations.length}</h1>
+                    <h1 className="text-xs text-gray-500">Registered Business</h1>
+                    <h1 className="text-4xl">{businessRegistrations.filter(z => z.status !== "verified").length}</h1>
+                 </div>
+                 <div className="bg-white h-full w-50 rounded-md justify-center items-center flex flex-col border-2 border-gray-300">
+                    <h1 className="text-xs text-gray-500">Pending Business Registrations</h1>
+                    <h1 className="text-4xl">{businessRegistrations.filter(z => z.status === "pending").length}</h1>
                  </div>
             </div>
             <BusinessRegistrationTable businessRegistrations={businessRegistrations}/>
