@@ -5,6 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import axios from 'axios';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../Context/AuthContext';
 
 // Fix marker icon
 let DefaultIcon = L.icon({
@@ -15,20 +18,45 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = () => {
+
+  const [listOfRegistration, setListOfRegistration] = useState([]);
+  const {userProfile} = useContext(AuthContext);
+
+  const filteredVerifiedRegistration = listOfRegistration.filter(registration => registration.status === "verified");
+
+   useEffect(() => {
+        const fetchBusinessRegistration = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/fetch-seller-registration`);
+                console.log(res.data.message, res.data.registrations);
+                setListOfRegistration(res.data.registrations);
+            } catch (error) {
+                console.error("Error fetching business registration:", error);
+            }
+        };
+        fetchBusinessRegistration();
+        
+    }, [userProfile?.accountId]);
+
   return (
     <div className="h-full w-full z-0 relative">
       <MapContainer
-        center={[14.5995, 120.9842]}
-        zoom={13}
+        center={[14.5824, 120.9937]}
+        zoom={10}
         className="h-full w-full"
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
-        <Marker position={[14.5995, 120.9842]}>
-          <Popup>Hello from Manila!</Popup>
-        </Marker>
+        {filteredVerifiedRegistration.map((registration) => (
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]}>
+          <Popup>{registration.businessName}</Popup>
+          </Marker>
+        ))}
+
+        
+        
       </MapContainer>
     </div>
   );
