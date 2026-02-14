@@ -46,9 +46,10 @@ const Map = () => {
         className="h-full w-full"
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; OpenStreetMap contributors &copy; CARTO'
         />
+        
         {filteredVerifiedRegistration.map((registration) => (
           <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]}>
           <Popup>{registration.businessName}</Popup>
