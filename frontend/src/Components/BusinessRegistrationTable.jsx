@@ -53,19 +53,19 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                 title="Confirm Rejection"
                 message="Are you sure you want to reject this business registration?"
             />)}
-                   <h1 className="w-full text-gray-300 font-bold">Business Registrations Table</h1>
-                   <div className=" bg-gray-200 h-10 w-full justify-between items-center flex rounded-md">
-                    <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Business ID</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Business Name</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Business Address</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Business Type</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Seller Name</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Email</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Contact</h1></div>
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">Action</h1></div>
+                   <h1 className="w-full text-black font-bold">Business Registrations Table</h1>
+                   <div className=" bg-black h-10 w-full justify-between items-center flex rounded-md">
+                    <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Business ID</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Business Name</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Business Address</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Business Type</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Seller Name</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Email</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Contact</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Action</h1></div>
                    </div>
                    {businessRegistrations.filter(z => z.status !== "verified" && z.status !== "rejected").map((registration) => (
-                    <div key={registration.businessId} className="border-2 border-gray-100 rounded-xl h-15 w-full justify-between items-center flex">
+                    <div key={registration.businessId} className="border-1 border-b-4 border-black rounded-xl h-15 w-full justify-between items-center flex">
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessId}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessName}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessAddress}</h1></div>
@@ -76,11 +76,11 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                       <div className="h-full w-50 justify-start items-center flex p-2 gap-2">
                         
                         <button className="bg-blue-100 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" onClick={() => confirm("Hello Nigga")}></button>
-                        <button className="bg-red-100 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
+                        <button className="bg-red-500 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
                         onClick={() => {setSelectedBusinessId(registration.businessId); setIsRejectingConfirmation(true);}}>
 
                         </button>
-                        <button className="bg-green-100 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
+                        <button className="bg-green-500 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
                         onClick={() => {setSelectedBusinessId(registration.businessId); setIsApprovingConfirmation(true);}}
                         ></button>
                       </div>
