@@ -1,9 +1,9 @@
-
+import ViewBusinessLocationMap from "./VIewBusinessLocationMap";
 const BusinessDetailModal = ({ onClose, selectedBusiness }) => {
  return(
     <div className="absolute inset-0 justify-center items-center flex">
         <div className={`inset-0 fixed bg-black/80`} onClick={onClose}></div>
-        <div className="relative z-10 bg-white h-3/4 w-3/4 rounded-xl p-4 justify-center items-center flex gap-4">
+        <div className="relative z-10 bg-white h-3/4 w-3/4 rounded-xl p-4 justify-center items-center flex gap-4 overflow-scroll hide-scrollbar">
             
             <div className="h-full w-100 justify-start items-start flex flex-col gap-2">
 
@@ -35,11 +35,21 @@ const BusinessDetailModal = ({ onClose, selectedBusiness }) => {
             </div>
 
             <div className="h-full w-full rounded-xl space-y-2">
-                <div className="bg-black h-10 w-100 rounded-xl p-2">
+                <div className="bg-black h-10 w-80 rounded-xl p-2">
                     <h1 className="text-white font-bold">Map Location</h1>
                 </div>
                 <div className="h-80 w-full rounded-xl  border-1 border-b-4 border-black p-2">
-                    
+                    {/* <div className="w-full">Location</div> */}
+                    <ViewBusinessLocationMap businessLocation={selectedBusiness} />
+                </div>
+                <div className="bg-black h-10 w-80 rounded-xl p-2">
+                    <h1 className="text-white font-bold">Required Documents</h1>
+                </div>
+                <div className="w-full rounded-xl  border-1 border-b-4 border-black p-2 space-y-2 mb-4">
+                    <div className="w-full">Business Permit</div>
+                    <div><img src={selectedBusiness?.businessPermit || "No Document Image"} className="w-full h-full object-cover rounded-xl" /></div>
+                    <div className="w-full">Valid ID</div>
+                    <div><img src={selectedBusiness?.validId || "No Document Image"} className="w-full h-full object-cover rounded-xl" /></div>
                 </div>
             </div>
                    
