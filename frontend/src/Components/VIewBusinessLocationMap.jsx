@@ -7,26 +7,41 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
+import PinPoint from '../Images/pin-point.svg';
 
 // Fix marker icon
-let DefaultIcon = L.icon({
-  iconUrl,
-  shadowUrl: iconShadow,
-  iconAnchor: [12, 41],
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+   // let DefaultIcon = L.icon({
+    // iconUrl,
+    // shadowUrl: iconShadow,
+    // iconAnchor: [12, 41],
+    // });
+
+    // L.Marker.prototype.options.icon = DefaultIcon;
+
+
+
 
 const ViewBusinessLocationMap = ({ businessLocation }) => {
+
+    const { userProfile } = useContext(AuthContext);
+ 
+    const profileIcon = L.icon({
+    iconUrl: PinPoint,
+    iconSize: [15, 15],
+    className: "rounded-full"
+    });
+
     return(
         
         <div className='h-full w-full'>
+            
             <MapContainer center={[Number(businessLocation.latitude), Number(businessLocation.longitude)]} zoom={15} className='rounded-xl'>
                 <TileLayer
                     url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                     attribution='&copy; OpenStreetMap contributors &copy; CARTO'
                     
                 />
-                <Marker position={[Number(businessLocation.latitude), Number(businessLocation.longitude)]}>
+                <Marker position={[Number(businessLocation.latitude), Number(businessLocation.longitude)]} icon={profileIcon}>
                     <Popup>
                         {businessLocation.businessName}
                     </Popup>
