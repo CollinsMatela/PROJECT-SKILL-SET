@@ -1,11 +1,15 @@
 import axios from "axios";
 import ComfirmationModal from "./ComfirmationModal";
+import BusinessDetailModal from "./BusinessDetailModal";
 import { useState } from "react";
 const BusinessRegistrationTable = ({businessRegistrations}) => {
 
     const [isApprovingConfirmation, setIsApprovingConfirmation] = useState(false);
     const [isRejectingConfirmation, setIsRejectingConfirmation] = useState(false);
+    const [isBusinessDetail, setIsBusinessDetail] = useState(false);
     const [selectedBusinessId, setSelectedBusinessId] = useState("");
+
+    const ViewSelectedBusiness = businessRegistrations.find(business => business.businessId === selectedBusinessId);
 
     const Approving = async (businessId) => {
 
@@ -53,6 +57,8 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                 title="Confirm Rejection"
                 message="Are you sure you want to reject this business registration?"
             />)}
+            {isBusinessDetail && (<BusinessDetailModal onClose={() =>setIsBusinessDetail(false)} selectedBusiness={ViewSelectedBusiness}/>)}
+
                    <h1 className="w-full text-black font-bold">Business Registrations Table</h1>
                    <div className=" bg-black h-10 w-full justify-between items-center flex rounded-md">
                     <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Business ID</h1></div>
@@ -75,7 +81,7 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.contact}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2 gap-2">
                         
-                        <button className="bg-blue-100 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" onClick={() => confirm("Hello Nigga")}></button>
+                        <button className="bg-blue-100 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" onClick={() => {setSelectedBusinessId(registration.businessId); setIsBusinessDetail(true);}}></button>
                         <button className="bg-red-500 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
                         onClick={() => {setSelectedBusinessId(registration.businessId); setIsRejectingConfirmation(true);}}>
 
