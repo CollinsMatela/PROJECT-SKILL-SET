@@ -11,26 +11,94 @@ const BusinessDetailModal = ({ onClose, selectedBusiness }) => {
                     <h1 className="text-white font-bold">Business Details</h1>
                 </div>
 
-                <div className="w-full rounded-xl border-1 border-b-4 border-black p-2">
+                <div className="w-full rounded-xl border border-b-4 border-black p-2">
                 <h1 className="text-sm font-bold mb-2">Personal Details</h1>
-                <h1 className="text-xs">Client: <span className="text-sm text-black">{selectedBusiness?.firstname} {selectedBusiness?.lastname || "No Business Selected"}</span></h1>
-                <h1 className="text-xs">Email: <span className="text-sm text-black">{selectedBusiness?.email || "No Business Selected"}</span></h1>
-                <h1 className="text-xs">Contact: <span className="text-sm text-black">{selectedBusiness?.contact || "No Business Selected"}</span></h1>
-                </div>
-                
-                <div className="w-full rounded-xl  border-1 border-b-4 border-black p-2">
-                <h1 className="text-sm font-bold mb-2">Business Information</h1>
-                <h1 className="text-xs">Business Identification: <span className="text-sm text-black">{selectedBusiness?.businessId || "No Business Identification"}</span></h1>
-                <h1 className="text-xs">Business Name: <span className="text-sm text-black">{selectedBusiness?.businessName || "No Business Selected"}</span></h1>
-                <h1 className="text-xs">Business Type: <span className="text-sm text-black">{selectedBusiness?.businessType || "No Business Type"}</span></h1>
-                <h1 className="text-xs">Business Address: <span className="text-sm text-black">{selectedBusiness?.businessAddress || "No Business Address"}</span></h1>
+
+                {/* Client */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Client:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness
+                        ? `${selectedBusiness?.firstname} ${selectedBusiness?.lastname}`
+                        : "No Business Selected"}
+                    </h1>
                 </div>
 
-                <div className="w-full rounded-xl  border-1 border-b-4 border-black p-2">
-                <h1 className="text-sm font-bold mb-2">Coordinates</h1>
-                <h1 className="text-xs">Latitude: <span className="text-sm text-black">{selectedBusiness?.latitude || "No Latitude"}</span></h1>
-                <h1 className="text-xs">Longitude: <span className="text-sm text-black">{selectedBusiness?.longitude || "No Longitude"}</span></h1>    
+                {/* Email */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Email:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.email || "No Business Selected"}
+                    </h1>
                 </div>
+
+                {/* Contact */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Contact:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.contact || "No Business Selected"}
+                    </h1>
+                </div>
+                </div>
+
+                
+                <div className="w-full rounded-xl border border-b-4 border-black p-2">
+                <h1 className="text-sm font-bold mb-2">Business Information</h1>
+
+                {/* Business ID */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Business ID:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.businessId || "No Business Identification"}
+                    </h1>
+                </div>
+
+                {/* Business Name */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Business Name:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.businessName || "No Business Selected"}
+                    </h1>
+                </div>
+
+                {/* Business Type */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Business Type:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.businessType || "No Business Type"}
+                    </h1>
+                </div>
+
+                {/* Business Address */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Business Address:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.businessAddress || "No Business Address"}
+                    </h1>
+                </div>
+                </div>
+
+
+                <div className="w-full rounded-xl border border-b-4 border-black p-2">
+                <h1 className="text-sm font-bold mb-2">Coordinates</h1>
+
+                {/* Latitude */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Latitude:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.latitude || "No Latitude"}
+                    </h1>
+                </div>
+
+                {/* Longitude */}
+                <div className="w-full flex">
+                    <h1 className="text-xs flex-1">Longitude:</h1>
+                    <h1 className="text-xs flex-1 text-black">
+                    {selectedBusiness?.longitude || "No Longitude"}
+                    </h1>
+                </div>
+                </div>
+
                 
             </div>
 

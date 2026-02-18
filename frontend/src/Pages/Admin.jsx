@@ -3,6 +3,7 @@ import LeftSidebar from "../Components/LeftSidebar";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import BusinessRegistrationTable from "../Components/BusinessRegistrationTable";
+import UserTable from "../Components/UserTable";
 
 
 const Admin = () => {
@@ -37,9 +38,9 @@ const Admin = () => {
       }, [userProfile?.accountId]);
 
      return(
-        <section className=" h-screen w-full justify-start items-center flex flex-col">
+        <section className="w-full justify-start items-center flex flex-col p-10">
             <LeftSidebar/>
-            <h1 className="w-300 mt-10 mb-10 text-2xl">Overview</h1>
+            <h1 className="w-300 mb-10 text-2xl">Overview</h1>
             <div className="h-20 w-300 justify-start items-center flex gap-2">
                  <div className="bg-white h-full w-50 rounded-xl justify-center items-center flex flex-col border-1 border-b-4 border-black">
                     <h1 className="text-xs text-gray-500">Registered Users</h1>
@@ -54,7 +55,9 @@ const Admin = () => {
                     <h1 className="text-4xl">{businessRegistrations.filter(z => z.status === "pending").length}</h1>
                  </div>
             </div>
+            <UserTable users={users}/>
             <BusinessRegistrationTable businessRegistrations={businessRegistrations}/>
+            
             
         </section>
      )

@@ -36,7 +36,7 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
 
     return (
         
-        <div className="h-100 hide-scrollbar w-300 mt-10 justify-start items-center flex flex-col gap-2">
+        <div className="h-100 border-b-1 border-gray-300 hide-scrollbar w-300 mt-10 justify-start items-center flex flex-col gap-2">
             {isApprovingConfirmation && (<ComfirmationModal 
                 isOpen={isApprovingConfirmation}
                 onClose={() => setIsApprovingConfirmation(false)}
@@ -70,9 +70,9 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Contact</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs text-white">Action</h1></div>
                    </div>
-                   {businessRegistrations.filter(z => z.status !== "verified" && z.status !== "rejected").map((registration) => (
+                   {businessRegistrations.filter(z => z.status !== "verified" && z.status !== "rejected").map((registration, index) => (
                     <div key={registration.businessId} className="border-1 border-b-4 border-black rounded-xl h-15 w-full justify-between items-center flex">
-                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessId}</h1></div>
+                      <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{index + 1}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessName}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessAddress}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.businessType}</h1></div>
@@ -81,12 +81,12 @@ const BusinessRegistrationTable = ({businessRegistrations}) => {
                       <div className="h-full w-50 justify-start items-center flex p-2"><h1 className="text-xs">{registration.contact}</h1></div>
                       <div className="h-full w-50 justify-start items-center flex p-2 gap-2">
                         
-                        <button className="bg-blue-100 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" onClick={() => {setSelectedBusinessId(registration.businessId); setIsBusinessDetail(true);}}></button>
-                        <button className="bg-red-500 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
+                        <button className="bg-gray-300 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" onClick={() => {setSelectedBusinessId(registration.businessId); setIsBusinessDetail(true);}}></button>
+                        <button className="bg-black h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
                         onClick={() => {setSelectedBusinessId(registration.businessId); setIsRejectingConfirmation(true);}}>
 
                         </button>
-                        <button className="bg-green-500 h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
+                        <button className="bg-black h-8 w-8 hover:w-full transition-all duration-300 ease-in-out rounded-md cursor-pointer" 
                         onClick={() => {setSelectedBusinessId(registration.businessId); setIsApprovingConfirmation(true);}}
                         ></button>
                       </div>

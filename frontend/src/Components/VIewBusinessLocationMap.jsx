@@ -25,10 +25,10 @@ const ViewBusinessLocationMap = ({ businessLocation }) => {
 
     const { userProfile } = useContext(AuthContext);
  
-    const profileIcon = L.icon({
+    const PinIcon = L.icon({
     iconUrl: PinPoint,
     iconSize: [15, 15],
-    className: "rounded-full"
+    className: "rounded-marker"
     });
 
     return(
@@ -41,7 +41,7 @@ const ViewBusinessLocationMap = ({ businessLocation }) => {
                     attribution='&copy; OpenStreetMap contributors &copy; CARTO'
                     
                 />
-                <Marker position={[Number(businessLocation.latitude), Number(businessLocation.longitude)]} icon={profileIcon}>
+                <Marker position={[Number(businessLocation.latitude), Number(businessLocation.longitude)]} icon={PinIcon}>
                     <Popup>
                         {businessLocation.businessName}
                     </Popup>
