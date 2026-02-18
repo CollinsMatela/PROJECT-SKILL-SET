@@ -8,14 +8,21 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
+import PinPoint from '../Images/pin-point.svg';
 
 // Fix marker icon
-let DefaultIcon = L.icon({
-  iconUrl,
-  shadowUrl: iconShadow,
-  iconAnchor: [12, 41],
+// let DefaultIcon = L.icon({
+//   iconUrl,
+//   shadowUrl: iconShadow,
+//   iconAnchor: [12, 41],
+// });
+// L.Marker.prototype.options.icon = DefaultIcon;
+
+const Pin = L.icon({
+  iconUrl: PinPoint,
+  iconSize: [15, 15],
+  iconAnchor: [0, 0],
 });
-L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = () => {
 
@@ -51,7 +58,7 @@ const Map = () => {
         />
         
         {filteredVerifiedRegistration.map((registration) => (
-          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]}>
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin}>
           <Popup>{registration.businessName}</Popup>
           </Marker>
         ))}

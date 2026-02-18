@@ -48,7 +48,7 @@ const PostCard = ({posting, userProfile}) => {
 
     return(
     <>
-    <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 rounded-t-xl rounded-t-xl border-1 border-gray-100">
+    <div key = {posting?.postingId} className="bg-gray-100 w-140 mb-4 rounded-t-xl rounded-t-xl shadow-xs border-black">
 
                   {/* HEADER*/}
                   <div className="bg-white h-15 w-full justify-start items-center rounded-t-xl flex p-2 gap-2">

@@ -47,7 +47,7 @@ const RightSideBar = () =>{
                 
             
             {users.map((user) => (           
-                    <div key={user?.accountId} className="border-1 border-gray-100  rounded-2xl w-80 flex justify-between items-center mb-2 gap-2 p-2">
+                    <div key={user?.accountId} className="border-1 border-b-4 border-black  rounded-2xl w-80 flex justify-between items-center mb-2 gap-2 p-2">
                         <div className="flex gap-2">
                         {/* Image */}
                         

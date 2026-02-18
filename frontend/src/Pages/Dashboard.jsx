@@ -143,18 +143,18 @@ const Dashboard = () =>{
                   <div className="justify-start items-start flex rounded-md p-2 gap-2 mb-4">
                   <img src={userProfile?.profile ? userProfile?.profile : defualtProfile} alt="profile" className="h-12 w-12 rounded-full object-cover cursor-pointer" />
                   <textarea name="posting" id="posting" placeholder={`Welcome ${userProfile?.firstname}, share your thoughts!`}
-                            className="bg-gray-100 h-full w-100 rounded-md px-4 outline-none pt-2"
+                            className="bg-white border-1 border-b-4 h-full w-100 rounded-xl px-4 outline-none pt-2"
                             value={text}
                             onChange={(e) => setText(e.target.value)}>
                         
                             </textarea>
-                  <button className="h-12 w-12 justify-items-center rounded-full border-2 border-gray-100 hover:bg-gray-100 cursor-pointer"
+                  <button className="h-12 w-12 justify-items-center rounded-xl border-1 border-b-4 border-black hover:bg-white cursor-pointer"
                           onClick={showExplorer}>
                     <img src={ImageIcon} alt="image" />
                   </button>
                   {/* Open file explorer */}
                   <input type="file" ref={filePicker} accept="image/*" onChange={handleUploadMedia} hidden />
-                  <button className="h-12 w-12 bg-black justify-items-center rounded-md transition-all duration-3000 ease-in-out hover:rounded-4xl hover:-translate-y-1 cursor-pointer"
+                  <button className="h-12 w-12 justify-items-center rounded-xl border-1 border-b-4 border-black transition-all duration-3000 ease-in-out cursor-pointer"
                           onClick={SubmitPosting}>
                     <img src={SendArrowIcon} alt="arrow" />
                   </button>

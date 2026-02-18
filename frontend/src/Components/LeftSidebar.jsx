@@ -62,8 +62,8 @@ const LeftSidebar = () =>{
         navigate(`/seller-registration/${userProfile?.accountId}`);
     }
     return(
-        <aside className="fixed bg-white justify-start items-start flex h-full left-0 top-0">
-            <div className={`${search ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-1 border-gray-100 pt-10 px-4`}>
+        <aside className="fixed justify-start items-start flex h-full left-0 top-0">
+            <div className={`${search ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-1 border-gray-200 pt-10 px-4`}>
                
                {search ? 
                <div className="bg-green-500 h-12 w-full rounded-md border-b-4 border-black justify-center items-center flex mb-2 cursor-pointer hover:bg-green-600">
@@ -124,10 +124,10 @@ const LeftSidebar = () =>{
              
             </div>
 
-            <div className={`bg-white h-screen px-2 border-r-1 border-gray-100 pt-10 transform transition-all duration-500 linear
+            <div className={`bg-white h-screen px-2 border-r-1 border-gray-200 pt-10 transform transition-all duration-500 linear
                            ${search ? "w-100 translate-x-0 opacity-100" : "w-0 -translate-x-full opacity-0 pointer-events-none"}`}>
                 <h1 className="font-nanum text-4xl font-bold mb-4">SEARCH</h1>
-                <input className="bg-gray-100  outline-none h-12 w-full rounded-full px-4 mb-4"
+                <input className="bg-black  outline-none h-12 w-full rounded-xl px-4 mb-4 text-white"
                        type="search" 
                        name="search"
                        id="search" 
@@ -137,7 +137,7 @@ const LeftSidebar = () =>{
                 />
                 <h1 className="text-md">Recent</h1>
                 {searchedUsers.map((user) => (
-                    <div key={user?.accountId} className="h-15 w-full border-1 border-gray-100 rounded-md mb-2 justify-start items-center flex gap-2 p-2 hover:bg-gray-100 cursor-pointer"
+                    <div key={user?.accountId} className="h-15 w-full border-1 border-b-4 border-black rounded-xl mb-2 justify-start items-center flex gap-2 p-2 hover:bg-gray-100 cursor-pointer"
                          onClick={() => handleUserClick(user?.accountId)}>
                         
                             <img src={user?.profile ? user?.profile : defualtProfile} className="h-10 w-10 object-cover rounded-full" />
