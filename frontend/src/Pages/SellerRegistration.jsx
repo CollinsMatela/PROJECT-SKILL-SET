@@ -4,8 +4,6 @@ import ImageIcon from "../Images/image.png"
 import { useContext, useEffect, useRef, useState } from "react";
 import LocationPicker from "../Components/LocationPicker";
 import { AuthContext } from "../Context/AuthContext";
-import PendingLoading from "../Components/PendingLoading";
-import VerifiedBusiness from "../Components/VerifiedBusiness";
 import axios from "axios";
 
 const SellerRegistration = () => {
@@ -144,8 +142,6 @@ const SellerRegistration = () => {
         
         <section className="bg-white w-full justify-center items-start flex">
             <LeftSidebar/>
-            {filteredPendingRegistration.length > 0 && (<PendingLoading/>)}
-            {filteredVerifiedRegistration.length > 0 && (<VerifiedBusiness/>)}
                   <div className={`${filteredNotRejectedRegistration.length > 0 || filteredVerifiedRegistration.length > 0 ? "hidden" : ""} h-3/4 w-320 pt-10 px-5 space-y-4`}>
                   <div className="w-full rounded-xl border-2 border-gray-50 p-5 space-y-2">
                     <h1>Fill-out Identity Information</h1>

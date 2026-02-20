@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import DashboardNav from "../Components/DashboardNav";
 import EditProfileModal from "../Components/EditProfileModal";
@@ -10,6 +10,7 @@ import ImageIcon from "../Images/image.png"
 import PostCard from "../Components/PostCard";
 import ProfilePostCards from "../Components/ProfilePostCards";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Profile = () =>{
 
@@ -25,12 +26,32 @@ const Profile = () =>{
     const handleEditProfile = () =>{
         setEditProfile(true);
     }
+    const handleSellerRegistration = () =>{
+        navigate(`/seller-registration/${userProfile?.accountId}`);
+    }
     const name = userProfile ? `${userProfile.firstname} ${userProfile.lastname}` : "User";
     const description = userProfile ? `${userProfile.bio}` : "No description yet";
     const availability = userProfile ? `${userProfile.availability}` : "No status";
     const location = userProfile ? `${userProfile.baranggay + ","} ${userProfile.city + ","} ${userProfile.province}` : "No location yet";
     const email = userProfile ? `${userProfile.email}` : 'No email';
     const contact = userProfile ? `${userProfile.contact}` : 'No contact';
+
+    const [listOfRegistration, setListOfRegistration] = useState([]);
+    const filterVerified = listOfRegistration.find(r => r.userId === userProfile.accountId && r.status === "verified");
+    const filterPending = listOfRegistration.find(r => r.userId === userProfile.accountId && r.status === "pending");
+
+    useEffect(() => {
+    const fetchBusinessRegistration = async () => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/fetch-seller-registration`);
+            console.log(res.data.message, res.data.registrations);
+            setListOfRegistration(res.data.registrations);
+        } catch (error) {
+            console.error("Error fetching business registration:", error);
+        }
+    };
+    fetchBusinessRegistration();
+    }, [userProfile?.accountId]);
 
     return(
         <main>
@@ -45,11 +66,22 @@ const Profile = () =>{
                         <div className="flex gap-4">
                             <h1>{numberOfPost} post</h1> <h1>{userProfile?.followers} followers</h1> <h1>{userProfile?.ratings} ratings</h1>
                         </div>
-                        <button className="bg-black h-8 w-full rounded-md font-nanum text-white text-lg cursor-pointer hover:-translate-y-1 transition-all duration-300 ease-in-out"
-                                onClick={handleEditProfile}>Edit Profile
-                        </button>
+                        <div className="w-full flex gap-2">
+                            <button className="bg-black h-8 w-full rounded-md font-nanum text-white text-lg cursor-pointer hover:-translate-y-1 transition-all duration-300 ease-in-out"
+                                    onClick={handleEditProfile}>Edit Profile
+                            </button>
+                            <button disabled={filterVerified || filterPending} className={`${filterVerified || filterPending ? "cursor-not-allowed border-gray-300 text-gray-300" : "cursor-pointer border-black text-black"} bg-white border-1 border-b-4 h-8 w-30 rounded-md font-nanum text-lg hover:-translate-y-1 transition-all duration-300 ease-in-out`}
+                                    onClick={handleSellerRegistration}>{filterPending ? "Pending" : filterVerified ? "Verified" : "Business"}
+                            </button>
+                        </div>
+                        
                      </div>
                      
+                 </div>
+
+                 <div className={`${filterPending ? "" : "hidden"} border-1 border-b-4 border-gray-300 w-200 justify-center items-center flex rounded-xl p-2 gap-2 mt-4`}>
+                    <div className="border-2 border-b-0 border-r-0 border-gray-300 h-5 w-5 rounded-4xl animate-spin"></div>
+                      <h1 className="text-gray-300 text-sm">Status: Pending please wait for approval of your business registration.</h1>
                  </div>
 
                  <div className="bg-white f-full flex flex-col p-5">
