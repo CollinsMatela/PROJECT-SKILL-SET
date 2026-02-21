@@ -9,6 +9,8 @@ import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import PinPoint from '../Images/pin-point.svg';
+import defualtProfile from '../Images/default_profile.png';
+import { useNavigate } from 'react-router-dom';
 
 // Fix marker icon
 // let DefaultIcon = L.icon({
@@ -26,6 +28,7 @@ const Pin = L.icon({
 
 const Map = () => {
 
+  const navigate = useNavigate();
   const [listOfRegistration, setListOfRegistration] = useState([]);
   const {userProfile} = useContext(AuthContext);
 
@@ -45,6 +48,10 @@ const Map = () => {
         
     }, [userProfile?.accountId]);
 
+    const ViewProfile = (accountId) => {
+          navigate('/view-profile/' + accountId);
+    }
+
   return (
     <div className="h-full w-full z-0 relative">
       <MapContainer
@@ -58,8 +65,29 @@ const Map = () => {
         />
         
         {filteredVerifiedRegistration.map((registration) => (
+
           <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin}>
-          <Popup>{registration.businessName}</Popup>
+              <Popup>
+                <div className='w-50 space-y-2'>
+                    <div className='w-full justify-start items-center flex gap-2'>
+                      <img src={registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile} className='h-12 w-12 rounded-full'/>
+                      <div>
+                        <h1 className='text-sm font-bold'>{registration.businessName}</h1>
+                        <h1 className='text-xs text-gray-500'>Business Type: {registration.businessType}</h1>
+                        <h1 className='text-md text-gray-500'>{registration.userId === userProfile?.accountId ? userProfile?.ratings : 0.0} <span className='text-yellow-500'>★</span></h1>
+                      </div>
+                    </div>
+
+                    
+
+                    <div className='w-full'>
+                      <button className='bg-white border-1 border-b-4 border-black h-8 w-full rounded-md hover:-translate-y-1 justify-center items-center flex cursor-pointer transition-all duration-300 ease-in-out'>
+                        <h1 className='text-black font-bold' onClick={() => ViewProfile(registration.userId)}>View Profile</h1>
+                      </button>
+                    </div>
+                     
+                </div>
+              </Popup>
           </Marker>
         ))}
 
