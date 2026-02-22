@@ -20,10 +20,11 @@ import { useNavigate } from 'react-router-dom';
 // });
 // L.Marker.prototype.options.icon = DefaultIcon;
 
-const Pin = L.icon({
-  iconUrl: PinPoint,
-  iconSize: [15, 15],
+const Pin = (profile) => L.icon({
+  iconUrl: profile,
+  iconSize: [25, 25],
   iconAnchor: [0, 0],
+  className: 'rounded-full border-2 border-white',
 });
 
 const Map = () => {
@@ -66,7 +67,7 @@ const Map = () => {
         
         {filteredVerifiedRegistration.map((registration) => (
 
-          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin}>
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)}>
               <Popup>
                 <div className='w-50 space-y-2'>
                     <div className='w-full justify-start items-center flex gap-2'>

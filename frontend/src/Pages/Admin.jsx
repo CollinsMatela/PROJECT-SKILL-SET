@@ -30,9 +30,7 @@ const Admin = () => {
          }
       }
 
-     useEffect(() => {
-        document.title = "Skillset (Admin Control)";
-        
+     useEffect(() => {        
         fetchBusinessRegistrations();
         fetchAllUsers();
       }, [userProfile?.accountId]);
