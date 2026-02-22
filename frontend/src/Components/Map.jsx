@@ -10,6 +10,7 @@ import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import PinPoint from '../Images/pin-point.svg';
 import defualtProfile from '../Images/default_profile.png';
+import MapSideBar from './MapSideBar';
 import { useNavigate } from 'react-router-dom';
 
 // Fix marker icon
@@ -24,7 +25,7 @@ const Pin = (profile) => L.icon({
   iconUrl: profile,
   iconSize: [25, 25],
   iconAnchor: [0, 0],
-  className: 'rounded-full border-2 border-white',
+  className: 'rounded-full border-2 border-black',
 });
 
 const Map = () => {
@@ -32,6 +33,8 @@ const Map = () => {
   const navigate = useNavigate();
   const [listOfRegistration, setListOfRegistration] = useState([]);
   const {userProfile} = useContext(AuthContext);
+
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   const filteredVerifiedRegistration = listOfRegistration.filter(registration => registration.status === "verified");
 
@@ -61,13 +64,14 @@ const Map = () => {
         className="h-full w-full"
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; OpenStreetMap contributors &copy; CARTO'
+          attribution='&copy; OpenStreetMap contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
         {filteredVerifiedRegistration.map((registration) => (
 
-          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)}>
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)} 
+          eventHandlers={{click: () => {setSelectedMarker(registration); console.log("Marker clicked for account ID:", registration.userId)}}}>
               <Popup>
                 <div className='w-50 space-y-2'>
                     <div className='w-full justify-start items-center flex gap-2'>
@@ -90,7 +94,11 @@ const Map = () => {
                 </div>
               </Popup>
           </Marker>
-        ))}
+ ))}
+         {selectedMarker && <MapSideBar businessName={selectedMarker.businessName}
+                                        businessType={selectedMarker.businessType} 
+                                        businessRating={selectedMarker.userId === userProfile?.accountId ? userProfile?.ratings : 0.0}/>
+         }
 
         
         

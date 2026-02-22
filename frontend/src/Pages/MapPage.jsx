@@ -1,6 +1,6 @@
 import React from "react";
 import Map from "../Components/Map";
-import MapSideBar from "../Components/MapSideBar";
+
 import LeftSidebar from "../Components/LeftSidebar";
 
 export default function MapPage() {
@@ -9,7 +9,7 @@ export default function MapPage() {
       
         <Map /> {/* map behind */}
       
-      <MapSideBar/>
+      
       <LeftSidebar/>
     </section>
   );

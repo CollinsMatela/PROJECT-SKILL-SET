@@ -51,12 +51,12 @@ const LeftSidebar = () =>{
         setLocation(true);
         setSearch(false);
         navigate("/map-location")
-        document.title = "Map Location"
+        document.title = "Grindspehere • Map"
         
     }
     const handleAdmin = () => {
         navigate("/admin")
-        document.title = "Admin"
+        document.title = "Grindspehere • Admin"
     }
     const handleSearch = () => {
         setSearch(prev => !prev);
@@ -65,7 +65,7 @@ const LeftSidebar = () =>{
     
     const handleHome = () =>{
     navigate(`/dashboard/${userProfile?.accountId}`);
-    document.title = "Home"
+    document.title = "Grindspehere • Home"
 
     if(isHome){
         setSearch(false);
@@ -75,7 +75,7 @@ const LeftSidebar = () =>{
     }
     const handleProfile = () => {
         navigate(`/profile/${userProfile?.accountId}`);
-        document.title = "Profile • " + userProfile?.firstname + " " + userProfile?.lastname;
+        document.title = "Grindspehere • " + userProfile?.firstname + " " + userProfile?.lastname;
     }
     
     return(
