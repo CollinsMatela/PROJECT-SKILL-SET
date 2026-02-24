@@ -80,7 +80,7 @@ const LeftSidebar = () =>{
     
     return(
         
-        <aside className="fixed justify-start items-start flex h-full left-0 top-0">
+        <aside className="fixed z-[1000] justify-start items-start flex h-full left-0 top-0">
             <div className={`${search || isLocationMap ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-1 border-gray-200 pt-10 px-4`}>
                
                {search || isLocationMap ? 
