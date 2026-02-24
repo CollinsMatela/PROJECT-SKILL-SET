@@ -1,6 +1,6 @@
 // Map.jsx
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
@@ -22,9 +22,9 @@ import { useNavigate } from 'react-router-dom';
 // L.Marker.prototype.options.icon = DefaultIcon;
 
 const Pin = (profile) => L.icon({
-  iconUrl: profile,
+  iconUrl: profile || defualtProfile,
   iconSize: [25, 25],
-  iconAnchor: [0, 0],
+  iconAnchor: [15, 15],
   className: 'rounded-full border-2 border-black',
 });
 
@@ -34,9 +34,22 @@ const Map = () => {
   const [listOfRegistration, setListOfRegistration] = useState([]);
   const {userProfile} = useContext(AuthContext);
 
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [accuracy, setAccuracy] = useState(null);
+
   const [selectedMarker, setSelectedMarker] = useState(null);
 
   const filteredVerifiedRegistration = listOfRegistration.filter(registration => registration.status === "verified");
+
+  useEffect(() => {
+       if(!navigator.geolocation) return alert("Geolocation is not supported!");
+
+       const watchId = navigator.geolocation.watchPosition((position) => {setCurrentLocation({lat: position.coords.latitude, lng: position.coords.longitude})},
+       (error) => {console.log("Watch Id Variable:", error)},
+       {enableHighAccuracy: true, maximumAge: 0, timeout: 5000,});
+
+       return () => {navigator.geolocation.clearWatch(watchId)}
+  }, [])
 
    useEffect(() => {
         const fetchBusinessRegistration = async () => {
@@ -67,6 +80,12 @@ const Map = () => {
           attribution='&copy; OpenStreetMap contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {currentLocation && (
+        <Marker position={[currentLocation.lat, currentLocation.lng]} icon={Pin(userProfile?.profile)}>
+            <Popup>This is you!</Popup>
+        </Marker>
+        )}
+
         
         {filteredVerifiedRegistration.map((registration) => (
 
