@@ -114,9 +114,7 @@ const Map = () => {
               </Popup>
           </Marker>
  ))}
-         {selectedMarker && <MapSideBar businessName={selectedMarker.businessName}
-                                        businessType={selectedMarker.businessType} 
-                                        businessRating={selectedMarker.userId === userProfile?.accountId ? userProfile?.ratings : 0.0}/>
+         {selectedMarker && <MapSideBar businessDetail={selectedMarker}/>
          }
 
         
