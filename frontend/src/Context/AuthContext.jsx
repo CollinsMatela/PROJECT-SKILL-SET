@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({children}) =>{
       
     const [userProfile, setUserProfile] = useState(null);
-    const [postings, setPostings] = useState(null);
+    const [postings, setPostings] = useState([]);
 
     return(
         <AuthContext.Provider value={{userProfile, setUserProfile, postings, setPostings}}>

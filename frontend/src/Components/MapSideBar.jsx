@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 
 const MapSideBar = ({businessDetail}) => {
 
     const navigate = useNavigate();
-    const {userProfile} = useContext(AuthContext);
+    const {userProfile, postings} = useContext(AuthContext);
     
     const [overview, setOverview] = useState(true);
     const [reviews, setReviews] = useState(false);
@@ -28,8 +28,10 @@ const MapSideBar = ({businessDetail}) => {
     }
     
     
+    
     return(
         <>
+        
         <div className="absolute left-20 h-screen z-[1000] h-100 w-100 bg-white justify-start items-start flex flex-col px-2">
             
                 <div className="w-full justify-between items-center flex mt-10">
@@ -45,11 +47,11 @@ const MapSideBar = ({businessDetail}) => {
                 <div className="w-full border-b-2 border-gray-100 justify-start items-start flex my-4 gap-2">
                     <button className={`${overview ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleOverview}>Overview</button>
                     <button className={`${reviews ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleReviews}>Reviews</button>
-                    <button className={`${about ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleAbout}>Post</button>
+                    <button className={`${about ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleAbout}>{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</button>
                 </div>
 
                 {overview && (
-                    <div className="w-full space-y-4">
+                    <div className="w-full space-y-4 overflow-scroll">
                         <h1 className="font-bold text-sm">About Information</h1>
                         <div className="flex gap-2"><img src="none"/><h1 className="text-sm">{businessDetail.businessAddress}</h1></div>
                         <div className="flex gap-2"><img src="none"/><h1 className="text-sm">{businessDetail.email}</h1></div>
@@ -84,6 +86,20 @@ const MapSideBar = ({businessDetail}) => {
                             <h1 className="text-4xl">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
                             <button className="bg-emerald-100 py-2 px-4 rounded-xl font-bold text-emerald-600 cursor-pointer hover:bg-emerald-200">Write a review</button>
                            </div>
+                        </div>
+                        <div>
+                            <h1  className="font-bold text-sm mb-4">{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</h1>
+                            {postings.filter(p => p.accountId === businessDetail.userId).map((posting) => (
+                                   <div key={posting.postingId} className="h-100 w-full bg-gray-100 mb-2 justify-center items-center flex rounded-xl">
+                                    {posting.media?.length > 0 ? 
+                                    (<img src={posting.media[0]} alt="" className="h-full w-full object-cover" />)
+                                    :
+                                    (<div className="bg-white w-full justify-center items-center flex p-10"><h1>{posting.text || "Empty Caption"}</h1></div>)
+                                
+                                }
+                                           
+                                   </div>
+                            ))}
                         </div>
                     </div>
                     

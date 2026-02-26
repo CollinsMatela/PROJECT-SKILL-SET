@@ -32,7 +32,7 @@ const Map = () => {
 
   const navigate = useNavigate();
   const [listOfRegistration, setListOfRegistration] = useState([]);
-  const {userProfile} = useContext(AuthContext);
+  const {userProfile, postings} = useContext(AuthContext);
 
   const [currentLocation, setCurrentLocation] = useState(null);
   const [accuracy, setAccuracy] = useState(null);
