@@ -35,11 +35,16 @@ const Map = () => {
   const {userProfile, postings} = useContext(AuthContext);
 
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [accuracy, setAccuracy] = useState(null);
-
   const [selectedMarker, setSelectedMarker] = useState(null);
 
-  const filteredVerifiedRegistration = listOfRegistration.filter(registration => registration.status === "verified");
+  const filteredAllVerified = listOfRegistration.filter(registration => registration.status === "verified");
+  const filteredService = listOfRegistration.filter(registration => registration.status === "verified" && registration.businessType === "service");
+  const filteredFood = listOfRegistration.filter(registration => registration.status === "verified" && registration.businessType === "food");
+  const filteredRetail = listOfRegistration.filter(registration => registration.status === "verified" && registration.businessType === "retail");
+
+  const [serviceClick, setServiceClick] = useState(false);
+  const [foodClick, setFoodClick] = useState(false);
+  const [retailClick, setRetailClick] = useState(false);
 
   useEffect(() => {
        if(!navigator.geolocation) return alert("Geolocation is not supported!");
@@ -71,6 +76,14 @@ const Map = () => {
 
   return (
     <div className="h-full w-full z-0 relative">
+      <nav className="fixed z-[900] top-0 h-15 w-full justify-end items-center flex px-2">
+            <ul className="flex gap-2">
+                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => {setServiceClick(prev => !prev), setFoodClick(false), setRetailClick(false)}}>Service</li>
+                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => {setFoodClick(prev => !prev), setServiceClick(false), setRetailClick(false)}}>Foods</li>
+                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => {setRetailClick(prev => !prev), setFoodClick(false), setServiceClick(false)}}>Retail</li>
+                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => alert("Ongoing!")}>Filter</li>
+            </ul>
+        </nav>
       <MapContainer
         center={[14.5824, 120.9937]}
         zoom={10}
@@ -85,10 +98,8 @@ const Map = () => {
             <Popup>This is you!</Popup>
         </Marker>
         )}
-
-        
-        {filteredVerifiedRegistration.map((registration) => (
-
+        {/*All Verified Render*/}
+        {!serviceClick && !foodClick && !retailClick && filteredAllVerified.map((registration) => (
           <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)} 
           eventHandlers={{click: () => {setSelectedMarker(registration); console.log("Marker clicked for account ID:", registration.userId)}}}>
               <Popup>
@@ -101,9 +112,6 @@ const Map = () => {
                         <h1 className='text-md text-gray-500'>{registration.userId === userProfile?.accountId ? userProfile?.ratings : 0.0} <span className='text-yellow-500'>★</span></h1>
                       </div>
                     </div>
-
-                    
-
                     <div className='w-full'>
                       <button className='bg-white border-1 border-b-4 border-black h-8 w-full rounded-md hover:-translate-y-1 justify-center items-center flex cursor-pointer transition-all duration-300 ease-in-out'>
                         <h1 className='text-black font-bold' onClick={() => ViewProfile(registration.userId)}>View Profile</h1>
@@ -113,9 +121,81 @@ const Map = () => {
                 </div>
               </Popup>
           </Marker>
- ))}
-         {selectedMarker && <MapSideBar businessDetail={selectedMarker}/>
-         }
+         ))}
+        {/*Service Filter Render*/}
+        {serviceClick && filteredService.map((registration) => (
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)} 
+          eventHandlers={{click: () => {setSelectedMarker(registration); console.log("Marker clicked for account ID:", registration.userId)}}}>
+              <Popup>
+                <div className='w-50 space-y-2'>
+                    <div className='w-full justify-start items-center flex gap-2'>
+                      <img src={registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile} className='h-12 w-12 rounded-full'/>
+                      <div>
+                        <h1 className='text-sm font-bold'>{registration.businessName}</h1>
+                        <h1 className='text-xs text-gray-500'>Business Type: {registration.businessType}</h1>
+                        <h1 className='text-md text-gray-500'>{registration.userId === userProfile?.accountId ? userProfile?.ratings : 0.0} <span className='text-yellow-500'>★</span></h1>
+                      </div>
+                    </div>
+                    <div className='w-full'>
+                      <button className='bg-white border-1 border-b-4 border-black h-8 w-full rounded-md hover:-translate-y-1 justify-center items-center flex cursor-pointer transition-all duration-300 ease-in-out'>
+                        <h1 className='text-black font-bold' onClick={() => ViewProfile(registration.userId)}>View Profile</h1>
+                      </button>
+                    </div>
+                     
+                </div>
+              </Popup>
+          </Marker>
+         ))}
+         {/*Food Filter Render*/}
+         {foodClick && filteredFood.map((registration) => (
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)} 
+          eventHandlers={{click: () => {setSelectedMarker(registration); console.log("Marker clicked for account ID:", registration.userId)}}}>
+              <Popup>
+                <div className='w-50 space-y-2'>
+                    <div className='w-full justify-start items-center flex gap-2'>
+                      <img src={registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile} className='h-12 w-12 rounded-full'/>
+                      <div>
+                        <h1 className='text-sm font-bold'>{registration.businessName}</h1>
+                        <h1 className='text-xs text-gray-500'>Business Type: {registration.businessType}</h1>
+                        <h1 className='text-md text-gray-500'>{registration.userId === userProfile?.accountId ? userProfile?.ratings : 0.0} <span className='text-yellow-500'>★</span></h1>
+                      </div>
+                    </div>
+                    <div className='w-full'>
+                      <button className='bg-white border-1 border-b-4 border-black h-8 w-full rounded-md hover:-translate-y-1 justify-center items-center flex cursor-pointer transition-all duration-300 ease-in-out'>
+                        <h1 className='text-black font-bold' onClick={() => ViewProfile(registration.userId)}>View Profile</h1>
+                      </button>
+                    </div>
+                     
+                </div>
+              </Popup>
+          </Marker>
+         ))}
+         {/*Retail Filter Render*/}
+         {retailClick && filteredRetail.map((registration) => (
+          <Marker key={registration.businessId} position={[Number(registration.latitude), Number(registration.longitude)]} icon={Pin(registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile)} 
+          eventHandlers={{click: () => {setSelectedMarker(registration); console.log("Marker clicked for account ID:", registration.userId)}}}>
+              <Popup>
+                <div className='w-50 space-y-2'>
+                    <div className='w-full justify-start items-center flex gap-2'>
+                      <img src={registration.userId === userProfile?.accountId ? userProfile?.profile : defualtProfile} className='h-12 w-12 rounded-full'/>
+                      <div>
+                        <h1 className='text-sm font-bold'>{registration.businessName}</h1>
+                        <h1 className='text-xs text-gray-500'>Business Type: {registration.businessType}</h1>
+                        <h1 className='text-md text-gray-500'>{registration.userId === userProfile?.accountId ? userProfile?.ratings : 0.0} <span className='text-yellow-500'>★</span></h1>
+                      </div>
+                    </div>
+                    <div className='w-full'>
+                      <button className='bg-white border-1 border-b-4 border-black h-8 w-full rounded-md hover:-translate-y-1 justify-center items-center flex cursor-pointer transition-all duration-300 ease-in-out'>
+                        <h1 className='text-black font-bold' onClick={() => ViewProfile(registration.userId)}>View Profile</h1>
+                      </button>
+                    </div>
+                     
+                </div>
+              </Popup>
+          </Marker>
+         ))}
+
+         {selectedMarker && <MapSideBar businessDetail={selectedMarker}/>}
 
         
         
