@@ -78,9 +78,9 @@ const Map = () => {
     <div className="h-full w-full z-0 relative">
       <nav className="fixed z-[900] top-0 h-15 w-full justify-end items-center flex px-2">
             <ul className="flex gap-2">
-                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => {setServiceClick(prev => !prev), setFoodClick(false), setRetailClick(false)}}>Service</li>
-                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => {setFoodClick(prev => !prev), setServiceClick(false), setRetailClick(false)}}>Foods</li>
-                <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => {setRetailClick(prev => !prev), setFoodClick(false), setServiceClick(false)}}>Retail</li>
+                <li className={`${serviceClick ? "bg-gray-300" : "bg-white"} h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs`} onClick={() => {setServiceClick(prev => !prev), setFoodClick(false), setRetailClick(false)}}>Service</li>
+                <li className={`${foodClick ? "bg-gray-300" : "bg-white"} h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs`} onClick={() => {setFoodClick(prev => !prev), setServiceClick(false), setRetailClick(false)}}>Foods</li>
+                <li className={`${retailClick ? "bg-gray-300" : "bg-white"} h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs`} onClick={() => {setRetailClick(prev => !prev), setFoodClick(false), setServiceClick(false)}}>Retail</li>
                 <li className="bg-white h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs" onClick={() => alert("Ongoing!")}>Filter</li>
             </ul>
         </nav>

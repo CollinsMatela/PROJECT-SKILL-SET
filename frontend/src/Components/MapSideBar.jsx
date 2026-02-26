@@ -39,8 +39,9 @@ const MapSideBar = ({businessDetail}) => {
                         <h1 className="text-2xl font-bold">{businessDetail.businessName}</h1>
                         <h1 className="text-xs text-gray-500">Business Type: {businessDetail.businessType}</h1>
                     </div>
-                    <div className="h-10 w-10 justify-center items-center flex">
-                        <h1 className="text-xl font-bold text-black">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"} <span className="text-yellow-500">★</span></h1>
+                    <div className="h-10 justify-center items-center flex gap-2">
+                        <h1 className="text-lg font-bold text-black">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
+                        <h1 className="text-yellow-500 font-bold">★</h1>
                     </div>
                 </div>
 
@@ -83,7 +84,7 @@ const MapSideBar = ({businessDetail}) => {
                             
                            </div>
                            <div className="flex-1 justify-center items-center flex flex-col">
-                            <h1 className="text-4xl">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
+                            <h1 className="text-2xl font-bold">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
                             <button className="bg-emerald-100 py-2 px-4 rounded-xl font-bold text-emerald-600 cursor-pointer hover:bg-emerald-200">Write a review</button>
                            </div>
                         </div>
