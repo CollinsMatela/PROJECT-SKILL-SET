@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
+import ReviewModal from "../Components/ReviewModal";
 
 const MapSideBar = ({businessDetail}) => {
 
@@ -11,15 +13,18 @@ const MapSideBar = ({businessDetail}) => {
     const [reviews, setReviews] = useState(false);
     const [about, setAbout] = useState(false);
 
+    const [reviewModal, setReviewModal] = useState(false);
+
     const handleOverview = () => {
         setOverview(true);
         setReviews(false);
         setAbout(false);
     }
-    const handleReviews = () => {
+    const handleReviews = async () => {
         setOverview(false);
         setReviews(true);
         setAbout(false);
+
     }
     const handleAbout = () => {
         setOverview(false);
@@ -31,8 +36,8 @@ const MapSideBar = ({businessDetail}) => {
     
     return(
         <>
-        
-        <div className="absolute left-20 h-screen z-[1000] h-100 w-100 bg-white justify-start items-start flex flex-col px-2">
+        {reviewModal && (<ReviewModal onClose={() => setReviewModal(false)} businessDetail={businessDetail}/>)}
+        <div className="absolute left-20 h-screen z-[900] h-100 w-100 bg-white justify-start items-start flex flex-col px-2">
             
                 <div className="w-full justify-between items-center flex mt-10">
                     <div>
@@ -85,7 +90,7 @@ const MapSideBar = ({businessDetail}) => {
                            </div>
                            <div className="flex-1 justify-center items-center flex flex-col">
                             <h1 className="text-2xl font-bold">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
-                            <button className="bg-emerald-100 py-2 px-4 rounded-xl font-bold text-emerald-600 cursor-pointer hover:bg-emerald-200">Write a review</button>
+                            <button className="bg-emerald-100 py-2 px-4 rounded-xl font-bold text-emerald-600 cursor-pointer hover:bg-emerald-200" onClick={() => setReviewModal(prev => !prev)}>Write a review</button>
                            </div>
                         </div>
                         <div>

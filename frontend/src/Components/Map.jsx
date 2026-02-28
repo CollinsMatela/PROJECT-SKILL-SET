@@ -12,7 +12,8 @@ import PinPoint from '../Images/pin-point.svg';
 import defualtProfile from '../Images/default_profile.png';
 import MapSideBar from './MapSideBar';
 import { useNavigate } from 'react-router-dom';
-
+import ReviewModal from './ReviewModal';
+import LeftSidebar from './LeftSidebar';
 // Fix marker icon
 // let DefaultIcon = L.icon({
 //   iconUrl,
@@ -76,6 +77,7 @@ const Map = () => {
 
   return (
     <div className="h-full w-full z-0 relative">
+      <LeftSidebar/>
       <nav className="fixed z-[900] top-0 h-15 w-full justify-end items-center flex px-2">
             <ul className="flex gap-2">
                 <li className={`${serviceClick ? "bg-gray-300" : "bg-white"} h-8 w-20 rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100 text-xs`} onClick={() => {setServiceClick(prev => !prev), setFoodClick(false), setRetailClick(false)}}>Service</li>
@@ -87,6 +89,7 @@ const Map = () => {
       <MapContainer
         center={[14.5824, 120.9937]}
         zoom={10}
+        zoomControl={false}
         className="h-full w-full"
       >
         <TileLayer

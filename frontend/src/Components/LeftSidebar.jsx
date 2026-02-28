@@ -80,7 +80,7 @@ const LeftSidebar = () =>{
     
     return(
         
-        <aside className="fixed z-[1000] justify-start items-start flex h-full left-0 top-0">
+        <aside className="fixed z-[900] justify-start items-start flex h-full left-0 top-0">
             <div className={`${search || isLocationMap ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-1 border-gray-200 pt-10 px-4`}>
                
                {search || isLocationMap ? 
@@ -113,7 +113,7 @@ const LeftSidebar = () =>{
                 <img src={LogoutIcon} alt="profile" className="h-7 w-7" />
                 <h1>{search || isLocationMap ? "" : "Find Location"}</h1>
             </button>
-            <button className={`h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleAdmin}>
+            <button className={`${userProfile?.email !== "admin@gmail.com" ? "hidden" : ""} h-12 w-full justify-start items-center flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 gap-2 px-2`} onClick={handleAdmin}>
                 <img src={LogoutIcon} alt="profile" className="h-7 w-7" />
                 <h1>{search || isLocationMap ? "" : "Admin Control"}</h1>
             </button>
