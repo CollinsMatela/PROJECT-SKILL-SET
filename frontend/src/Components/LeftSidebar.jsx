@@ -6,7 +6,7 @@ import MessageIcon from "../Images/message30.png"
 import HomeIcon from "../Images/home30.png"
 import ProfileIcon from "../Images/profile30.png"
 import LogoutIcon from "../Images/logout30.png"
-import SkillSetLogo from "../Images/skillsetlogo30.png"
+import SkillSetLogo from "../Images/SphereIcon.png"
 import defualtProfile from "../Images/default_profile.png"
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
@@ -84,11 +84,9 @@ const LeftSidebar = () =>{
             <div className={`${search || isLocationMap ? "w-20" : "w-80"} transform transition-all duration-1000 ease-out flex flex-col bg-white h-screen border-r-1 border-gray-200 pt-10 px-4`}>
                
                {search || isLocationMap ? 
-               <div className="bg-green-500 h-12 w-full rounded-md border-b-4 border-black justify-center items-center flex mb-2 cursor-pointer hover:bg-green-600">
-                      <div className="h-5 w-5 justify-center items-center flex font-nanum font-bold text-white text-2xl">SS+</div>
-               </div>
+               <img src={SkillSetLogo} className="h-10 w-10 object-cover"/>
                :
-               <h1 className="text-4xl font-nanum font-extrabold text-green-500 mb-2">SKILLSET</h1>
+               <h1 className="text-4xl font-nanum font-extrabold text-emerald-500 mb-2">SPHERE</h1>
              }
 
             <button className="h-12 w-full justify-start items-start flex bg-white rounded-xl hover:bg-gray-100 cursor-pointer mb-2 p-2 gap-2"
