@@ -1,13 +1,32 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import axios from "axios";
 
 const ReviewModal = ({onClose, businessDetail}) => {
     const {userProfile} = useContext(AuthContext);
+    
+    const [reviewMessage, setReviewMessage] = useState("");
+    const [rating, setRating] = useState(0);
+
     const [oneStar, setOneStar] = useState(false);
     const [twoStar, setTwoStar] = useState(false);
     const [threeStar, setThreeStar] = useState(false);
     const [fourStar, setFourStar] = useState(false);
     const [fiveStar, setFiveStar] = useState(false);
+
+    const SubmitReview = async () => {
+        if(rating === 0) return alert("Please select star for ratings.");
+        if(!reviewMessage) return alert("Please enter review message to proceed.");
+
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/submit-review`, {rating, reviewMessage});
+            console.log(res.data.message);
+
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
 
     const OneStarHandler = () => {
           setOneStar(true);
@@ -15,6 +34,8 @@ const ReviewModal = ({onClose, businessDetail}) => {
           setThreeStar(false)
           setFourStar(false)
           setFiveStar(false)
+
+          setRating(1);
     }
     const TwoStarHandler = () => {
           setOneStar(true);
@@ -22,6 +43,8 @@ const ReviewModal = ({onClose, businessDetail}) => {
           setThreeStar(false)
           setFourStar(false)
           setFiveStar(false)
+
+          setRating(2);
     }
     const ThreeStarHandler = () => {
           setOneStar(true);
@@ -29,6 +52,8 @@ const ReviewModal = ({onClose, businessDetail}) => {
           setThreeStar(true)
           setFourStar(false)
           setFiveStar(false)
+
+          setRating(3);
     }
     const FourStarHandler = () => {
           setOneStar(true);
@@ -36,6 +61,8 @@ const ReviewModal = ({onClose, businessDetail}) => {
           setThreeStar(true)
           setFourStar(true)
           setFiveStar(false)
+
+          setRating(4);
     }
     const FiveStarHandler = () => {
           setOneStar(true);
@@ -43,6 +70,8 @@ const ReviewModal = ({onClose, businessDetail}) => {
           setThreeStar(true)
           setFourStar(true)
           setFiveStar(true)
+
+          setRating(5);
     }
      return(
         <section className="fixed inset-0 z-[9999] justify-center items-center flex flex-col">
@@ -70,8 +99,10 @@ const ReviewModal = ({onClose, businessDetail}) => {
                     </div>
                     
                 </div>
-                <textarea className={"bg-white border-1 border-black w-full h-20 rounded-xl p-2"} name="review" id="review" placeholder="Share your personal review in this business"></textarea>
-                <button className="bg-black text-sm h-12 w-full rounded-xl text-white font-bold cursor-pointer">Submit</button>
+                <textarea className={"bg-white border-1 border-black w-full h-20 rounded-xl p-2"} name="review" id="review" placeholder="Share your personal review in this business"
+                          onChange={(e) => setReviewMessage(e.target.value)} value={reviewMessage}
+                ></textarea>
+                <button className="bg-black text-sm h-12 w-full rounded-xl text-white font-bold cursor-pointer" onClick={SubmitReview}>Submit</button>
             </div>
         </section>
      )
