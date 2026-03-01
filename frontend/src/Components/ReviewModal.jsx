@@ -19,8 +19,12 @@ const ReviewModal = ({onClose, businessDetail}) => {
         if(!reviewMessage) return alert("Please enter review message to proceed.");
 
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/submit-review`, {rating, reviewMessage});
-            console.log(res.data.message);
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/submit-review`, {businessId : businessDetail.businessId, 
+                                                                                           accountId: userProfile.accountId, 
+                                                                                           rating, 
+                                                                                           reviewMessage
+            });
+            console.log(res.data.message, res.data.review);
 
         } catch (error) {
             console.log(error);
