@@ -14,6 +14,7 @@ import MapSideBar from './MapSideBar';
 import { useNavigate } from 'react-router-dom';
 import ReviewModal from './ReviewModal';
 import LeftSidebar from './LeftSidebar';
+
 // Fix marker icon
 // let DefaultIcon = L.icon({
 //   iconUrl,
@@ -33,6 +34,7 @@ const Map = () => {
 
   const navigate = useNavigate();
   const [listOfRegistration, setListOfRegistration] = useState([]);
+  const [listOfReviews, setListOfReviews] = useState([]);
   const {userProfile, postings} = useContext(AuthContext);
 
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -74,6 +76,19 @@ const Map = () => {
     const ViewProfile = (accountId) => {
           navigate('/view-profile/' + accountId);
     }
+    useEffect(() => {
+        try {
+            const fetchReviews = async () => {
+             const res = await axios.get(`${import.meta.env.VITE_API_URL}/fetch-review/`);
+             console.log(res.data.message);
+             console.log(res.data.reviews.length);
+             setListOfReviews(res.data.reviews);
+        }
+        fetchReviews();
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
 
   return (
     <div className="h-full w-full z-0 relative">
@@ -198,7 +213,7 @@ const Map = () => {
           </Marker>
          ))}
 
-         {selectedMarker && <MapSideBar businessDetail={selectedMarker}/>}
+         {selectedMarker && <MapSideBar businessDetail={selectedMarker} ListofReviews={listOfReviews}/>}
 
         
         

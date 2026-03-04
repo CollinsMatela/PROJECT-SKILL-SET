@@ -4,7 +4,7 @@ import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import ReviewModal from "../Components/ReviewModal";
 
-const MapSideBar = ({businessDetail}) => {
+const MapSideBar = ({businessDetail, ListofReviews}) => {
 
     const navigate = useNavigate();
     const {userProfile, postings} = useContext(AuthContext);
@@ -34,6 +34,7 @@ const MapSideBar = ({businessDetail}) => {
     
     
     
+    
     return(
         <>
         {reviewModal && (<ReviewModal onClose={() => setReviewModal(false)} businessDetail={businessDetail}/>)}
@@ -45,7 +46,7 @@ const MapSideBar = ({businessDetail}) => {
                         <h1 className="text-xs text-gray-500">Business Type: {businessDetail.businessType}</h1>
                     </div>
                     <div className="h-10 justify-center items-center flex gap-2">
-                        <h1 className="text-lg font-bold text-black">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
+                        <h1 className="text-lg font-bold text-black">{ListofReviews.filter(b => b.businessId === businessDetail.businessId).length > 0 ? ListofReviews.filter(b => b.businessId === businessDetail.businessId).length : "No Rating"}</h1>
                         <h1 className="text-yellow-500 font-bold">★</h1>
                     </div>
                 </div>

@@ -4,6 +4,12 @@ const submitReview = async (req, res) => {
       const {businessId, accountId, rating, reviewMessage} = req.body;
 
       try {
+        const isExist = await UserReview.findOne({businessId: businessId, accountId: accountId});
+        if(isExist){
+            res.status(201).json({message: "User already been reviewed this business."})
+            return;
+        }
+
         const result = await UserReview.create({
                    businessId: businessId,
                    accountId: accountId,

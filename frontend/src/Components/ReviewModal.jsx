@@ -25,7 +25,7 @@ const ReviewModal = ({onClose, businessDetail}) => {
                                                                                            reviewMessage
             });
             console.log(res.data.message, res.data.review);
-
+            onClose();
         } catch (error) {
             console.log(error);
         }
