@@ -15,6 +15,9 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
 
     const [reviewModal, setReviewModal] = useState(false);
 
+    const SelectedBusiness = ListofReviews.filter(b => b.businessId === businessDetail.businessId);
+    
+
     const handleOverview = () => {
         setOverview(true);
         setReviews(false);
@@ -46,7 +49,12 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                         <h1 className="text-xs text-gray-500">Business Type: {businessDetail.businessType}</h1>
                     </div>
                     <div className="h-10 justify-center items-center flex gap-2">
-                        <h1 className="text-lg font-bold text-black">{ListofReviews.filter(b => b.businessId === businessDetail.businessId).length > 0 ? ListofReviews.filter(b => b.businessId === businessDetail.businessId).length : "No Rating"}</h1>
+                        <h1 className="text-lg font-bold text-black">{SelectedBusiness.length > 0 ?
+                                                                        SelectedBusiness.reduce((sum, reviews) => sum + reviews.rating, 0) / SelectedBusiness.length
+                                                                        : 
+                                                                        "No Rating"
+                                                                        }
+                        </h1>
                         <h1 className="text-yellow-500 font-bold">★</h1>
                     </div>
                 </div>
@@ -90,7 +98,11 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                             
                            </div>
                            <div className="flex-1 justify-center items-center flex flex-col">
-                            <h1 className="text-2xl font-bold">{businessDetail.userId === userProfile?.accountId ? userProfile?.ratings : "No Rating"}</h1>
+                            <h1 className="text-2xl font-bold">{SelectedBusiness.length > 0 ?
+                                                                        SelectedBusiness.reduce((sum, reviews) => sum + reviews.rating, 0) / SelectedBusiness.length
+                                                                        : 
+                                                                        "No Rating"
+                                                                }</h1>
                             <button className="bg-emerald-100 py-2 px-4 rounded-xl font-bold text-emerald-600 cursor-pointer hover:bg-emerald-200" onClick={() => setReviewModal(prev => !prev)}>Write a review</button>
                            </div>
                         </div>
