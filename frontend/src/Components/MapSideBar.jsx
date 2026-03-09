@@ -15,7 +15,10 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
 
     const [reviewModal, setReviewModal] = useState(false);
 
-    const SelectedBusiness = ListofReviews.filter(b => b.businessId === businessDetail.businessId);
+    const SelectedBusiness = ListofReviews.filter(b => b.businessId === businessDetail.businessId); // All business review
+
+    const fiveStarBar = ListofReviews.filter(b => b.businessId === businessDetail.businessId && b.rating === 5);
+    const percentage =  (fiveStarBar / SelectedBusiness.length) * 100;
     
 
     const handleOverview = () => {
@@ -61,7 +64,7 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
 
                 <div className="w-full border-b-2 border-gray-100 justify-start items-start flex my-4 gap-2">
                     <button className={`${overview ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleOverview}>Overview</button>
-                    <button className={`${reviews ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleReviews}>Reviews</button>
+                    <button className={`${reviews ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleReviews}>{`Reviews (${SelectedBusiness.length})`}</button>
                     <button className={`${about ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleAbout}>{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</button>
                 </div>
 
@@ -77,7 +80,9 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                             <h1 className="font-bold text-sm">Review Summary</h1>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>5</h1>
-                                <div className="bg-gray-100 h-2 w-full rounded-full"></div>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full w-${percentage} rounded-md`}></div>
+                                </div>
                             </div>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>4</h1>
