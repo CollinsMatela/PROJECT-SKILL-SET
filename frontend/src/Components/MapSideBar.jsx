@@ -18,7 +18,15 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
     const SelectedBusiness = ListofReviews.filter(b => b.businessId === businessDetail.businessId); // All business review
 
     const fiveStarBar = ListofReviews.filter(b => b.businessId === businessDetail.businessId && b.rating === 5);
-    const percentage =  (fiveStarBar / SelectedBusiness.length) * 100;
+    const fivePercentage =  (fiveStarBar.length / SelectedBusiness.length) * 100;
+    const fourStarBar = ListofReviews.filter(b => b.businessId === businessDetail.businessId && b.rating === 4);
+    const fourPercentage =  (fourStarBar.length / SelectedBusiness.length) * 100;
+    const threeStarBar = ListofReviews.filter(b => b.businessId === businessDetail.businessId && b.rating === 3);
+    const threePercentage =  (threeStarBar.length / SelectedBusiness.length) * 100;
+    const twoStarBar = ListofReviews.filter(b => b.businessId === businessDetail.businessId && b.rating === 2);
+    const twoPercentage =  (twoStarBar.length / SelectedBusiness.length) * 100;
+    const oneStarBar = ListofReviews.filter(b => b.businessId === businessDetail.businessId && b.rating === 1);
+    const onePercentage =  (oneStarBar.length / SelectedBusiness.length) * 100;
     
 
     const handleOverview = () => {
@@ -77,28 +85,44 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
 
                         <div className="bg-white border-b-1 border-t-1 border-gray-300 justify-center items-center flex py-4">
                            <div className="flex-1 flex-col space-y-2">
-                            <h1 className="font-bold text-sm">Review Summary</h1>
+                            <h1 className="font-bold text-sm">{`Review Summary (${SelectedBusiness.length})`}</h1>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>5</h1>
                                 <div className="bg-gray-100 h-2 w-full rounded-full">
-                                    <div className={`bg-yellow-500 h-full w-${percentage} rounded-md`}></div>
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${fivePercentage}%`}}></div>
                                 </div>
                             </div>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>4</h1>
-                                <div className="bg-gray-100 h-2 w-full rounded-full"></div>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${fourPercentage}%`}}></div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>3</h1>
-                                <div className="bg-gray-100 h-2 w-full rounded-full"></div>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${threePercentage}%`}}></div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>2</h1>
-                                <div className="bg-gray-100 h-2 w-full rounded-full"></div>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${twoPercentage}%`}}></div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="gap-4 justify-center items-center flex">
                                 <h1>1</h1>
-                                <div className="bg-gray-100 h-2 w-full rounded-full"></div>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${onePercentage}%`}}></div>
+                                    </div>
+                                </div>
                             </div>
                             
                            </div>
