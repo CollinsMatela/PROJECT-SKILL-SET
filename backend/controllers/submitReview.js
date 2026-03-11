@@ -1,4 +1,5 @@
 import UserReview from '../models/ReviewModel.js'
+import { nanoid } from 'nanoid';
 const submitReview = async (req, res) => {
 
       const {businessId, accountId, rating, reviewMessage} = req.body;
@@ -11,6 +12,7 @@ const submitReview = async (req, res) => {
         }
 
         const result = await UserReview.create({
+                   reviewId: "REV-" + nanoid(),
                    businessId: businessId,
                    accountId: accountId,
                    rating: rating,

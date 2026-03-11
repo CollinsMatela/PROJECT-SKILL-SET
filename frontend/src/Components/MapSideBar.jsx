@@ -152,6 +152,75 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                     </div>
                     
                 )}
+
+                {reviews && (
+                    <div className="h-full w-full bg-transparent">
+                         <div className="flex-1 flex-col space-y-2 border-b-1 border-gray-200 pb-4">
+                            <h1 className="font-bold text-sm">{`Review Summary (${SelectedBusiness.length})`}</h1>
+                            <div className="gap-4 justify-center items-center flex">
+                                <h1>5</h1>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${fivePercentage}%`}}></div>
+                                </div>
+                            </div>
+                            <div className="gap-4 justify-center items-center flex">
+                                <h1>4</h1>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${fourPercentage}%`}}></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="gap-4 justify-center items-center flex">
+                                <h1>3</h1>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${threePercentage}%`}}></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="gap-4 justify-center items-center flex">
+                                <h1>2</h1>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${twoPercentage}%`}}></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="gap-4 justify-center items-center flex">
+                                <h1>1</h1>
+                                <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className="bg-gray-100 h-2 w-full rounded-full">
+                                    <div className={`bg-yellow-500 h-full rounded-md`} style={{width: `${onePercentage}%`}}></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                           </div>
+
+                           <div className="h-full w-full">
+                            <h1 className="font-bold text-sm mt-4">{`Review Summary (${SelectedBusiness.length})`}</h1>
+                            {
+                            SelectedBusiness?.length > 0 ? (
+                                SelectedBusiness.map((review) => (
+                                <div key={review.reviewId} className="border-1 border-b-4 border-gray-300 border-gray-100 w-full rounded-xl py-2 mt-2">
+                                    <div className="justify-between items-center flex px-2">
+                                        <h1 className="font-bold text-sm">{review.accountId === userProfile.accountId ? `${userProfile?.firstname} ${userProfile?.lastname}` : "Unidentified User"}</h1>
+                                        <h1 className="font-bold text-xs text-yellow-500">{review.rating}★</h1>
+                                    </div>
+                                    <p className="text-gray-500 px-2">feedback: {review.message}</p>
+                                </div>
+                                ))
+                            ) : (
+                                <div className="h-20 w-full rounded-md bg-gray-100 flex items-center justify-center">
+                                <h1>No review recorded</h1>
+                                </div>
+                            )
+                            }
+
+                           </div>
+                    </div>
+                )}
                 
              
         </div>
