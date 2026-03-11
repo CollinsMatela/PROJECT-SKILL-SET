@@ -12,7 +12,7 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
 
     const [overview, setOverview] = useState(true);
     const [reviews, setReviews] = useState(false);
-    const [about, setAbout] = useState(false);
+    const [post, setPost] = useState(false);
 
     const [reviewModal, setReviewModal] = useState(false);
 
@@ -33,18 +33,18 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
     const handleOverview = () => {
         setOverview(true);
         setReviews(false);
-        setAbout(false);
+        setPost(false);
     }
     const handleReviews = async () => {
         setOverview(false);
         setReviews(true);
-        setAbout(false);
+        setPost(false);
 
     }
-    const handleAbout = () => {
+    const handlePost = () => {
         setOverview(false);
         setReviews(false);
-        setAbout(true);
+        setPost(true);
     }
 
     const fetchAllUsers = async () => {
@@ -88,7 +88,7 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                 <div className="w-full border-b-2 border-gray-100 justify-start items-start flex my-4 gap-2">
                     <button className={`${overview ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleOverview}>Overview</button>
                     <button className={`${reviews ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleReviews}>{`Reviews (${SelectedBusiness.length})`}</button>
-                    <button className={`${about ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handleAbout}>{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</button>
+                    <button className={`${post ? 'bg-black text-white' : 'bg-white text-black'} h-10 w-full text-xs px-4 py-2 rounded-md transition-all duration-300 ease-in-out cursor-pointer`} onClick={handlePost}>{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</button>
                 </div>
 
                 {overview && (
@@ -241,6 +241,24 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                            </div>
                     </div>
                 )}
+
+                {post &&
+                  <div className="overflow-scroll">
+                        <h1  className="font-bold text-sm mb-4">{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</h1>
+                        {postings.filter(p => p.accountId === businessDetail.userId).map((posting) => (
+                                <div key={posting.postingId} className="h-100 w-full bg-gray-100 mb-2 justify-center items-center flex rounded-xl">
+                                {posting.media?.length > 0 ? 
+                                (<img src={posting.media[0]} alt="" className="h-full w-full object-cover" />)
+                                :
+                                (<div className="bg-white w-full justify-center items-center flex p-10"><h1>{posting.text || "Empty Caption"}</h1></div>)
+                            
+                            }
+                                        
+                                </div>
+                        ))}
+                 </div>
+
+                }
                 
              
         </div>
