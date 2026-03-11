@@ -8,7 +8,8 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
 
     const navigate = useNavigate();
     const {userProfile, postings} = useContext(AuthContext);
-    
+    const [users, setUsers] = useState([]);
+
     const [overview, setOverview] = useState(true);
     const [reviews, setReviews] = useState(false);
     const [about, setAbout] = useState(false);
@@ -45,6 +46,20 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
         setReviews(false);
         setAbout(true);
     }
+
+    const fetchAllUsers = async () => {
+          try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/map-fetch-all-users`);
+            setUsers(res.data.users);
+            console.log(res.data.message);
+
+          } catch (error) {
+            console.log(error);
+          }
+    }
+    useEffect(() =>{
+        fetchAllUsers();
+    },[])
     
     
     
@@ -202,15 +217,20 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                             <h1 className="font-bold text-sm mt-4">{`Review Summary (${SelectedBusiness.length})`}</h1>
                             {
                             SelectedBusiness?.length > 0 ? (
-                                SelectedBusiness.map((review) => (
-                                <div key={review.reviewId} className="border-1 border-b-4 border-gray-300 border-gray-100 w-full rounded-xl py-2 mt-2">
-                                    <div className="justify-between items-center flex px-2">
-                                        <h1 className="font-bold text-sm">{review.accountId === userProfile.accountId ? `${userProfile?.firstname} ${userProfile?.lastname}` : "Unidentified User"}</h1>
-                                        <h1 className="font-bold text-xs text-yellow-500">{review.rating}★</h1>
+                                SelectedBusiness.map((review) => {
+                                const user = users.find(user => user.accountId === review.accountId);
+
+                                return(
+                                    <div key={review.reviewId} className="border-1 border-b-4 border-gray-300 border-gray-100 w-full rounded-xl py-2 mt-2">
+                                        <div className="justify-between items-center flex px-2">
+                                            <h1 className="font-bold text-sm">{user ? `${user?.firstname} ${user?.lastname}` : "Unidentified User"}</h1>
+                                            <h1 className="font-bold text-xs text-yellow-500">{review.rating}★</h1>
+                                        </div>
+                                            <p className="text-gray-500 px-2">feedback: {review.message}</p>
                                     </div>
-                                    <p className="text-gray-500 px-2">feedback: {review.message}</p>
-                                </div>
-                                ))
+                                )
+                                
+                                })
                             ) : (
                                 <div className="h-20 w-full rounded-md bg-gray-100 flex items-center justify-center">
                                 <h1>No review recorded</h1>
