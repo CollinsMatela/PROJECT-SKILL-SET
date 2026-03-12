@@ -27,7 +27,7 @@ const Pin = (profile) => L.icon({
   iconUrl: profile || defualtProfile,
   iconSize: [25, 25],
   iconAnchor: [15, 15],
-  className: 'rounded-full border-2 border-black',
+  className: 'rounded-full border-2 border-emerald-500',
 });
 
 const Map = () => {

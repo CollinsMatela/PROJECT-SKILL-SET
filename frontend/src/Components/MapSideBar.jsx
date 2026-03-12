@@ -153,11 +153,11 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                         <div>
                             <h1  className="font-bold text-sm mb-4">{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</h1>
                             {postings.filter(p => p.accountId === businessDetail.userId).map((posting) => (
-                                   <div key={posting.postingId} className="h-100 w-full bg-gray-100 mb-2 justify-center items-center flex rounded-xl">
+                                   <div key={posting.postingId} className="w-full bg-gray-100 mb-2 justify-center items-center flex rounded-xl">
                                     {posting.media?.length > 0 ? 
-                                    (<img src={posting.media[0]} alt="" className="h-full w-full object-cover" />)
+                                    (<img src={posting.media[0]} alt="" className="h-100 w-full object-cover rounded-xl" />)
                                     :
-                                    (<div className="bg-white w-full justify-center items-center flex p-10"><h1>{posting.text || "Empty Caption"}</h1></div>)
+                                    (<div className="bg-white border-1 border-b-4 border-gray-300 w-full justify-center items-center flex rounded-xl p-10"><h1>{posting.text || "Empty Caption"}</h1></div>)
                                 
                                 }
                                            
@@ -246,11 +246,11 @@ const MapSideBar = ({businessDetail, ListofReviews}) => {
                   <div className="overflow-scroll">
                         <h1  className="font-bold text-sm mb-4">{`Postings (${postings.filter(p => p.accountId === businessDetail.userId).length})`}</h1>
                         {postings.filter(p => p.accountId === businessDetail.userId).map((posting) => (
-                                <div key={posting.postingId} className="h-100 w-full bg-gray-100 mb-2 justify-center items-center flex rounded-xl">
+                                <div key={posting.postingId} className="w-full mb-2 justify-center items-center flex rounded-xl">
                                 {posting.media?.length > 0 ? 
-                                (<img src={posting.media[0]} alt="" className="h-full w-full object-cover" />)
+                                (<img src={posting.media[0]} alt="" className="h-100 w-full object-cover rounded-xl" />)
                                 :
-                                (<div className="bg-white w-full justify-center items-center flex p-10"><h1>{posting.text || "Empty Caption"}</h1></div>)
+                                (<div className="bg-white border-1 border-b-4 border-gray-300 w-full justify-center items-center flex rounded-xl p-10"><h1>{posting.text || "Empty Caption"}</h1></div>)
                             
                             }
                                         
