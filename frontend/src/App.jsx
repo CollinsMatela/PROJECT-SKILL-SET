@@ -13,6 +13,7 @@ import FilterPostModal from "./Components/FilterPostModal";
 import MapPage from "./Pages/MapPage"
 import SellerRegistration from "./Pages/SellerRegistration";
 import Admin from "./Pages/Admin";
+import CommentModal from "./Components/CommentModal";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Route path={"/map-location"} element={<MapPage/>}></Route>
       <Route path={"/seller-registration/:accountId"} element={<SellerRegistration/>}></Route>
       <Route path={"/admin"} element={<Admin/>}></Route>
+      <Route path={"/comment"} element={<CommentModal/>}></Route>
     </Routes>
      
     </BrowserRouter>

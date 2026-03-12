@@ -7,12 +7,14 @@ import Comments from "../Images/comments.png"
 import defualtProfile from "../Images/default_profile.png"
 import handleLike from "../Services/handleLike"
 import { AuthContext } from "../Context/AuthContext"
+import CommentModal from "./CommentModal"
 
 const PostCard = ({posting, userProfile}) => {
 
     const {setPostings} = useContext(AuthContext);
 
     const [imageIndex, setImageIndex] = useState(0);
+    const [isComment, setComment] = useState(false);
 
     const timeAgo = (createdAt) =>{
           const time = Date.now() - new Date(createdAt);
@@ -94,13 +96,15 @@ const PostCard = ({posting, userProfile}) => {
                         <img src={posting?.liked ? RedHeartIcon : BlackHeartIcon} alt="heart" />
                         <h1>{posting?.likesCount}</h1>
                        </div>
-                       <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1">
+                       <div className="bg-white h-full justify-center items-center flex cursor-pointer gap-1" onClick={() => setComment(true)}>
                         <img src={Comments} alt="comments" />
                         <h1>0</h1>                
                        </div>
                        
                     </div>
                   </div>
+                  {isComment && (<CommentModal onClose={() => setComment(false)}
+                                               PostingId={posting?.postingId}/>)}
                 </div>
     </>
     )
