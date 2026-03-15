@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import defaultProfile from "../Images/profile30.png"
 
 const CommentModal = ({onClose, PostingId}) => {
 
     const {postings} = useContext(AuthContext);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     const userPost = postings.find(p => p.postingId === PostingId);
 
@@ -12,8 +13,15 @@ const CommentModal = ({onClose, PostingId}) => {
         <div className="bg-black/80 inset-0 fixed z-50 justify-center items-center flex">
              <div className="relative h-220 w-300 flex">
                   {/* Images */}
-                  <div className="flex-2 bg-black">
-
+                  <div className={`${userPost?.media.length === 0 ? "hidden" : ""} relative flex-2 bg-black justify-center items-center flex`}>
+                        <div className=" justify-center items-center flex h-full w-20 absolute left-0">
+                            <div className={`${currentIndex === 0 && "hidden"} bg-white h-10 w-10 rounded-full cursor-pointer`} onClick={() => currentIndex === 0 ? null : setCurrentIndex(prev => prev - 1)}></div>
+                        </div>
+                        <img src={userPost?.media[currentIndex]} className="h-full w-full object-cover" />
+                        <div className=" justify-center items-center flex h-full w-20 absolute right-0">
+                            <div className={`${currentIndex >= userPost?.media.length - 1 && "hidden"} bg-white h-10 w-10 rounded-full cursor-pointer`} onClick={() => currentIndex >= userPost?.media.length - 1 ? null : setCurrentIndex(prev => prev + 1)}></div>
+                        </div>
+                        
                   </div>
                   {/* Comments */}
                   <div className="flex-1 bg-white rounded-xl">
