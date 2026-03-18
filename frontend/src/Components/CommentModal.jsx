@@ -34,9 +34,20 @@ const CommentModal = ({onClose, PostingId}) => {
                          <button className="bg-gray-100 h-5 w-5 text-gray-500 text-sm rounded-full justify-center items-center flex cursor-pointer" onClick={onClose}>x</button>
                     </div>
 
-                    <div className="w-full flex flex-col p-4">
+                    {/* caption container */}
+                    <div className="w-full flex flex-col p-4 border-b-1 border-gray-100">
                         <p className="text-xs font-bold text-gray-300">#Caption</p>
                         <p className="text-sm ">{userPost?.text ? userPost?.text : "No caption"}</p>
+
+                        <div className="w-full mt-2 space-x-2 justify-start items-center flex">
+                            <button className="bg-black h-10 w-10 rounded-full cursor-pointer"></button>
+                            <button className="bg-black h-10 w-10 rounded-full cursor-pointer"></button>
+                        </div>
+                    </div>
+                    
+                    {/* comments list container */}
+                    <div className="w-full flex px-4 gap-2 my-2">
+                        <div className="h-12 w-full bg-gray-100 rounded-xl justify-center items-center flex text-sm text-gray-300">••• Be the first comment</div>
                     </div>
 
                     <div className="w-full flex px-4 gap-2">
