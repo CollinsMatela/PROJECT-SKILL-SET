@@ -32,6 +32,7 @@ import rejectingBusinessRegistrationRoute from "./routes/rejectingBusinessRegist
 import reviewRoute from "./routes/reviewRoute.js";
 import fetchReviewRoute from './routes/fetchReviewRoute.js'
 import fetchAllUsersRoute from './routes/fetchAllUsersRoute.js'
+import addCommentRoute from './routes/addCommentRoute.js'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -66,6 +67,7 @@ app.use("/", rejectingBusinessRegistrationRoute);
 app.use("/", reviewRoute);
 app.use("/", fetchReviewRoute);
 app.use("/", fetchAllUsersRoute);
+app.use("/", addCommentRoute);
 
 
 app.get("/", (req, res) => {

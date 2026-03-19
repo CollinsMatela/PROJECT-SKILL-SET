@@ -1,13 +1,39 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import defaultProfile from "../Images/profile30.png"
+import axios from "axios";
 
 const CommentModal = ({onClose, PostingId}) => {
 
-    const {postings} = useContext(AuthContext);
+    const {userProfile, postings} = useContext(AuthContext);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const userPost = postings.find(p => p.postingId === PostingId);
+
+    const [comment, setComment] = useState("");
+
+    const addComment = async () => {
+
+          if(!comment) {
+            alert("Please add your comment")
+            return
+          } 
+
+          const CommentDetail = {
+                accountId: userProfile?.accountId,
+                postingId: PostingId,
+                comment: comment
+          }
+          
+          try {
+            alert(comment);
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/add-comment`, CommentDetail)
+            console.log(res.data.message);
+
+          } catch (error) {
+            console.log(error)
+          }
+    }
 
     return(
         <div className="bg-black/80 inset-0 fixed z-50 justify-center items-center flex">
@@ -51,8 +77,8 @@ const CommentModal = ({onClose, PostingId}) => {
                     </div>
 
                     <div className="w-full flex px-4 gap-2">
-                        <input type="text" className="bg-gray-100 h-12 w-full rounded-xl px-2" placeholder="Add a comment..."/>
-                        <button className="h-12 min-w-12 border-1 border-b-4 border-black rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100">Post</button>
+                        <input type="text" onChange={(e) => setComment(e.target.value)} value={comment} className="bg-gray-100 h-12 w-full rounded-xl px-2" placeholder="Add a comment..."/>
+                        <button className="h-12 min-w-12 border-1 border-b-4 border-black rounded-xl justify-center items-center flex cursor-pointer hover:bg-gray-100" onClick={addComment}>Post</button>
                     </div>
                      
                   </div>
