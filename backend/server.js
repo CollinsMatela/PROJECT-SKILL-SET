@@ -33,6 +33,7 @@ import reviewRoute from "./routes/reviewRoute.js";
 import fetchReviewRoute from './routes/fetchReviewRoute.js'
 import fetchAllUsersRoute from './routes/fetchAllUsersRoute.js'
 import addCommentRoute from './routes/addCommentRoute.js'
+import fetchCommentsRoute from './routes/fetchCommentsRoute.js'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -68,6 +69,7 @@ app.use("/", reviewRoute);
 app.use("/", fetchReviewRoute);
 app.use("/", fetchAllUsersRoute);
 app.use("/", addCommentRoute);
+app.use("/", fetchCommentsRoute);
 
 
 app.get("/", (req, res) => {

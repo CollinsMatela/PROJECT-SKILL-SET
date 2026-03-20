@@ -1,7 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import defaultProfile from "../Images/profile30.png"
 import axios from "axios";
+import commentIcon from "../Images/comments.png"
+import passiveHeart from "../Images/blackheart25.png"
+
 
 const CommentModal = ({onClose, PostingId}) => {
 
@@ -11,9 +14,22 @@ const CommentModal = ({onClose, PostingId}) => {
     const userPost = postings.find(p => p.postingId === PostingId);
 
     const [comment, setComment] = useState("");
+    const [listComments, setListComments] = useState([]);
+
+    useEffect(() => {
+       const fetchComments = async () => {
+             try {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-comment/${PostingId}`);
+                console.log(res.data.message);
+
+             } catch (error) {
+                console.log(error);
+             }
+       }
+       fetchComments();
+    }, [])
 
     const addComment = async () => {
-
           if(!comment) {
             alert("Please add your comment")
             return
@@ -29,11 +45,13 @@ const CommentModal = ({onClose, PostingId}) => {
             alert(comment);
             const res = await axios.post(`${import.meta.env.VITE_API_URL}/add-comment`, CommentDetail)
             console.log(res.data.message);
+            setComment("");
 
           } catch (error) {
             console.log(error)
           }
     }
+
 
     return(
         <div className="bg-black/80 inset-0 fixed z-50 justify-center items-center flex">
@@ -66,8 +84,12 @@ const CommentModal = ({onClose, PostingId}) => {
                         <p className="text-sm ">{userPost?.text ? userPost?.text : "No caption"}</p>
 
                         <div className="w-full mt-2 space-x-2 justify-start items-center flex">
-                            <button className="bg-black h-10 w-10 rounded-full cursor-pointer"></button>
-                            <button className="bg-black h-10 w-10 rounded-full cursor-pointer"></button>
+                            <button className="h-10 w-10 rounded-full cursor-pointer justify-center items-center flex">
+                            <img src={passiveHeart} />
+                            </button>
+                            <button className="h-10 w-10 rounded-full cursor-pointer justify-center items-center flex">
+                            <img src={commentIcon} />
+                            </button>
                         </div>
                     </div>
                     
