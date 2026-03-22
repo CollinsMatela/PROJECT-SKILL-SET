@@ -19,14 +19,16 @@ const CommentModal = ({onClose, PostingId}) => {
     useEffect(() => {
        const fetchComments = async () => {
              try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-comment/${PostingId}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/get-comment`);
                 console.log(res.data.message);
+                setListComments(res.data.commentsList);
 
              } catch (error) {
                 console.log(error);
              }
        }
        fetchComments();
+       console.log("Number of comments", listComments.length);
     }, [])
 
     const addComment = async () => {
@@ -95,7 +97,7 @@ const CommentModal = ({onClose, PostingId}) => {
                     
                     {/* comments list container */}
                     <div className="w-full flex px-4 gap-2 my-2">
-                        <div className="h-12 w-full bg-gray-100 rounded-xl justify-center items-center flex text-sm text-gray-300">••• Be the first comment</div>
+                        <div className={`${listComments?.some(z => z.postingId === PostingId) ? "hidden" : "" } h-12 w-full bg-gray-100 rounded-xl justify-center items-center flex text-sm text-gray-300`}>••• Be the first comment</div>
                     </div>
 
                     <div className="w-full flex px-4 gap-2">
