@@ -15,6 +15,7 @@ const CommentModal = ({onClose, PostingId}) => {
 
     const [comment, setComment] = useState("");
     const [listComments, setListComments] = useState([]);
+    const [listUsers, setListUsers] = useState([]);
 
     useEffect(() => {
        const fetchComments = async () => {
@@ -27,8 +28,17 @@ const CommentModal = ({onClose, PostingId}) => {
                 console.log(error);
              }
        }
+       const fetchAllUsers = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/map-fetch-all-users`);
+                console.log(res.data.message)
+                setListUsers(res.data.users)
+            } catch (error) {
+                console.log(error)
+            }
+       }
        fetchComments();
-       console.log("Number of comments", listComments.length);
+       fetchAllUsers();
     }, [])
 
     const addComment = async () => {
@@ -98,6 +108,13 @@ const CommentModal = ({onClose, PostingId}) => {
                     {/* comments list container */}
                     <div className="w-full flex px-4 gap-2 my-2">
                         <div className={`${listComments?.some(z => z.postingId === PostingId) ? "hidden" : "" } h-12 w-full bg-gray-100 rounded-xl justify-center items-center flex text-sm text-gray-300`}>••• Be the first comment</div>
+                            {listComments?.map((comment) => {
+                                  <div className={`h-12 w-full`}>
+                                     {/* <img src={comment?.accountId === } alt="" /> */}
+                                  </div>
+                                    
+                            })}
+   
                     </div>
 
                     <div className="w-full flex px-4 gap-2">
